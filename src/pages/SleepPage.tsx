@@ -10,6 +10,8 @@ import {
   IonCheckbox,
   IonLabel,
   IonProgressBar,
+  IonBackButton,
+  IonButtons
 } from '@ionic/react';
 
 // Import CSS file
@@ -88,6 +90,9 @@ const SleepPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+        <IonButtons slot="start">
+          <IonBackButton />
+          </IonButtons>
           <IonTitle>Sleep Habits</IonTitle>
         </IonToolbar>
       </IonHeader>
