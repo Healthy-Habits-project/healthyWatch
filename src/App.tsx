@@ -11,7 +11,7 @@ import {
 } from '@ionic/react';
 
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle, cog } from 'ionicons/icons';
+import { ellipse, square, triangle, cog, calendarOutline } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -67,10 +67,10 @@ const App: React.FC = () => (
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="tab1" href="/tab1">
-          <IoHome size={30} />
+            <IoHome size={30} />
           </IonTabButton>
           <IonTabButton tab="tab2" href="/tab2">
-            <BsFileBarGraph size={30} />
+            <IonIcon aria-hidden="true" icon={calendarOutline} style={{fontSize:'2.5rem'}}/>
           </IonTabButton>
           <IonTabButton tab="tab3" href="/tab3">
             <IonIcon aria-hidden="true" icon={cog} style={{fontSize:'2.5rem'}}/>

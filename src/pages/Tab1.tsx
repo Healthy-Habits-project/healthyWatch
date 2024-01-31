@@ -46,7 +46,7 @@ const Tab1: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Healthy Habit Tracker</IonTitle>
+          <IonTitle>Healthy Habits: Home Page</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
