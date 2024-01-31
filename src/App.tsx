@@ -16,7 +16,7 @@ import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 import About from './pages/MentalHealthPage';
-import PhyscialHealthPage from './pages/PhysicalHealthPage';
+import PhysicalHealthPage from './pages/PhysicalHealthPage';
 import NutritionPage from './pages/NutritionPage';
 import SleepPage from './pages/SleepPage';
 
@@ -49,7 +49,7 @@ const App: React.FC = () => (
       <IonTabs>
         <IonRouterOutlet>
         <Route path="/mentalhealthpage" component={MentalHealthPage} exact />
-        <Route path="/physicalhealthpage" component={PhyscialHealthPage} exact />
+        <Route path="/physicalhealthpage" component={PhysicalHealthPage} exact />
         <Route path="/nutritionpage" component={NutritionPage} exact />
         <Route path="/sleeppage" component={SleepPage} exact />
           <Route exact path="/tab1">
