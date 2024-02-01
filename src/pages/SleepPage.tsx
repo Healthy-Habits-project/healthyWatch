@@ -98,24 +98,28 @@ const SleepPage: React.FC = () => {
       </IonHeader>
 
       <IonList>
-        <IonItem>
+      <IonItem>
           <IonCheckbox
             slot="start"
             checked={sleepHabits.consistentBedtime}
             onIonChange={() => handleCheckboxChange('consistentBedtime')}
             aria-label="Consistent Bedtime"
           />
-          <IonLabel>Do you have a consistent bedtime?</IonLabel>
+          <IonLabel onClick={() => handleCheckboxChange('consistentBedtime')}>
+            Do you have a consistent bedtime?
+          </IonLabel>
         </IonItem>
-
-        <IonItem>
+        
+       <IonItem>
           <IonCheckbox
             slot="start"
             checked={sleepHabits.restfulSleep}
             onIonChange={() => handleCheckboxChange('restfulSleep')}
             aria-label="Restful Sleep"
           />
-          <IonLabel>Do you experience restful sleep?</IonLabel>
+          <IonLabel onClick={() => handleCheckboxChange('restfulSleep')}>
+            Did you experience restful sleep?
+          </IonLabel>
         </IonItem>
 
         <IonItem>
@@ -123,9 +127,11 @@ const SleepPage: React.FC = () => {
             slot="start"
             checked={sleepHabits.avoidScreensBeforeBed}
             onIonChange={() => handleCheckboxChange('avoidScreensBeforeBed')}
-            aria-label="Avoid Screens Before Bedtime"
+            aria-label="Avoid Screens Before Bed"
           />
-          <IonLabel>Do you avoid screens before bedtime?</IonLabel>
+          <IonLabel onClick={() => handleCheckboxChange('avoidScreensBeforeBed')}>
+            Did you avoid screens before bedtime?
+          </IonLabel>
         </IonItem>
 
         <IonItem>
@@ -133,9 +139,11 @@ const SleepPage: React.FC = () => {
             slot="start"
             checked={sleepHabits.darkRoom}
             onIonChange={() => handleCheckboxChange('darkRoom')}
-            aria-label="Dark Room"
+            aria-label="Darkness for Sleep"
           />
-          <IonLabel>Is your room dark for sleep?</IonLabel>
+          <IonLabel onClick={() => handleCheckboxChange('darkRoom')}>
+            Was your room dark for sleep?
+          </IonLabel>
         </IonItem>
 
         <IonItem>
@@ -145,7 +153,9 @@ const SleepPage: React.FC = () => {
             onIonChange={() => handleCheckboxChange('comfortableMattress')}
             aria-label="Comfortable Mattress"
           />
-          <IonLabel>Do you sleep on a comfortable mattress?</IonLabel>
+          <IonLabel onClick={() => handleCheckboxChange('comfortableMattress')}>
+            Did you sleep on a comfortable mattress?
+          </IonLabel>
         </IonItem>
 
         <IonItem>
@@ -153,9 +163,11 @@ const SleepPage: React.FC = () => {
             slot="start"
             checked={sleepHabits.quietEnvironment}
             onIonChange={() => handleCheckboxChange('quietEnvironment')}
-            aria-label="Quiet Environment"
+            aria-label="Comfortable Mattress"
           />
-          <IonLabel>Is your sleep environment quiet?</IonLabel>
+          <IonLabel onClick={() => handleCheckboxChange('quietEnvironment')}>
+            Was your sleep environment quiet?
+          </IonLabel>
         </IonItem>
 
         <IonItem>
@@ -163,9 +175,11 @@ const SleepPage: React.FC = () => {
             slot="start"
             checked={sleepHabits.consistentWakeUpTime}
             onIonChange={() => handleCheckboxChange('consistentWakeUpTime')}
-            aria-label="Consistent Wake-up Time"
+            aria-label="Consistent Wake Up"
           />
-          <IonLabel>Do you have a consistent wake-up time?</IonLabel>
+          <IonLabel onClick={() => handleCheckboxChange('consistentWakeUpTime')}>
+            Did you wake up on time?
+          </IonLabel>
         </IonItem>
 
         <IonItem>
@@ -173,9 +187,11 @@ const SleepPage: React.FC = () => {
             slot="start"
             checked={sleepHabits.limitCaffeineIntake}
             onIonChange={() => handleCheckboxChange('limitCaffeineIntake')}
-            aria-label="Limit Caffeine Intake"
+            aria-label="Limit Caffiene"
           />
-          <IonLabel>Do you limit caffeine intake?</IonLabel>
+          <IonLabel onClick={() => handleCheckboxChange('limitCaffeineIntake')}>
+            Did you limit caffeine intake?
+          </IonLabel>
         </IonItem>
 
         <IonItem>
@@ -185,7 +201,9 @@ const SleepPage: React.FC = () => {
             onIonChange={() => handleCheckboxChange('bedtimeRoutine')}
             aria-label="Bedtime Routine"
           />
-          <IonLabel>Do you have a bedtime routine?</IonLabel>
+          <IonLabel onClick={() => handleCheckboxChange('bedtimeRoutine')}>
+            Did you have a routine before bedtime?
+          </IonLabel>
         </IonItem>
 
         <IonItem>
@@ -195,7 +213,9 @@ const SleepPage: React.FC = () => {
             onIonChange={() => handleCheckboxChange('coolSleepEnvironment')}
             aria-label="Cool Sleep Environment"
           />
-          <IonLabel>Is your sleep environment cool?</IonLabel>
+          <IonLabel onClick={() => handleCheckboxChange('coolSleepEnvironment')}>
+            Did you sleep in a cool environment?
+          </IonLabel>
         </IonItem>
       </IonList>
 
