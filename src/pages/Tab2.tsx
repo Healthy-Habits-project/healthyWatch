@@ -3,7 +3,7 @@ import React from 'react';
 import { IonContent, IonHeader, IonToolbar, IonPage, IonList, IonItem, IonCheckbox, IonRouterLink } from '@ionic/react';
 import FullCalendarComponent from '../components/FullCalendarComponent';
 
-const CheckboxPage: React.FC = () => {
+const  CalendarPage: React.FC = () => {
   return (
     <IonPage>
       <IonContent className="ion-padding">
@@ -14,4 +14,4 @@ const CheckboxPage: React.FC = () => {
   );
 };
 
-export default CheckboxPage;
+export default CalendarPage;

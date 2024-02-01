@@ -17,16 +17,15 @@ const FullCalendarComponent: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Mental Health Calendar</IonTitle>
+          <IonTitle>FullCalendar Example</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
-        <div>
-          <FullCalendar
-            plugins={[dayGridPlugin]}
-            events={events}
-          />
-        </div>
+      <IonContent scroll-y={true}>
+        <FullCalendar
+          plugins={[dayGridPlugin]}
+          events={events}
+          height="100%" // Set the height directly on the FullCalendar component
+        />
       </IonContent>
     </IonPage>
   );
