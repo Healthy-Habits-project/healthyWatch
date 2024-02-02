@@ -7,23 +7,24 @@ const Tab3: React.FC = () => {
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system'); // State for theme selection
 
   const handleSave = () => {
-    console.log(name);
+    console.log('LOG: Saving app data, set name to:', name);
     // Save settings here
   };
 
   const handleThemeChange = (selectedTheme: 'light' | 'dark' | 'system') => {
+    console.log('LOG: Changing theme to:', selectedTheme);
     setTheme(selectedTheme);
     // Implement theme change logic here, for example, by updating a global state or applying a class to the body
   };
 
   const resetAppData = () => {
     // Implement reset logic here, such as clearing local storage or resetting global state
-    console.log('App data reset');
+    console.log('LOG: Handling reset app data');
   };
 
   const exportAppData = () => {
     // Implement export logic here, such as exporting data to a file
-    console.log('Data exported');
+    console.log('LOG: Handling export app data');
   };
 
   return (
