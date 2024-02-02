@@ -39,7 +39,7 @@ import {
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
 import { ellipse, square, triangle, cog } from 'ionicons/icons';
-
+import { IonSelect, IonSelectOption } from '@ionic/react';
 
 const Tab1: React.FC = () => {
   return (
@@ -117,8 +117,16 @@ const Tab1: React.FC = () => {
                   </IonCardHeader>
                 </IonCard>
                 </IonRouterLink>
-              </IonCol>
 
+                {/* Dropdown for how day was */}
+                <IonSelect placeholder="How was your day today?">
+                {[...Array(10).keys()].map((num) => (
+                  <IonSelectOption key={num} value={num + 1}>
+                    {num + 1}
+                  </IonSelectOption>
+                ))}
+              </IonSelect>
+              </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>
