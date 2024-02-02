@@ -42,6 +42,20 @@ import { ellipse, square, triangle, cog } from 'ionicons/icons';
 import { IonSelect, IonSelectOption } from '@ionic/react';
 
 const Tab1: React.FC = () => {
+
+  const options = [
+    { value: 1, label: 'Terrible' },
+    { value: 2, label: 'Bad' },
+    { value: 3, label: 'Poor' },
+    { value: 4, label: 'Could be Better' },
+    { value: 5, label: 'Okay' },
+    { value: 6, label: 'Pretty Good' },
+    { value: 7, label: 'Very Good' },
+    { value: 8, label: 'Great' },
+    { value: 9, label: 'Amazing' },
+    { value: 10, label: 'The Best!' },
+  ];
+
   return (
     <IonPage>
       <IonHeader>
@@ -120,9 +134,9 @@ const Tab1: React.FC = () => {
 
                 {/* Dropdown for how day was */}
                 <IonSelect placeholder="How was your day today?">
-                {[...Array(10).keys()].map((num) => (
-                  <IonSelectOption key={num} value={num + 1}>
-                    {num + 1}
+                {options.map(({ value, label }) => (
+              <IonSelectOption key={value} value={value}>
+                {`${value} - ${label}`}
                   </IonSelectOption>
                 ))}
               </IonSelect>
