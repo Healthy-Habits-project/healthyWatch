@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface AppContextProps {
   selectedOption: number | null;
@@ -7,7 +7,7 @@ interface AppContextProps {
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 
-export const AppProvider: React.FC = ({ children }) => {
+const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
   return (
@@ -17,10 +17,12 @@ export const AppProvider: React.FC = ({ children }) => {
   );
 };
 
-export const useAppContext = () => {
+const useAppContext = () => {
   const context = useContext(AppContext);
   if (!context) {
     throw new Error('useAppContext must be used within an AppProvider');
   }
   return context;
 };
+
+export { AppProvider, useAppContext };
