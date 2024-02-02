@@ -1,5 +1,6 @@
 ion-card {
     height: auto;
+    background-color: black;
 }
 ion-card-title {
     font-size: 27px;
