@@ -21,6 +21,11 @@ const Tab3: React.FC = () => {
     console.log('App data reset');
   };
 
+  const exportAppData = () => {
+    // Implement export logic here, such as exporting data to a file
+    console.log('Data exported');
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -44,8 +49,8 @@ const Tab3: React.FC = () => {
           <IonGrid>
             <IonRow>
               <IonButton onClick={handleSave}>Save</IonButton>
-              <IonButton onClick={resetAppData}>Export Data</IonButton>
-              <IonButton onClick={resetAppData}>Reset App Data</IonButton>
+              <IonButton onClick={exportAppData}>Export Data</IonButton>
+              <IonButton onClick={resetAppData}>Reset Data</IonButton>
             </IonRow>
           </IonGrid>
         </IonList>
