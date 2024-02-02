@@ -25,6 +25,7 @@
     "@ionic/react-router": "^7.6.6",
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
+    "date": "^2.0.3",
     "date-fns": "^3.3.1",
     "ionicons": "^7.0.0",
     "moment": "^2.30.1",

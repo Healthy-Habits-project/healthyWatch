@@ -1,45 +1,12 @@
 import React from 'react';
-import {
-  IonContent,
-  IonHeader,
-  IonCol,
-  IonCardTitle,
-  IonCardHeader,
-  IonCardContent,
-  IonCard,
-  IonGrid,
-  IonRow,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonButton,
-  IonImg,
-  IonCardSubtitle,
-  IonText,
-  IonRouterLink,
-  IonChip,
-  IonAvatar,
-  IonLabel,
-  IonInput,
-  IonIcon,
-  IonNote,
-  IonFabButton,
-  IonFabList,
-  IonFab
-} from '@ionic/react';
-import {
-  chevronDownCircle,
-  chevronForwardCircle,
-  chevronUpCircle,
-  colorPalette,
-  document,
-  globe,
-} from 'ionicons/icons';
+import { IonContent, IonHeader, IonCol, IonCardTitle, IonCardHeader, IonCardContent, IonCard, IonGrid, IonRow, IonPage, IonTitle, IonToolbar, IonButtons, IonButton, IonImg, IonCardSubtitle, IonText, IonRouterLink, IonChip, IonAvatar, IonLabel, IonInput, IonIcon, IonNote, IonFabButton, IonFabList, IonFab } from '@ionic/react';
+import { chevronDownCircle, chevronForwardCircle, chevronUpCircle, colorPalette, document, globe, } from 'ionicons/icons';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
 import { ellipse, square, triangle, cog } from 'ionicons/icons';
 import { IonSelect, IonSelectOption } from '@ionic/react';
+import { useIonRouter } from '@ionic/react';
+import { App } from '@capacitor/app';
 
 const Tab1: React.FC = () => {
 
@@ -60,7 +27,7 @@ const Tab1: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle className = "ion-text-center">Hello, [NAME]</IonTitle>
+          <IonTitle className = "ion-text-center">Hello, obvious change</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
