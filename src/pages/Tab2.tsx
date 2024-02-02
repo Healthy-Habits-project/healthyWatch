@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IonDatetime, IonLabel, IonContent, IonPage, IonHeader, IonToolbar, IonTitle } from '@ionic/react';
-
+import './Tab2.css';
 function Example() {
   const [selectedDate, setSelectedDate] = useState<string>('');
 
