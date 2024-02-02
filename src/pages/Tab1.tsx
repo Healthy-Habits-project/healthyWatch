@@ -46,7 +46,7 @@ const Tab1: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Healthy Habits</IonTitle>
+          <IonTitle className = "ion-text-center">Hello, [NAME]</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
