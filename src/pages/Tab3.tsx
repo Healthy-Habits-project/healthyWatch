@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonContent, IonHeader, IonGrid, IonRow, IonButton, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonList, IonSelect, IonSelectOption, IonLabel } from '@ionic/react';
+import { IonButton, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react';
 import './Tab3.css';
 
 const Tab3: React.FC = () => {
@@ -7,18 +7,24 @@ const Tab3: React.FC = () => {
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system'); // State for theme selection
 
   const handleSave = () => {
-    console.log(name);
+    console.log('LOG: Saving app data, set name to:', name);
     // Save settings here
   };
 
   const handleThemeChange = (selectedTheme: 'light' | 'dark' | 'system') => {
+    console.log('LOG: Changing theme to:', selectedTheme);
     setTheme(selectedTheme);
     // Implement theme change logic here, for example, by updating a global state or applying a class to the body
   };
 
   const resetAppData = () => {
     // Implement reset logic here, such as clearing local storage or resetting global state
-    console.log('App data reset');
+    console.log('LOG: Handling reset app data');
+  };
+
+  const exportAppData = () => {
+    // Implement export logic here, such as exporting data to a file
+    console.log('LOG: Handling export app data');
   };
 
   return (
@@ -44,8 +50,8 @@ const Tab3: React.FC = () => {
           <IonGrid>
             <IonRow>
               <IonButton onClick={handleSave}>Save</IonButton>
-              <IonButton onClick={resetAppData}>Export Data</IonButton>
-              <IonButton onClick={resetAppData}>Reset App Data</IonButton>
+              <IonButton onClick={exportAppData}>Export Data</IonButton>
+              <IonButton onClick={resetAppData}>Reset Data</IonButton>
             </IonRow>
           </IonGrid>
         </IonList>
