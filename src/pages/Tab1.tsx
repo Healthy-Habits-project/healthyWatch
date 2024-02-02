@@ -92,7 +92,7 @@ const Tab1: React.FC = () => {
             <IonCol size="6" size-sm="4" style={{}}>
               <IonRouterLink routerLink="/mentalhealthpage">
                 <IonCard>
-                  <img alt="MentalHealth" src="./Images/MentalHealthCard.png" />
+                  <img alt="MentalHealth" src="/MentalHealthCard.png" />
                   <IonCardHeader>
                     <IonCardTitle>Mental Health</IonCardTitle>
                   </IonCardHeader>
@@ -103,7 +103,7 @@ const Tab1: React.FC = () => {
             <IonCol size="6" size-sm="4" style={{}}>
               <IonRouterLink routerLink="/physicalhealthpage">
                 <IonCard>
-                  <img alt="PhysicalHealth" src="./Images/PhysicalHealthCard.png" height="" />
+                  <img alt="PhysicalHealth" src="/PhysicalHealthCard.png" height="" />
                   <IonCardHeader>
                     <IonCardTitle>Physical Health</IonCardTitle>
                   </IonCardHeader>
@@ -114,7 +114,7 @@ const Tab1: React.FC = () => {
               <IonCol size="6" size-sm="4" style={{}}>
               <IonRouterLink routerLink="/nutritionpage">
                 <IonCard>
-                  <img alt="Nutrition" src="./Images/NutritionCard.png" />
+                  <img alt="Nutrition" src="/NutritionCard.png" />
                   <IonCardHeader>
                     <IonCardTitle>Nutrition</IonCardTitle>
                   </IonCardHeader>
@@ -125,7 +125,7 @@ const Tab1: React.FC = () => {
               <IonCol size="6" size-sm="4" style={{}}>
               <IonRouterLink routerLink="/sleeppage">
                 <IonCard>
-                  <img alt="SleepHabits" src="./Images/SleepCard.png" />
+                  <img alt="SleepHabits" src="/SleepCard.png" />
                   <IonCardHeader>
                     <IonCardTitle>Sleep</IonCardTitle>
                   </IonCardHeader>
