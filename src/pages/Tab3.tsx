@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonList } from '@ionic/react';
+import { IonContent, IonHeader, IonGrid, IonRow, IonButton, IonButtons, IonBackButton, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonList } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab3.css';
 
@@ -7,6 +7,9 @@ const Tab3: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton/>
+          </IonButtons>
           <IonTitle>Settings</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -15,12 +18,12 @@ const Tab3: React.FC = () => {
           <IonItem>
             <IonInput placeholder="Enter Name"></IonInput>
           </IonItem>
-          <IonItem>
-            <IonInput placeholder="Enter Input"></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonInput placeholder="Enter Input"></IonInput>
-          </IonItem>
+          <IonGrid>
+            <IonRow>
+              <IonButton>Save</IonButton>
+              <IonButton>Export</IonButton>
+            </IonRow>
+          </IonGrid>
         </IonList>
       </IonContent>
     </IonPage>
