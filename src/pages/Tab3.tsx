@@ -24,7 +24,7 @@ const Tab3: React.FC = () => {
   const exportAppData = () => {
     // Implement export logic here, such as exporting data to a file
     console.log('Data exported');
-  }
+  };
 
   return (
     <IonPage>
