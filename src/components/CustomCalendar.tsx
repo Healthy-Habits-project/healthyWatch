@@ -1,4 +1,3 @@
-// src/components/CustomCalendar.tsx
 import React, { useState } from 'react';
 import {
   format,
@@ -6,31 +5,48 @@ import {
   addDays,
   startOfMonth,
   endOfMonth,
-  eachDayOfInterval,
   isSameMonth,
   endOfWeek,
   subMonths,
   addMonths,
 } from 'date-fns';
-import './CustomCalendar.css'; // Make sure this CSS file exists in the same directory
+import './CustomCalendar.css'; // Ensure this CSS file is correctly referenced
 
-const CustomCalendar: React.FC = () => {
+interface CustomCalendarProps {
+  dayRatings: { [key: string]: number };
+}
+
+const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  const getColorForRating = (rating: number): string => {
+    switch (rating) {
+      case 1: return '#fc6203';
+      case 2: return '#fc9003';
+      case 3: return '#fcba03';
+      case 4: return '#fce703';
+      case 5: return '#99ff00';
+      case 6: return '#1aff00';
+      case 7: return '#00c414';
+      case 8: return '#109c1e';
+      case 9: return '#00ed4b';
+      case 10: return '#00ff51';
+      default: return ''; // Default case if no rating
+    }
+  };
 
   const renderHeader = () => {
     const dateFormat = 'MMMM yyyy';
     return (
       <div className="header row flex-middle">
-        <div className="column col-start">
-          <div className="icon" onClick={prevMonth}>
-            {'<'}
-          </div>
+        <div className="column col-start" onClick={prevMonth}>
+          <div className="icon">{'<'}</div>
         </div>
         <div className="column col-center">
           <span>{format(currentMonth, dateFormat)}</span>
         </div>
         <div className="column col-end" onClick={nextMonth}>
-          <div className="icon">{">"}</div>
+          <div className="icon">{'>'}</div>
         </div>
       </div>
     );
@@ -58,7 +74,6 @@ const CustomCalendar: React.FC = () => {
     const startDate = startOfWeek(monthStart);
     const endDate = endOfWeek(monthEnd);
 
-    const dateFormat = 'd';
     const rows = [];
 
     let days = [];
@@ -66,14 +81,24 @@ const CustomCalendar: React.FC = () => {
 
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
+        const formattedDay = format(day, "yyyy-MM-dd");
+        const dayRating = dayRatings[formattedDay];
+        const backgroundColor = getColorForRating(dayRating);
+        const cellStyle = {
+          backgroundColor,
+          borderColor: dayRating === 10 ? 'gold' : '#ddd',
+          borderWidth: dayRating === 10 ? '2px' : '1px',
+          borderStyle: 'solid',
+        };
         days.push(
           <div
             className={`column cell ${
               !isSameMonth(day, monthStart) ? 'disabled' : ''
             }`}
             key={day.toString()}
+            style={cellStyle}
           >
-            {format(day, dateFormat)}
+            {format(day, "d")}
           </div>
         );
         day = addDays(day, 1);

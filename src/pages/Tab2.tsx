@@ -1,16 +1,17 @@
-// src/pages/Tab2.tsx
 import React, { useState } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonGrid, IonRow, IonCol } from '@ionic/react';
 import CustomCalendar from '../components/CustomCalendar';
+import { format } from 'date-fns';
 
 const Tab2: React.FC = () => {
-  const [userRating, setUserRating] = useState<number | null>(null);
+  const [dayRatings, setDayRatings] = useState<{ [key: string]: number }>({});
   const [showRatings, setShowRatings] = useState<boolean>(false);
+  // Example for handling date selection, this should be replaced with actual logic
+  const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), "yyyy-MM-dd"));
 
   const handleRateDay = (rating: number) => {
-    setUserRating(rating);
+    setDayRatings({ ...dayRatings, [selectedDate]: rating });
     setShowRatings(false); // Optionally hide ratings after selection
-    // Additional actions after rating...
   };
 
   const renderRatingButtons = () => {
@@ -42,8 +43,7 @@ const Tab2: React.FC = () => {
       <IonContent fullscreen>
         <IonButton onClick={() => setShowRatings(!showRatings)}>How do you rate your day?</IonButton>
         {showRatings && renderRatingButtons()}
-        <CustomCalendar />
-        {userRating && <p>Your rating for today is: {userRating}</p>}
+        <CustomCalendar dayRatings={dayRatings} />
       </IonContent>
     </IonPage>
   );

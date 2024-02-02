@@ -1,4 +1,3 @@
-/* src/components/CustomCalendar.css */
 .calendar {
   display: flex;
   flex-direction: column;
@@ -19,21 +18,11 @@
 .cell {
   padding: 10px;
   border: 1px solid #ddd;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .disabled {
   color: #ddd; /* Style for days not in the current month */
-}
-.ion-row {
-  overflow-x: auto;
-  white-space: nowrap;
-}
-
-.ion-col {
-  display: flex;
-  justify-content: center;
-  padding: 4px;
-}
-.ion-title {
-  text-align: center;
+  pointer-events: none;
 }
