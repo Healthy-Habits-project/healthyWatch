@@ -1,0 +1,36 @@
+/* src/components/CustomCalendar.css */
+.calendar {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px; /* Set a fixed height for each cell */
+}
+
+.cell {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.disabled {
+  color: #ddd; /* Style for days not in the current month */
+}
+.ion-row {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.ion-col {
+  display: flex;
+  justify-content: center;
+  padding: 4px;
+}

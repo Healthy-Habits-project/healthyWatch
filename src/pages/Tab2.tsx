@@ -1,38 +1,47 @@
+// src/pages/Tab2.tsx
 import React, { useState } from 'react';
-import { IonDatetime, IonLabel, IonContent, IonPage, IonHeader, IonToolbar, IonTitle } from '@ionic/react';
-import './Tab2.css';
-function Example() {
-  const [selectedDate, setSelectedDate] = useState<string>('');
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonList, IonItem } from '@ionic/react';
+import CustomCalendar from '../components/CustomCalendar';
 
-  const handleDateChange = (event: CustomEvent) => {
-    // Assuming the selected date is in the format YYYY-MM-DDTHH:mm
-    const selectedDateTime = new Date(event.detail.value as string);
-    const formattedDate = selectedDateTime.toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    });
-    setSelectedDate(formattedDate);
+const Tab2: React.FC = () => {
+  const [userRating, setUserRating] = useState<number | null>(null);
+  const [showRatings, setShowRatings] = useState<boolean>(false);
+
+  const handleRateDay = (rating: number) => {
+    setUserRating(rating);
+    setShowRatings(false); // Hide ratings after selection
+    // Additional actions after rating...
+  };
+
+  const renderRatingButtons = () => {
+    const buttons = [];
+    for (let i = 1; i <= 10; i++) {
+      buttons.push(
+        <IonItem key={i}>
+          <IonButton expand="block" onClick={() => handleRateDay(i)}>
+            {i}
+          </IonButton>
+        </IonItem>
+      );
+    }
+    return buttons;
   };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Date and Time Picker</IonTitle>
+          <IonTitle>Rate Your Day</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">
-        <IonLabel>Select a Date and Time:</IonLabel>
-        <IonDatetime
-          value={selectedDate}
-          onIonChange={handleDateChange}
-        />
+      <IonContent fullscreen>
+        <IonButton onClick={() => setShowRatings(!showRatings)}>How do you rate your day?</IonButton>
+        {showRatings && <IonList>{renderRatingButtons()}</IonList>}
+        <CustomCalendar />
+        {userRating && <p>Your rating for today is: {userRating}</p>}
       </IonContent>
     </IonPage>
   );
-}
+};
 
-export default Example;
+export default Tab2;
