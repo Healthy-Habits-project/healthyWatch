@@ -1,6 +1,6 @@
 // src/pages/Tab2.tsx
 import React, { useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonList, IonItem } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonGrid, IonRow, IonCol } from '@ionic/react';
 import CustomCalendar from '../components/CustomCalendar';
 
 const Tab2: React.FC = () => {
@@ -9,22 +9,27 @@ const Tab2: React.FC = () => {
 
   const handleRateDay = (rating: number) => {
     setUserRating(rating);
-    setShowRatings(false); // Hide ratings after selection
+    setShowRatings(false); // Optionally hide ratings after selection
     // Additional actions after rating...
   };
 
   const renderRatingButtons = () => {
-    const buttons = [];
-    for (let i = 1; i <= 10; i++) {
-      buttons.push(
-        <IonItem key={i}>
-          <IonButton expand="block" onClick={() => handleRateDay(i)}>
-            {i}
-          </IonButton>
-        </IonItem>
-      );
+    const rows = [];
+    for (let row = 0; row < 2; row++) {
+      const cols = [];
+      for (let i = 1; i <= 5; i++) {
+        const index = row * 5 + i;
+        cols.push(
+          <IonCol key={index}>
+            <IonButton expand="block" onClick={() => handleRateDay(index)}>
+              {index}
+            </IonButton>
+          </IonCol>
+        );
+      }
+      rows.push(<IonRow key={row}>{cols}</IonRow>);
     }
-    return buttons;
+    return <IonGrid>{rows}</IonGrid>;
   };
 
   return (
@@ -36,7 +41,7 @@ const Tab2: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen>
         <IonButton onClick={() => setShowRatings(!showRatings)}>How do you rate your day?</IonButton>
-        {showRatings && <IonList>{renderRatingButtons()}</IonList>}
+        {showRatings && renderRatingButtons()}
         <CustomCalendar />
         {userRating && <p>Your rating for today is: {userRating}</p>}
       </IonContent>

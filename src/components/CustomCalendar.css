@@ -34,3 +34,6 @@
   justify-content: center;
   padding: 4px;
 }
+.ion-title {
+  text-align: center;
+}
