@@ -44,6 +44,7 @@ const Tab3: React.FC = () => {
           <IonGrid>
             <IonRow>
               <IonButton onClick={handleSave}>Save</IonButton>
+              <IonButton onClick={resetAppData}>Export Data</IonButton>
               <IonButton onClick={resetAppData}>Reset App Data</IonButton>
             </IonRow>
           </IonGrid>
