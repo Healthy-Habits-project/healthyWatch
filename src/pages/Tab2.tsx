@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonGrid, IonRow, IonCol } from '@ionic/react';
 import CustomCalendar from '../components/CustomCalendar';
 import { format } from 'date-fns';
@@ -6,32 +6,54 @@ import { format } from 'date-fns';
 const Tab2: React.FC = () => {
   const [dayRatings, setDayRatings] = useState<{ [key: string]: number }>({});
   const [showRatings, setShowRatings] = useState<boolean>(false);
-  // Example for handling date selection, this should be replaced with actual logic
-  const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), "yyyy-MM-dd"));
+
+  // Load ratings from Local Storage on initial render
+  useEffect(() => {
+    const storedRatings = localStorage.getItem('dayRatings');
+    if (storedRatings) {
+      setDayRatings(JSON.parse(storedRatings));
+    }
+  }, []);
+
+  // Update Local Storage whenever dayRatings change
+  useEffect(() => {
+    localStorage.setItem('dayRatings', JSON.stringify(dayRatings));
+  }, [dayRatings]);
 
   const handleRateDay = (rating: number) => {
-    setDayRatings({ ...dayRatings, [selectedDate]: rating });
-    setShowRatings(false); // Optionally hide ratings after selection
+    const today = format(new Date(), "yyyy-MM-dd");
+    setDayRatings(prevRatings => ({
+      ...prevRatings,
+      [today]: rating
+    }));
+    setShowRatings(false);
   };
 
   const renderRatingButtons = () => {
-    const rows = [];
-    for (let row = 0; row < 2; row++) {
-      const cols = [];
-      for (let i = 1; i <= 5; i++) {
-        const index = row * 5 + i;
-        cols.push(
-          <IonCol key={index}>
-            <IonButton expand="block" onClick={() => handleRateDay(index)}>
-              {index}
-            </IonButton>
-          </IonCol>
-        );
-      }
-      rows.push(<IonRow key={row}>{cols}</IonRow>);
-    }
-    return <IonGrid>{rows}</IonGrid>;
+    return (
+      <IonGrid>
+        <IonRow>
+          {Array.from({ length: 5 }, (_, i) => 1 + i).map(number => (
+            <IonCol key={number}>
+              <IonButton expand="block" onClick={() => handleRateDay(number)}>
+                {number}
+              </IonButton>
+            </IonCol>
+          ))}
+        </IonRow>
+        <IonRow>
+          {Array.from({ length: 5 }, (_, i) => 6 + i).map(number => (
+            <IonCol key={number}>
+              <IonButton expand="block" onClick={() => handleRateDay(number)}>
+                {number}
+              </IonButton>
+            </IonCol>
+          ))}
+        </IonRow>
+      </IonGrid>
+    );
   };
+  
 
   return (
     <IonPage>
@@ -50,3 +72,4 @@ const Tab2: React.FC = () => {
 };
 
 export default Tab2;
+
