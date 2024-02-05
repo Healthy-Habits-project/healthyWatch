@@ -10,13 +10,14 @@ import {
   subMonths,
   addMonths,
 } from 'date-fns';
-import './CustomCalendar.css'; // Ensure this CSS file is correctly referenced
+import './CustomCalendar.css';
 
 interface CustomCalendarProps {
   dayRatings: { [key: string]: number };
+  onDaySelect: (date: string) => void;
 }
 
-const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings }) => {
+const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const getColorForRating = (rating: number): string => {
@@ -53,7 +54,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings }) => {
   };
 
   const renderDaysOfWeekHeader = () => {
-    const dateFormat = 'EEE'; // 3-letter abbreviation of day names
+    const dateFormat = 'EEE';
     const days = [];
     let startDate = startOfWeek(currentMonth);
 
@@ -75,7 +76,6 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings }) => {
     const endDate = endOfWeek(monthEnd);
 
     const rows = [];
-
     let days = [];
     let day = startDate;
 
@@ -89,14 +89,14 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings }) => {
           borderColor: dayRating === 10 ? 'gold' : '#ddd',
           borderWidth: dayRating === 10 ? '2px' : '1px',
           borderStyle: 'solid',
+          cursor: 'pointer', // Indicate the day can be clicked
         };
         days.push(
           <div
-            className={`column cell ${
-              !isSameMonth(day, monthStart) ? 'disabled' : ''
-            }`}
+            className={`column cell ${!isSameMonth(day, monthStart) ? 'disabled' : ''}`}
             key={day.toString()}
             style={cellStyle}
+            onClick={() => onDaySelect(formattedDay)}
           >
             {format(day, "d")}
           </div>

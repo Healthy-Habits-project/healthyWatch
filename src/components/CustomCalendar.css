@@ -26,3 +26,9 @@
   color: #ddd; /* Style for days not in the current month */
   pointer-events: none;
 }
+.rate-day-prompt {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  color: #666; /* Example color; adjust as needed */
+}
