@@ -1,6 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { IonPage, IonList, IonProgressBar, IonItem, IonCheckbox, IonLabel, IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton } from '@ionic/react';
-
+import React, { useEffect, useState } from 'react';
+import {
+  IonBackButton,
+  IonButtons,
+  IonCheckbox,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonPage,
+  IonProgressBar,
+  IonTitle,
+  IonToolbar
+} from '@ionic/react';
 import './NutritionPage.css';
 
 interface NutritionPageState {
@@ -43,11 +54,11 @@ const NutritionPage: React.FC = () => {
 
   // Function to determine the color based on the checkedCount
   const getColorBasedOnCount = () => {
-    if (checkedCount <= 2) return 'orange'; // Orange
-    if (checkedCount <= 4) return 'yellow'; // Yellow
-    if (checkedCount <= 6) return 'greenyellow'; // Greenyellow
-    if (checkedCount <= 8) return 'green'; // Green
-    return '#00ff11'; // Bright Green for 9 and 10
+    if (checkedCount <= 0) return 'red';
+    if (checkedCount <= 1) return 'orangered';
+    if (checkedCount <= 2) return 'orange';
+    if (checkedCount <= 3) return 'yellow';
+    if (checkedCount <= 4) return 'green';
   };
   
   const color = getColorBasedOnCount();
@@ -64,15 +75,15 @@ const NutritionPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-        <IonButtons slot="start">
-          <IonBackButton />
+          <IonButtons slot="start">
+            <IonBackButton />
           </IonButtons>
           <IonTitle>Nutrition</IonTitle>
         </IonToolbar>
       </IonHeader>
 
       <IonList>
-      <IonItem>
+        <IonItem>
           <IonCheckbox
             slot="start"
             checked={nutritionHabits.calorieTarget}
@@ -84,7 +95,7 @@ const NutritionPage: React.FC = () => {
           </IonLabel>
         </IonItem>
       
-      <IonItem>
+        <IonItem>
           <IonCheckbox
             slot="start"
             checked={nutritionHabits.individualMeals}
@@ -129,9 +140,8 @@ const NutritionPage: React.FC = () => {
 <IonProgressBar
   style={{ height: '10px', marginTop: '10px' }}
   color={color}
-  value={checkedCount / 10}
+  value={checkedCount / 4}
 ></IonProgressBar>
-
 
       {/* Dynamic square based on the checked count */}
       <div style={colorStyles}></div>
