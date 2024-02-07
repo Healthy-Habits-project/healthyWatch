@@ -54,11 +54,11 @@ const NutritionPage: React.FC = () => {
 
   // Function to determine the color based on the checkedCount
   const getColorBasedOnCount = () => {
-    if (checkedCount <= 0) return 'red';
-    if (checkedCount <= 1) return 'orangered';
-    if (checkedCount <= 2) return 'orange';
-    if (checkedCount <= 3) return 'yellow';
-    if (checkedCount <= 4) return 'green';
+    if (checkedCount <= 0) return '#fa0000';
+    if (checkedCount <= 1) return '#f26c00';
+    if (checkedCount <= 2) return '#d5a500';
+    if (checkedCount <= 3) return '#a0d500';
+    if (checkedCount <= 4) return '#00ff00';
   };
   
   const color = getColorBasedOnCount();
