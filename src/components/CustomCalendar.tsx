@@ -1,3 +1,4 @@
+// CustomCalendar.tsx
 import React, { useState } from 'react';
 import {
   format,
@@ -9,6 +10,9 @@ import {
   endOfWeek,
   subMonths,
   addMonths,
+  isToday,
+  isBefore,
+  differenceInCalendarDays
 } from 'date-fns';
 import './CustomCalendar.css';
 
@@ -32,7 +36,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
       case 8: return '#98da00';
       case 9: return '#6fed00';
       case 10: return '#00ff00';
-      default: return ''; // Default case if no rating
+      default: return '';
     }
   };
 
@@ -74,29 +78,33 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart);
     const endDate = endOfWeek(monthEnd);
-
+  
     const rows = [];
     let days = [];
     let day = startDate;
-
+    const today = new Date();
+  
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
         const formattedDay = format(day, "yyyy-MM-dd");
         const dayRating = dayRatings[formattedDay];
         const backgroundColor = getColorForRating(dayRating);
+        const isDayInPastWeek = differenceInCalendarDays(today, day) <= 7;
+        const isEligibleForRating = isToday(day) || (isBefore(day, today) && isDayInPastWeek);
         const cellStyle = {
           backgroundColor,
           borderColor: dayRating === 10 ? 'gold' : '#ddd',
           borderWidth: dayRating === 10 ? '2px' : '1px',
           borderStyle: 'solid',
-          cursor: 'pointer', // Indicate the day can be clicked
+          cursor: isEligibleForRating ? 'pointer' : 'not-allowed',
+          opacity: isEligibleForRating ? 1 : 0.5,
         };
         days.push(
           <div
             className={`column cell ${!isSameMonth(day, monthStart) ? 'disabled' : ''}`}
             key={day.toString()}
             style={cellStyle}
-            onClick={() => onDaySelect(formattedDay)}
+            onClick={() => isEligibleForRating && onDaySelect(formattedDay)}
           >
             {format(day, "d")}
           </div>
@@ -106,9 +114,10 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
       rows.push(<div className="row" key={day.toString()}>{days}</div>);
       days = [];
     }
-
+  
     return <div className="body">{rows}</div>;
   };
+  
 
   const nextMonth = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
