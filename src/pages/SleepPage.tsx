@@ -69,11 +69,17 @@ const SleepPage: React.FC = () => {
 
   // Function to determine the color based on the checkedCount
   const getColorBasedOnCount = () => {
-    if (checkedCount <= 2) return 'orange'; // Orange
-    if (checkedCount <= 4) return 'yellow'; // Yellow
-    if (checkedCount <= 6) return 'greenyellow'; // Greenyellow
-    if (checkedCount <= 8) return 'green'; // Green
-    return '#00ff11'; // Bright Green for 9 and 10
+    if (checkedCount <= 0) return '#fa0000';
+    if (checkedCount <= 1) return '#fa3f00';
+    if (checkedCount <= 2) return '#f65e00';
+    if (checkedCount <= 3) return '#ee7800';
+    if (checkedCount <= 4) return '#e39000';
+    if (checkedCount <= 5) return '#d5a500';
+    if (checkedCount <= 6) return '#c3b900';
+    if (checkedCount <= 7) return '#adcc00';
+    if (checkedCount <= 8) return '#91de00';
+    if (checkedCount <= 9) return '#6aef00';
+    return '#00ff00';
   };
   
   const color = getColorBasedOnCount();
