@@ -1,3 +1,4 @@
+// CustomCalendar.tsx
 import React, { useState } from 'react';
 import {
   format,
@@ -35,7 +36,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
       case 8: return '#98da00';
       case 9: return '#6fed00';
       case 10: return '#00ff00';
-      default: return ''; // Default case if no rating
+      default: return '';
     }
   };
 
@@ -95,8 +96,8 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
           borderColor: dayRating === 10 ? 'gold' : '#ddd',
           borderWidth: dayRating === 10 ? '2px' : '1px',
           borderStyle: 'solid',
-          cursor: isEligibleForRating ? 'pointer' : 'not-allowed', // Change cursor based on eligibility
-          opacity: isEligibleForRating ? 1 : 0.5, // Dim cells that cannot be rated
+          cursor: isEligibleForRating ? 'pointer' : 'not-allowed',
+          opacity: isEligibleForRating ? 1 : 0.5,
         };
         days.push(
           <div
