@@ -12,12 +12,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px; /* Set a fixed height for each cell */
+  height: 5rem; /* Set a fixed height for each cell */
 }
 
 .cell {
   padding: 10px;
   border: 1px solid #ddd;
+  background-color: white;
+  color: black;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
