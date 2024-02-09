@@ -1,9 +1,11 @@
 ion-card {
     height: auto;
     background-color: black;
+    color: white;
 }
 ion-card-title {
     font-size: 27px;
+    color: white;
 }
 ion-row {
     background-color: #7030a0;
