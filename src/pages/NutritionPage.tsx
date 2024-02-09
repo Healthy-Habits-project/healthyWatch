@@ -3,6 +3,7 @@ import {
   IonBackButton,
   IonButtons,
   IonCheckbox,
+  IonContent,
   IonHeader,
   IonItem,
   IonLabel,
@@ -82,73 +83,73 @@ const NutritionPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonList>
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={nutritionHabits.calorieTarget}
-            onIonChange={() => handleCheckboxChange('calorieTarget')}
-            aria-label="Calorie Target"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('calorieTarget')}>
-            Did you meet your calorie target today?
-          </IonLabel>
-        </IonItem>
+      <IonContent>
+        <IonList>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={nutritionHabits.calorieTarget}
+              onIonChange={() => handleCheckboxChange('calorieTarget')}
+              aria-label="Calorie Target"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('calorieTarget')}>
+              Did you meet your calorie target today?
+            </IonLabel>
+          </IonItem>
+        
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={nutritionHabits.individualMeals}
+              onIonChange={() => handleCheckboxChange('individualMeals')}
+              aria-label="Individual Meals"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('individualMeals')}>
+              Did you eat individual meals today?
+            </IonLabel>
+          </IonItem>
+
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={nutritionHabits.waterTarget}
+              onIonChange={() => handleCheckboxChange('waterTarget')}
+              aria-label="Water Target"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('waterTarget')}>
+              Did you drink enough water today?
+            </IonLabel>
+          </IonItem>
+
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={nutritionHabits.fastFood}
+              onIonChange={() => handleCheckboxChange('fastFood')}
+              aria-label="Fast Food Consumption"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('fastFood')}>
+              Did you avoid fast food today?
+            </IonLabel>
+          </IonItem>
+        </IonList>
+        <div className={`color-square color-${color}`} style={{ marginTop: '10px', width: '50px', height: '50px' }}></div>
       
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={nutritionHabits.individualMeals}
-            onIonChange={() => handleCheckboxChange('individualMeals')}
-            aria-label="Individual Meals"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('individualMeals')}>
-            Did you eat individual meals today?
-          </IonLabel>
-        </IonItem>
-
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={nutritionHabits.waterTarget}
-            onIonChange={() => handleCheckboxChange('waterTarget')}
-            aria-label="Avoid Screens Before Bed"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('waterTarget')}>
-            Did you drink enough water today?
-          </IonLabel>
-        </IonItem>
-
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={nutritionHabits.fastFood}
-            onIonChange={() => handleCheckboxChange('fastFood')}
-            aria-label="Darkness for Sleep"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('fastFood')}>
-            Did you avoid fast food today?
-          </IonLabel>
-        </IonItem>
-      </IonList>
-
-      <div
-  className={`color-square color-${color}`}
-  style={{ marginTop: '10px', width: '50px', height: '50px' }}
-></div>
-
-<IonProgressBar
-  style={{ height: '10px', marginTop: '10px' }}
-  color={color}
-  value={checkedCount / 4}
-></IonProgressBar>
-
       {/* Dynamic square based on the checked count */}
       <div style={colorStyles}></div>
-
+      <IonProgressBar
+        className="progress-bar-custom"
+        style={{
+          '--dynamic-progress-color': getColorBasedOnCount(), // This applies the dynamic color
+          height: '2rem',
+          marginTop: '10px',
+        }}
+        value={calculateCheckedCount() / 4}>
+      </IonProgressBar>
       <p>
         Number of checked checkboxes: {checkedCount}
       </p>
+      </IonContent>
     </IonPage>
   );
 };
