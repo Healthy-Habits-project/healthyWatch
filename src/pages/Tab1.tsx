@@ -23,7 +23,7 @@ const Tab1: React.FC = () => {
             <IonTitle size="large">Healthy Habit Tracker</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonFab slot="fixed" vertical="center" horizontal="start">
+{/*         <IonFab slot="fixed" vertical="center" horizontal="start">
           <IonFabButton>
             <IonIcon icon={chevronForwardCircle}></IonIcon>
           </IonFabButton>
@@ -38,7 +38,7 @@ const Tab1: React.FC = () => {
               <IonIcon icon={globe}></IonIcon>
             </IonFabButton>
           </IonFabList>
-        </IonFab>
+        </IonFab> */}
 
 
         <IonGrid>
