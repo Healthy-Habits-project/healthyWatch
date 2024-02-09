@@ -215,7 +215,7 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
       <div style={colorStyles}></div>
 
       <p>
-        Number of checked checkboxes: {checkedCount}
+        Goals Accomplished: {checkedCount}
       </p>
       </IonContent>
     </IonPage>
