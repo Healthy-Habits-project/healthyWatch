@@ -1,4 +1,6 @@
 .calendar {
+  height: 100vh; /* Full height of the viewport */
+  width: 100vw; /* Full width of the viewport */
   display: flex;
   flex-direction: column;
 }
@@ -12,7 +14,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 5.75rem; /* Set a fixed height for each cell */
+  height: 10vh; /* Set a fixed height for each cell */
   font-weight: bolder;
   align-items: center;
   justify-content: center;
@@ -23,6 +25,8 @@
   position: relative; /* For pseudo-element positioning */
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transitions for interactions */
   color: white;
+  font-size: clamp(0.8rem, 2vw, 1.2rem);
+  
 }
 
 .cell {
@@ -44,3 +48,17 @@
   font-size: 18px;
   color: #666; /* Example color; adjust as needed */
 }
+@media (max-width: 600px) {
+  .column {
+    height: 4rem; /* Smaller height for smaller screens */
+    font-size: 0.8rem; /* Adjust font size for readability */
+  }
+}
+.header, .row:first-of-type /* Assuming this is your week day header */ {
+  flex: none; /* Do not grow or shrink, set a fixed height if necessary */
+}
+
+.body /* Assuming this is the container for your date cells */ {
+  flex: auto; /* Takes up the remaining space */
+}
+
