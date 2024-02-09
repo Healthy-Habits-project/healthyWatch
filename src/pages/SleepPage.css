@@ -35,7 +35,10 @@
   
   /* Add the following styles to ensure the progress bar color is applied */
   ion-progress-bar {
-    --progress-background: var(--ion-color-light); /* Set the default background color */
+    --progress-background: cyan; /* Set the default background color */
     --progress-background-hover: var(--ion-color-light);
   }
+/* SleepPage.css */
+.progress-color-0 { --ion-color-primary: #fa0000; }
+.progress-color-1 { --ion-color-primary: #fa3f00; }
   

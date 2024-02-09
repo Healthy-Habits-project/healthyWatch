@@ -10,7 +10,8 @@ import {
   IonLabel,
   IonProgressBar,
   IonBackButton,
-  IonButtons
+  IonButtons,
+  IonContent
 } from '@ionic/react';
 
 // Import CSS file
@@ -98,7 +99,7 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
           <IonTitle>Mental Health</IonTitle>
         </IonToolbar>
       </IonHeader>
-
+      <IonContent>
       <IonList>
       <IonItem>
           <IonCheckbox
@@ -216,6 +217,7 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
       <p>
         Number of checked checkboxes: {checkedCount}
       </p>
+      </IonContent>
     </IonPage>
   );
 };

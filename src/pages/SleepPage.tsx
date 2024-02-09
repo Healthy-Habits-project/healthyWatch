@@ -11,7 +11,8 @@ import {
   IonLabel,
   IonProgressBar,
   IonBackButton,
-  IonButtons
+  IonButtons,
+  IonContent
 } from '@ionic/react';
 
 // Import CSS file
@@ -102,7 +103,7 @@ const SleepPage: React.FC = () => {
           <IonTitle>Sleep Habits</IonTitle>
         </IonToolbar>
       </IonHeader>
-
+      <IonContent>
       <IonList>
       <IonItem>
           <IonCheckbox
@@ -230,19 +231,25 @@ const SleepPage: React.FC = () => {
   style={{ marginTop: '10px', width: '50px', height: '50px' }}
 ></div>
 
-<IonProgressBar
-  style={{ height: '10px', marginTop: '10px' }}
-  color={color}
-  value={checkedCount / 10}
-></IonProgressBar>
+
+
 
 
       {/* Dynamic square based on the checked count */}
       <div style={colorStyles}></div>
-
+      <IonProgressBar
+        className="progress-bar-custom"
+        style={{
+          '--dynamic-progress-color': getColorBasedOnCount(), // This applies the dynamic color
+          height: '2rem',
+          marginTop: '10px',
+        }}
+        value={calculateCheckedCount() / 10}
+      ></IonProgressBar>
       <p>
         Number of checked checkboxes: {checkedCount}
       </p>
+      </IonContent>
     </IonPage>
   );
 };
