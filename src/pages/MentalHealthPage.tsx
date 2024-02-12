@@ -85,7 +85,7 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
     width: '100px', // Adjust the width as needed
     height: '100px', // Adjust the height as needed
     margin: 'auto', // Center the square horizontally
-    marginTop: '20px', // Adjust the top margin as needed
+    marginTop: '0px', // Adjust the top margin as needed
     backgroundColor: color, // Apply the color variable dynamically
     borderRadius: '10px', // Adjust the border-radius as needed for rounded corners
   };
@@ -199,10 +199,7 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
 
 
       </IonList>
-      <div
-  className={`color-square color-${color}`}
-  style={{ marginTop: '10px', width: '50px', height: '50px' }}
-></div>
+      <div className={`color-square color-${color}`} style={{ marginTop: '10px', width: '50px', height: '50px' }} ></div>
 
 <IonProgressBar
   style={{ height: '10px', marginTop: '10px' }}
@@ -213,6 +210,16 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
 
       {/* Dynamic square based on the checked count */}
       <div style={colorStyles}></div>
+
+      <IonProgressBar
+        className="progress-bar-custom"
+        style={{
+          '--dynamic-progress-color': getColorBasedOnCount(), // This applies the dynamic color
+          height: '2rem',
+          marginTop: '10px',
+        }}
+        value={calculateCheckedCount() / 8}
+      ></IonProgressBar>
 
       <p>
         Goals Accomplished: {checkedCount}
