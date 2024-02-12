@@ -96,7 +96,7 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
         <IonButtons slot="start">
           <IonBackButton />
           </IonButtons>
-          <IonTitle>Mental Health</IonTitle>
+          <IonTitle>Mental Health, these are some words to delete later</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
