@@ -3,13 +3,15 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonGri
 import CustomCalendar from '../components/CustomCalendar'; // Make sure this path is correct
 import { format } from 'date-fns';
 import badgeImage from '/badges/badge1.png'; // Ensure this path points to your badge image
+import { useCheckedCount } from '../contexts/CheckedCountContext'; 
 
 const Tab2: React.FC = () => {
   const [dayRatings, setDayRatings] = useState<{ [key: string]: number }>({});
   const [badgeCount, setBadgeCount] = useState<number>(0);
   const [showRatings, setShowRatings] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), "yyyy-MM-dd"));
-
+  const { checkedCount } = useCheckedCount();
+  
   useEffect(() => {
     const storedRatings = localStorage.getItem('dayRatings');
     const storedBadgeCount = localStorage.getItem('badgeCount');
@@ -69,6 +71,9 @@ const Tab2: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>Rate Your Day</IonTitle>
+          <div className="abitofspace">
+          <p>Mental Health Page: {checkedCount} </p>
+          </div>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -85,6 +90,7 @@ const Tab2: React.FC = () => {
             setShowRatings(true);
           }}
         />
+     
       </IonContent>
       {/* Displaying badges at the bottom */}
       <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, textAlign: 'center', padding: '20px', background: 'black', color: 'white', borderTop: '1px solid #ccc', zIndex: 1000 }}>

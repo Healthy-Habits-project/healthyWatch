@@ -16,6 +16,7 @@ import {
 
 // Import CSS file
 import './SleepPage.css';
+import { useCheckedCount } from '../contexts/CheckedCountContext';
 
 interface mentalHealthPageState {
   mindfulness: boolean;
@@ -42,14 +43,16 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
         feelings: false,
         balance: false,
         kindness: false,
-        bedtimeRoutine: false,
-        coolSleepEnvironment: false,
       };
   });
 
+  const { setCheckedCount } = useCheckedCount();
+
   useEffect(() => {
+    const checkedCount = Object.values(mentalHealth).filter(Boolean).length;
+    setCheckedCount(checkedCount);
     localStorage.setItem('mentalHealthPageCheckboxes', JSON.stringify(mentalHealth));
-  }, [mentalHealth]);
+  }, [mentalHealth, setCheckedCount]);
 
   const handleCheckboxChange = (key: keyof mentalHealthPageState) => {
     setmentalHealth((prevmentalHealth) => ({
@@ -58,13 +61,13 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
     }));
   };
   
-
+  const checkedCount = Object.values(mentalHealth).filter(Boolean).length;
   // Function to calculate the count of checked checkboxes
   const calculateCheckedCount = () => {
     return Object.values(mentalHealth).filter((value) => value).length;
   };
 
-  const checkedCount = calculateCheckedCount();
+  
 
   // Function to determine the color based on the checkedCount
   const getColorBasedOnCount = () => {
@@ -221,9 +224,7 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
         value={calculateCheckedCount() / 8}
       ></IonProgressBar>
 
-      <p>
-        Goals Accomplished: {checkedCount}
-      </p>
+<p>Goals Accomplished: {checkedCount} out of {Object.keys(mentalHealth).length - 2}</p>
       </IonContent>
     </IonPage>
   );
