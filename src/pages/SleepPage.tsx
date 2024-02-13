@@ -17,6 +17,7 @@ import {
 
 // Import CSS file
 import './SleepPage.css';
+import { useGlobalCounts } from '../contexts/GlobalCountsContext';
 
 interface SleepPageState {
   consistentBedtime: boolean;
@@ -50,9 +51,14 @@ const SleepPage: React.FC = () => {
       };
   });
 
+  const { setSleepCheckedCount } = useGlobalCounts();
+
   useEffect(() => {
+    const newCheckedCount = Object.values(sleepHabits).filter(Boolean).length;
+    setSleepCheckedCount(newCheckedCount);
+    // Optionally, persist the sleepHabits state in localStorage
     localStorage.setItem('sleepPageCheckboxes', JSON.stringify(sleepHabits));
-  }, [sleepHabits]);
+  }, [sleepHabits, setSleepCheckedCount]);
 
   const handleCheckboxChange = (key: keyof SleepPageState) => {
     setSleepHabits((prevSleepHabits) => ({

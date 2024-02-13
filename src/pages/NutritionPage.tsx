@@ -14,6 +14,7 @@ import {
   IonToolbar
 } from '@ionic/react';
 import './NutritionPage.css';
+import { useGlobalCounts } from '../contexts/GlobalCountsContext';
 
 interface NutritionPageState {
   calorieTarget: boolean;
@@ -35,9 +36,15 @@ const NutritionPage: React.FC = () => {
       };
   });
 
+  const { nutritionCheckedCount, setNutritionCheckedCount } = useGlobalCounts();
+  
+
   useEffect(() => {
+    const newCheckedCount = Object.values(nutritionHabits).filter(Boolean).length;
+    setNutritionCheckedCount(newCheckedCount);
+    // Optionally, persist the nutritionHabits state in localStorage
     localStorage.setItem('nutritionPageCheckboxes', JSON.stringify(nutritionHabits));
-  }, [nutritionHabits]);
+  }, [nutritionHabits, setNutritionCheckedCount]);
 
   const handleCheckboxChange = (key: keyof NutritionPageState) => {
     setNutritionHabits((prevNutritionHabits) => ({

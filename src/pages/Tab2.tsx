@@ -12,6 +12,8 @@ const Tab2: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), "yyyy-MM-dd"));
   const { mentalHealthCheckedCount } = useGlobalCounts();
   const { physicalHealthCheckedCount } = useGlobalCounts();
+  const { nutritionCheckedCount } = useGlobalCounts();
+  const { sleepCheckedCount } = useGlobalCounts();
 
   useEffect(() => {
     const storedRatings = localStorage.getItem('dayRatings');
@@ -75,6 +77,8 @@ const Tab2: React.FC = () => {
           <div className="abitofspace">
           <p>Mental Health Checked Count: {mentalHealthCheckedCount}</p>
           <p>Physical Health Checked Count: {physicalHealthCheckedCount}</p>
+          <p>Nutrition Checked Count: {nutritionCheckedCount}</p>
+          <p>Sleep Checked Count: {sleepCheckedCount}</p>
           </div>
         </IonToolbar>
       </IonHeader>
