@@ -14,6 +14,7 @@ import {
   IonToolbar
 } from '@ionic/react';
 import './PhysicalHealthPage.css';
+import { useGlobalCounts } from '../contexts/GlobalCountsContext';
 
 interface PhysicalPageState {
   resistance: boolean;
@@ -37,9 +38,13 @@ const PhysicalPage: React.FC = () => {
       };
   });
 
+  const { setPhysicalHealthCheckedCount } = useGlobalCounts();
+
   useEffect(() => {
+    const newCheckedCount = calculateCheckedCount();
+    setPhysicalHealthCheckedCount(newCheckedCount);
     localStorage.setItem('physicalPageCheckboxes', JSON.stringify(physicalHabits));
-  }, [physicalHabits]);
+  }, [physicalHabits, setPhysicalHealthCheckedCount]);
 
   const handleCheckboxChange = (key: keyof PhysicalPageState) => {
     setPhysicalHabits((prevPhysicalHabits) => ({

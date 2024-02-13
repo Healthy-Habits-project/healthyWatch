@@ -16,7 +16,7 @@ import {
 
 // Import CSS file
 import './SleepPage.css';
-import { useCheckedCount } from '../contexts/CheckedCountContext';
+import { useGlobalCounts } from '../contexts/GlobalCountsContext';
 
 interface mentalHealthPageState {
   mindfulness: boolean;
@@ -46,13 +46,14 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
       };
   });
 
-  const { setCheckedCount } = useCheckedCount();
+  const { setMentalHealthCheckedCount } = useGlobalCounts();
 
   useEffect(() => {
-    const checkedCount = Object.values(mentalHealth).filter(Boolean).length;
-    setCheckedCount(checkedCount);
+    // Update the checked count in the global context
+    const newCheckedCount = Object.values(mentalHealth).filter(Boolean).length;
+    setMentalHealthCheckedCount(newCheckedCount); // Use the appropriate setter from the global context
     localStorage.setItem('mentalHealthPageCheckboxes', JSON.stringify(mentalHealth));
-  }, [mentalHealth, setCheckedCount]);
+  }, [mentalHealth, setMentalHealthCheckedCount]);
 
   const handleCheckboxChange = (key: keyof mentalHealthPageState) => {
     setmentalHealth((prevmentalHealth) => ({

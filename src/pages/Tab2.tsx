@@ -3,15 +3,16 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonGri
 import CustomCalendar from '../components/CustomCalendar'; // Make sure this path is correct
 import { format } from 'date-fns';
 import badgeImage from '/badges/badge1.png'; // Ensure this path points to your badge image
-import { useCheckedCount } from '../contexts/CheckedCountContext'; 
+import { useGlobalCounts } from '../contexts/GlobalCountsContext';
 
 const Tab2: React.FC = () => {
   const [dayRatings, setDayRatings] = useState<{ [key: string]: number }>({});
   const [badgeCount, setBadgeCount] = useState<number>(0);
   const [showRatings, setShowRatings] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), "yyyy-MM-dd"));
-  const { checkedCount } = useCheckedCount();
-  
+  const { mentalHealthCheckedCount } = useGlobalCounts();
+  const { physicalHealthCheckedCount } = useGlobalCounts();
+
   useEffect(() => {
     const storedRatings = localStorage.getItem('dayRatings');
     const storedBadgeCount = localStorage.getItem('badgeCount');
@@ -72,7 +73,8 @@ const Tab2: React.FC = () => {
         <IonToolbar>
           <IonTitle>Rate Your Day</IonTitle>
           <div className="abitofspace">
-          <p>Mental Health Page: {checkedCount} </p>
+          <p>Mental Health Checked Count: {mentalHealthCheckedCount}</p>
+          <p>Physical Health Checked Count: {physicalHealthCheckedCount}</p>
           </div>
         </IonToolbar>
       </IonHeader>

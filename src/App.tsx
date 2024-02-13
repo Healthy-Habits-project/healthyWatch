@@ -10,8 +10,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 
-import { CheckedCountProvider } from './contexts/CheckedCountContext';
-
+import { GlobalCountsProvider } from './contexts/GlobalCountsContext';
 import { IonReactRouter } from '@ionic/react-router';
 import { calendarOutline, homeOutline, settingsOutline } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
@@ -42,7 +41,7 @@ import './theme/variables.css';
 setupIonicReact();
 
 const App: React.FC = () => (
-  <CheckedCountProvider>
+  <GlobalCountsProvider>
     <IonApp>
       <IonReactRouter>
         <IonTabs>
@@ -78,7 +77,7 @@ const App: React.FC = () => (
         </IonTabs>
       </IonReactRouter>
     </IonApp>
-  </CheckedCountProvider>
+    </GlobalCountsProvider>
 );
 
 export default App;
