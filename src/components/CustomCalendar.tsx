@@ -88,9 +88,9 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
         const formattedDay = format(day, "yyyy-MM-dd");
-        const dayRating = dayRatings[formattedDay];
+        const dayRating = dayRatings[formattedDay] || 0;
         const isTodayFlag = isToday(day);
-        const backgroundColor = isTodayFlag ? calculatedColor : "#ffffff"; 
+        const backgroundColor = isTodayFlag ? calculatedColor : getColorForRating(dayRating);
         const isDayInPastWeek = differenceInCalendarDays(today, day) <= 7;
         const isEligibleForRating = isToday(day) || (isBefore(day, today) && isDayInPastWeek);
         const cellStyle = {
