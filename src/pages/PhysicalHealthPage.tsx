@@ -71,15 +71,6 @@ const PhysicalPage: React.FC = () => {
   };
   
   const color = getColorBasedOnCount();
-  
-  const colorStyles = {
-    width: '100px',
-    height: '100px',
-    margin: 'auto',
-    marginTop: '20px',
-    backgroundColor: color,
-    borderRadius: '10px',
-  };
 
   return (
     <IonPage>
@@ -154,11 +145,6 @@ const PhysicalPage: React.FC = () => {
             </IonLabel>
           </IonItem>
         </IonList>
-
-        <div className={`color-square color-${color}`} style={{ marginTop: '10px', width: '50px', height: '50px' }}></div>
-        
-        {/* Dynamic square based on the checked count */}
-        <div style={colorStyles}></div>
         <IonProgressBar
           className={`progress-bar-custom color-${color}`}
           style={{
@@ -166,9 +152,8 @@ const PhysicalPage: React.FC = () => {
             marginTop: '10px',
             height: '1rem',
           }}
-          value={calculateCheckedCount() / 5}
-        >
-        </IonProgressBar>
+          value={calculateCheckedCount() / 5} // This is the value of the progress bar based on the checked count
+        ></IonProgressBar>
         <p>
           Number of checked checkboxes: {checkedCount}
         </p>
