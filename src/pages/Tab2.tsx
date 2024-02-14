@@ -15,6 +15,26 @@ const Tab2: React.FC = () => {
   const { nutritionCheckedCount } = useGlobalCounts();
   const { sleepCheckedCount } = useGlobalCounts();
 
+  const calculateColor = (
+    physicalHealthCheckedCount: number,
+    mentalHealthCheckedCount: number,
+    nutritionCheckedCount: number,
+    sleepCheckedCount: number
+  ): string => {
+    
+    const score = 0.25 * (physicalHealthCheckedCount / 5) + 0.25 * (mentalHealthCheckedCount / 8) + 0.25 * (nutritionCheckedCount / 4) + 0.25 * (sleepCheckedCount / 10);
+    if (score <= 0.25) return 'red';
+    else if (score <= 0.5) return 'orange';
+    else if (score <= 0.75) return 'yellow';
+    else return 'green';
+  };
+const backgroundColor = calculateColor(
+  physicalHealthCheckedCount,
+  mentalHealthCheckedCount,
+  nutritionCheckedCount,
+  sleepCheckedCount
+);
+
   useEffect(() => {
     const storedRatings = localStorage.getItem('dayRatings');
     const storedBadgeCount = localStorage.getItem('badgeCount');
@@ -95,6 +115,7 @@ const Tab2: React.FC = () => {
             setSelectedDate(date);
             setShowRatings(true);
           }}
+          calculatedColor={backgroundColor}
         />
      
       </IonContent>

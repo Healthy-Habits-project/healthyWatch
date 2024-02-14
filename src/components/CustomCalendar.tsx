@@ -19,9 +19,10 @@ import './CustomCalendar.css';
 interface CustomCalendarProps {
   dayRatings: { [key: string]: number };
   onDaySelect: (date: string) => void;
+  calculatedColor: string; 
 }
 
-const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect }) => {
+const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect, calculatedColor }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const getColorForRating = (rating: number): string => {
@@ -88,7 +89,8 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
       for (let i = 0; i < 7; i++) {
         const formattedDay = format(day, "yyyy-MM-dd");
         const dayRating = dayRatings[formattedDay];
-        const backgroundColor = getColorForRating(dayRating);
+        const isTodayFlag = isToday(day);
+        const backgroundColor = isTodayFlag ? calculatedColor : "#ffffff"; 
         const isDayInPastWeek = differenceInCalendarDays(today, day) <= 7;
         const isEligibleForRating = isToday(day) || (isBefore(day, today) && isDayInPastWeek);
         const cellStyle = {
