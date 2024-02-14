@@ -74,16 +74,26 @@ const PhysicalPage: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent={true}>
         <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton />
-          </IonButtons>
+          <IonButtons slot='start'><IonBackButton/></IonButtons>
           <IonTitle>Physical</IonTitle>
+          <IonProgressBar
+            className={`progress-bar-custom color-${color}`}
+            style={{
+              '--dynamic-progress-color': getColorBasedOnCount()
+            }}
+            value={calculateCheckedCount() / 5}
+          ></IonProgressBar>
         </IonToolbar>
       </IonHeader>
 
-      <IonContent>
+      <IonContent fullscreen={true} className="ion-padding">
+        <IonItem>
+          <IonLabel>
+            <h2>Keep track of your physical activities below!</h2>
+          </IonLabel>
+        </IonItem>
         <IonList>
           <IonItem>
             <IonCheckbox
@@ -145,15 +155,6 @@ const PhysicalPage: React.FC = () => {
             </IonLabel>
           </IonItem>
         </IonList>
-        <IonProgressBar
-          className={`progress-bar-custom color-${color}`}
-          style={{
-            '--dynamic-progress-color': getColorBasedOnCount(),
-            marginTop: '10px',
-            height: '1rem',
-          }}
-          value={calculateCheckedCount() / 5} // This is the value of the progress bar based on the checked count
-        ></IonProgressBar>
         <p>
           Number of checked checkboxes: {checkedCount}
         </p>

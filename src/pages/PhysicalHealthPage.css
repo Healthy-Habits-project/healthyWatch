@@ -1,5 +1,6 @@
 /* PhysicalHealthPage.css */
-  /* Add the following styles to ensure the progress bar color is applied */
-  .progress-bar-custom {
-    --progress-background: var(--dynamic-progress-color, #ffffff); /* Fallback color */
-  }
+
+/* Add the following styles to ensure the progress bar color is applied */
+.progress-bar-custom {
+  --progress-background: var(--dynamic-progress-color, #ffffff); /* Fallback color */
+}
