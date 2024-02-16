@@ -3,12 +3,22 @@ import { IonContent, IonHeader, IonCol, IonCardTitle, IonCardHeader, IonCardCont
 import { chevronDownCircle, chevronForwardCircle, chevronUpCircle, colorPalette, document, globe, } from 'ionicons/icons';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
-import { ellipse, square, triangle, cog } from 'ionicons/icons';
 import { IonSelect, IonSelectOption } from '@ionic/react';
 import { useIonRouter } from '@ionic/react';
 import { App } from '@capacitor/app';
 
-const Tab1: React.FC = () => {
+interface colors {
+  mentalColor: string;
+  physicalColor: string; 
+  nutritionColor: string;
+  sleepColor: string;
+}
+
+{/*
+const mentalCardColor = 
+*/}
+
+const Tab1: React.FC<colors> = ({mentalColor, physicalColor, nutritionColor, sleepColor}) => {
 
   return (
     <IonPage>
@@ -23,32 +33,16 @@ const Tab1: React.FC = () => {
             <IonTitle size="large">Healthy Habit Tracker</IonTitle>
           </IonToolbar>
         </IonHeader>
-{/*         <IonFab slot="fixed" vertical="center" horizontal="start">
-          <IonFabButton>
-            <IonIcon icon={chevronForwardCircle}></IonIcon>
-          </IonFabButton>
-          <IonFabList side="end">
-            <IonFabButton>
-              <IonIcon icon={document}></IonIcon>
-            </IonFabButton>
-            <IonFabButton>
-              <IonIcon icon={colorPalette}></IonIcon>
-            </IonFabButton>
-            <IonFabButton>
-              <IonIcon icon={globe}></IonIcon>
-            </IonFabButton>
-          </IonFabList>
-        </IonFab> */}
-
 
         <IonGrid>
           <IonRow>
             <IonCol size="6" size-sm="4" style={{}}>
               <IonRouterLink routerLink="/mentalhealthpage">
-                <IonCard>
+                <IonCard color="secondary">
                   <img alt="MentalHealth" src="/MentalHealthCard.png" />
                   <IonCardHeader>
                     <IonCardTitle>Mental Health</IonCardTitle>
+                    <IonCardSubtitle>Take care of your mental health!</IonCardSubtitle>
                   </IonCardHeader>
                 </IonCard>
               </IonRouterLink>

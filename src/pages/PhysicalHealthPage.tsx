@@ -21,6 +21,7 @@ interface PhysicalPageState {
   resistance: boolean;
   cardio: boolean;
   balance: boolean;
+  rom: boolean;
   steps: boolean;
   sunlight: boolean;
 }
@@ -34,6 +35,7 @@ const PhysicalPage: React.FC = () => {
         resistance: false,
         cardio: false,
         balance: false,
+        rom: false,
         steps: false,
         sunlight: false,
       };
@@ -63,12 +65,13 @@ const PhysicalPage: React.FC = () => {
 
   // Function to determine the color based on the checkedCount
   const getColorBasedOnCount = () => {
-    if (checkedCount <= 0) return '#fa0000';
-    if (checkedCount <= 1) return '#f65e00';
-    if (checkedCount <= 2) return '#e39000';
-    if (checkedCount <= 3) return '#c3b900';
-    if (checkedCount <= 4) return '#91de00';
-    if (checkedCount <= 5) return '#00ff00';
+    if (checkedCount <= 0) return '#ff0000';
+    if (checkedCount <= 1) return '#fb5600';
+    if (checkedCount <= 2) return '#ee8200';
+    if (checkedCount <= 3) return '#d7a700';
+    if (checkedCount <= 4) return '#b6c700';
+    if (checkedCount <= 5) return '#86e400';
+    if (checkedCount <= 6) return '#00ff00';
   };
   
   const color = getColorBasedOnCount();
@@ -85,7 +88,7 @@ const PhysicalPage: React.FC = () => {
               '--dynamic-progress-color': getColorBasedOnCount(),
               height: '0.5rem'
             }}
-            value={calculateCheckedCount() / 5}
+            value={calculateCheckedCount() / 6}
           ></IonProgressBar>
         </IonToolbar>
       </IonHeader>
@@ -130,6 +133,18 @@ const PhysicalPage: React.FC = () => {
             />
             <IonLabel onClick={() => handleCheckboxChange('balance')}>
               Did you meet your balance training goal today?
+            </IonLabel>
+          </IonItem>
+
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={physicalHabits.rom}
+              onIonChange={() => handleCheckboxChange('rom')}
+              aria-label="Range of Motion"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('rom')}>
+              Did you stretch at all today?
             </IonLabel>
           </IonItem>
 
