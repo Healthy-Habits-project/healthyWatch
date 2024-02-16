@@ -16,13 +16,21 @@ import {
 } from 'date-fns';
 import './CustomCalendar.css';
 
+interface ProgressData {
+  mentalHealthCheckedCount: number;
+  physicalHealthCheckedCount: number;
+  nutritionCheckedCount: number;
+  sleepCheckedCount: number;
+}
+
 interface CustomCalendarProps {
   dayRatings: { [key: string]: number };
   onDaySelect: (date: string) => void;
   calculatedColor: string; 
+  progressData: ProgressData; // Use the defined ProgressData type here
 }
 
-const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect, calculatedColor }) => {
+const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect, calculatedColor, progressData }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const getColorForRating = (rating: number): string => {
@@ -97,16 +105,30 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
         let cellStyle: React.CSSProperties = {
           cursor: 'pointer',
           opacity: 1,
+          position: 'relative',
           backgroundColor: isEligibleForRating ? 'white' : '#929693',
           border: '1px solid #ddd', // Default border color
         };
         if (isTodayFlag) {
-          cellStyle.border = `4px solid ${calculatedColor}`;
+          cellStyle.border = `6px solid ${calculatedColor}`;
         }
         if (dayRating) {
           const ratingColor = getColorForRating(dayRating);
           cellStyle.backgroundColor = ratingColor;
         }
+        const renderProgressBars = () => {
+          return (
+            <div style={{ position: 'absolute', bottom: 0, width: '100%', display: 'flex', flexDirection: 'column' }}>
+              {/* Simplify the bars for debugging */}
+              <div style={{ width: '25%', height: '5px', backgroundColor: 'red' }}></div>
+              <div style={{ width: '50%', height: '5px', backgroundColor: 'blue' }}></div>
+              <div style={{ width: '75%', height: '5px', backgroundColor: 'green' }}></div>
+              <div style={{ width: '100%', height: '5px', backgroundColor: 'orange' }}></div>
+            </div>
+          );
+        };
+        
+        
         
         days.push(
           <div
@@ -116,6 +138,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
             onClick={() => isEligibleForRating && onDaySelect(formattedDay)}
           >
             {format(day, "d")}
+            {isTodayFlag && renderProgressBars()}
           </div>
         );
         day = addDays(day, 1);

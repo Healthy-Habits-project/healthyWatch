@@ -1,5 +1,5 @@
 .calendar {
-  height: 100vh; /* Full height of the viewport */
+  height: 80vh; /* Full height of the viewport */
   width: 100vw; /* Full width of the viewport */
   display: flex;
   flex-direction: column;
@@ -60,8 +60,4 @@
 
 .body /* Assuming this is the container for your date cells */ {
   flex: auto; /* Takes up the remaining space */
-}
-
-.abitofspace {
-  margin-top: 5rem;
 }

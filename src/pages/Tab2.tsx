@@ -94,7 +94,7 @@ const backgroundColor = calculateColor(
       <IonHeader>
         <IonToolbar>
           <IonTitle>Rate Your Day</IonTitle>
-          <div className="abitofspace">
+          <div>
           <p>Mental Health Checked Count: {mentalHealthCheckedCount}</p>
           <p>Physical Health Checked Count: {physicalHealthCheckedCount}</p>
           <p>Nutrition Checked Count: {nutritionCheckedCount}</p>
@@ -116,6 +116,12 @@ const backgroundColor = calculateColor(
             setShowRatings(true);
           }}
           calculatedColor={backgroundColor}
+          progressData={{
+            mentalHealthCheckedCount,
+            physicalHealthCheckedCount,
+            nutritionCheckedCount,
+            sleepCheckedCount,
+          }}
         />
      
       </IonContent>
