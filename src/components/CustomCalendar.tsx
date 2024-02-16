@@ -90,20 +90,27 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
         const formattedDay = format(day, "yyyy-MM-dd");
         const dayRating = dayRatings[formattedDay] || 0;
         const isTodayFlag = isToday(day);
+        const isCurrentMonth = isSameMonth(day, monthStart);
         const backgroundColor = isTodayFlag ? calculatedColor : getColorForRating(dayRating);
-        const isDayInPastWeek = differenceInCalendarDays(today, day) <= 7;
-        const isEligibleForRating = isToday(day) || (isBefore(day, today) && isDayInPastWeek);
-        const cellStyle = {
-          backgroundColor,
-          borderColor: dayRating === 10 ? 'gold' : '#ddd',
-          borderWidth: dayRating === 10 ? '2px' : '1px',
-          borderStyle: 'solid',
-          cursor: isEligibleForRating ? 'pointer' : 'not-allowed',
-          opacity: isEligibleForRating ? 1 : 0.5,
+        const isDayInPastWeek = differenceInCalendarDays(today, day) <= 7 && differenceInCalendarDays(today, day) >= 0;
+        const isEligibleForRating = isTodayFlag || (isBefore(day, today) && isDayInPastWeek);
+        let cellStyle: React.CSSProperties = {
+          cursor: 'pointer',
+          opacity: 1,
+          backgroundColor: isEligibleForRating ? 'white' : '#929693',
+          border: '1px solid #ddd', // Default border color
         };
+        if (isTodayFlag) {
+          cellStyle.border = `4px solid ${calculatedColor}`;
+        }
+        if (dayRating) {
+          const ratingColor = getColorForRating(dayRating);
+          cellStyle.backgroundColor = ratingColor;
+        }
+        
         days.push(
           <div
-            className={`column cell ${!isSameMonth(day, monthStart) ? 'disabled' : ''}`}
+           className={`column cell ${!isCurrentMonth ? 'disabled' : ''} ${isTodayFlag ? 'today' : ''}`}
             key={day.toString()}
             style={cellStyle}
             onClick={() => isEligibleForRating && onDaySelect(formattedDay)}
