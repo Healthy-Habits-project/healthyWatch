@@ -83,7 +83,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
   };
 
   const MAX_CHECKBOXES = {
-    mentalHealth: 5, // Example maximum counts
+    mentalHealth: 8,
     physicalHealth: 6,
     nutrition: 4,
     sleep: 10,
