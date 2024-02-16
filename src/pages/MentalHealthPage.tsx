@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonList,
-  IonItem,
-  IonCheckbox,
-  IonLabel,
-  IonProgressBar,
   IonBackButton,
   IonButtons,
-  IonContent
+  IonCheckbox,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonPage,
+  IonProgressBar,
+  IonTitle,
+  IonToolbar
 } from '@ionic/react';
 
-// Import CSS file
 import './SleepPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
 

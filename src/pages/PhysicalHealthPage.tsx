@@ -13,6 +13,7 @@ import {
   IonTitle,
   IonToolbar
 } from '@ionic/react';
+
 import './PhysicalHealthPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
 

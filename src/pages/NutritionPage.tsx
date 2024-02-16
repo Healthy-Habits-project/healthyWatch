@@ -13,6 +13,7 @@ import {
   IonTitle,
   IonToolbar
 } from '@ionic/react';
+
 import './NutritionPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
 
@@ -71,14 +72,6 @@ const NutritionPage: React.FC = () => {
   
   const color = getColorBasedOnCount();
   
-  const colorStyles = {
-    width: '100px', // Adjust the width as needed
-    height: '100px', // Adjust the height as needed
-    margin: 'auto', // Center the square horizontally
-    marginTop: '20px', // Adjust the top margin as needed
-    backgroundColor: color, // Apply the color variable dynamically
-    borderRadius: '10px', // Adjust the border-radius as needed for rounded corners
-  };
   return (
     <IonPage>
       <IonHeader>

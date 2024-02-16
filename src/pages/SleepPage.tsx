@@ -1,21 +1,19 @@
-// SleepPage.tsx
 import React, { useState, useEffect } from 'react';
 import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonList,
-  IonItem,
-  IonCheckbox,
-  IonLabel,
-  IonProgressBar,
   IonBackButton,
   IonButtons,
-  IonContent
+  IonCheckbox,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonPage,
+  IonProgressBar,
+  IonTitle,
+  IonToolbar
 } from '@ionic/react';
 
-// Import CSS file
 import './SleepPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
 
@@ -91,167 +89,145 @@ const SleepPage: React.FC = () => {
   
   const color = getColorBasedOnCount();
   
-  const colorStyles = {
-    width: '100px', // Adjust the width as needed
-    height: '100px', // Adjust the height as needed
-    margin: 'auto', // Center the square horizontally
-    marginTop: '20px', // Adjust the top margin as needed
-    backgroundColor: color, // Apply the color variable dynamically
-    borderRadius: '10px', // Adjust the border-radius as needed for rounded corners
-  };
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-        <IonButtons slot="start">
-          <IonBackButton />
-          </IonButtons>
-          <IonTitle>Sleep Habits</IonTitle>
+          <IonButtons slot="start"><IonBackButton/></IonButtons>
+          <IonTitle>Sleep</IonTitle>
+          <IonProgressBar
+            className={`progress-bar-custom color-${color}`}
+            style={{
+              '--dynamic-progress-color': getColorBasedOnCount(),
+              height: '0.5rem'
+            }}
+            value={calculateCheckedCount() / 10}
+          ></IonProgressBar>
         </IonToolbar>
       </IonHeader>
+
       <IonContent>
-      <IonList>
-      <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={sleepHabits.consistentBedtime}
-            onIonChange={() => handleCheckboxChange('consistentBedtime')}
-            aria-label="Consistent Bedtime"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('consistentBedtime')}>
-            Do you have a consistent bedtime?
-          </IonLabel>
-        </IonItem>
-        
-       <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={sleepHabits.restfulSleep}
-            onIonChange={() => handleCheckboxChange('restfulSleep')}
-            aria-label="Restful Sleep"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('restfulSleep')}>
-            Did you experience restful sleep?
-          </IonLabel>
-        </IonItem>
+        <IonList>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={sleepHabits.consistentBedtime}
+              onIonChange={() => handleCheckboxChange('consistentBedtime')}
+              aria-label="Consistent Bedtime"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('consistentBedtime')}>
+              Do you have a consistent bedtime?
+            </IonLabel>
+          </IonItem>
 
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={sleepHabits.avoidScreensBeforeBed}
-            onIonChange={() => handleCheckboxChange('avoidScreensBeforeBed')}
-            aria-label="Avoid Screens Before Bed"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('avoidScreensBeforeBed')}>
-            Did you avoid screens before bedtime?
-          </IonLabel>
-        </IonItem>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={sleepHabits.restfulSleep}
+              onIonChange={() => handleCheckboxChange('restfulSleep')}
+              aria-label="Restful Sleep"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('restfulSleep')}>
+              Did you experience restful sleep?
+            </IonLabel>
+          </IonItem>
 
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={sleepHabits.darkRoom}
-            onIonChange={() => handleCheckboxChange('darkRoom')}
-            aria-label="Darkness for Sleep"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('darkRoom')}>
-            Was your room dark for sleep?
-          </IonLabel>
-        </IonItem>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={sleepHabits.avoidScreensBeforeBed}
+              onIonChange={() => handleCheckboxChange('avoidScreensBeforeBed')}
+              aria-label="Avoid Screens Before Bed"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('avoidScreensBeforeBed')}>
+              Did you avoid screens before bedtime?
+            </IonLabel>
+          </IonItem>
 
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={sleepHabits.comfortableMattress}
-            onIonChange={() => handleCheckboxChange('comfortableMattress')}
-            aria-label="Comfortable Mattress"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('comfortableMattress')}>
-            Did you sleep on a comfortable mattress?
-          </IonLabel>
-        </IonItem>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={sleepHabits.darkRoom}
+              onIonChange={() => handleCheckboxChange('darkRoom')}
+              aria-label="Darkness for Sleep"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('darkRoom')}>
+              Was your room dark for sleep?
+            </IonLabel>
+          </IonItem>
 
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={sleepHabits.quietEnvironment}
-            onIonChange={() => handleCheckboxChange('quietEnvironment')}
-            aria-label="Comfortable Mattress"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('quietEnvironment')}>
-            Was your sleep environment quiet?
-          </IonLabel>
-        </IonItem>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={sleepHabits.comfortableMattress}
+              onIonChange={() => handleCheckboxChange('comfortableMattress')}
+              aria-label="Comfortable Mattress"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('comfortableMattress')}>
+              Did you sleep on a comfortable mattress?
+            </IonLabel>
+          </IonItem>
 
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={sleepHabits.consistentWakeUpTime}
-            onIonChange={() => handleCheckboxChange('consistentWakeUpTime')}
-            aria-label="Consistent Wake Up"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('consistentWakeUpTime')}>
-            Did you wake up on time?
-          </IonLabel>
-        </IonItem>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={sleepHabits.quietEnvironment}
+              onIonChange={() => handleCheckboxChange('quietEnvironment')}
+              aria-label="Comfortable Mattress"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('quietEnvironment')}>
+              Was your sleep environment quiet?
+            </IonLabel>
+          </IonItem>
 
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={sleepHabits.limitCaffeineIntake}
-            onIonChange={() => handleCheckboxChange('limitCaffeineIntake')}
-            aria-label="Limit Caffiene"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('limitCaffeineIntake')}>
-            Did you limit caffeine intake?
-          </IonLabel>
-        </IonItem>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={sleepHabits.consistentWakeUpTime}
+              onIonChange={() => handleCheckboxChange('consistentWakeUpTime')}
+              aria-label="Consistent Wake Up"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('consistentWakeUpTime')}>
+              Did you wake up on time?
+            </IonLabel>
+          </IonItem>
 
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={sleepHabits.bedtimeRoutine}
-            onIonChange={() => handleCheckboxChange('bedtimeRoutine')}
-            aria-label="Bedtime Routine"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('bedtimeRoutine')}>
-            Did you have a routine before bedtime?
-          </IonLabel>
-        </IonItem>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={sleepHabits.limitCaffeineIntake}
+              onIonChange={() => handleCheckboxChange('limitCaffeineIntake')}
+              aria-label="Limit Caffeine"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('limitCaffeineIntake')}>
+              Did you limit caffeine intake?
+            </IonLabel>
+          </IonItem>
 
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={sleepHabits.coolSleepEnvironment}
-            onIonChange={() => handleCheckboxChange('coolSleepEnvironment')}
-            aria-label="Cool Sleep Environment"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('coolSleepEnvironment')}>
-            Did you sleep in a cool environment?
-          </IonLabel>
-        </IonItem>
-      </IonList>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={sleepHabits.bedtimeRoutine}
+              onIonChange={() => handleCheckboxChange('bedtimeRoutine')}
+              aria-label="Bedtime Routine"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('bedtimeRoutine')}>
+              Did you have a routine before bedtime?
+            </IonLabel>
+          </IonItem>
 
-      <div
-  className={`color-square color-${color}`}
-  style={{ marginTop: '10px', width: '50px', height: '50px' }}
-></div>
-
-
-
-
-
-      {/* Dynamic square based on the checked count */}
-      <div style={colorStyles}></div>
-      <IonProgressBar
-        className="progress-bar-custom"
-        style={{
-          '--dynamic-progress-color': getColorBasedOnCount(), // This applies the dynamic color
-          height: '2rem',
-          marginTop: '10px',
-        }}
-        value={calculateCheckedCount() / 10}
-      ></IonProgressBar>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={sleepHabits.coolSleepEnvironment}
+              onIonChange={() => handleCheckboxChange('coolSleepEnvironment')}
+              aria-label="Cool Sleep Environment"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('coolSleepEnvironment')}>
+              Did you sleep in a cool environment?
+            </IonLabel>
+          </IonItem>
+        </IonList>
       <p>
         Number of checked checkboxes: {checkedCount}
       </p>
