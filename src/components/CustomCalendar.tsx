@@ -26,7 +26,7 @@ interface ProgressData {
 interface CustomCalendarProps {
   dayRatings: { [key: string]: number };
   onDaySelect: (date: string) => void;
-  calculatedColor: string; 
+  calculatedColor: string;
   progressData: ProgressData; // Use the defined ProgressData type here
 }
 
@@ -82,17 +82,24 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
     return <div className="row">{days}</div>;
   };
 
+  const MAX_CHECKBOXES = {
+    mentalHealth: 5, // Example maximum counts
+    physicalHealth: 6,
+    nutrition: 4,
+    sleep: 10,
+  };
+
   const renderCells = () => {
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart);
     const endDate = endOfWeek(monthEnd);
-  
+
     const rows = [];
     let days = [];
     let day = startDate;
     const today = new Date();
-  
+
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
         const formattedDay = format(day, "yyyy-MM-dd");
@@ -116,29 +123,33 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
           const ratingColor = getColorForRating(dayRating);
           cellStyle.backgroundColor = ratingColor;
         }
-        const renderProgressBars = () => {
+
+        const renderProgressBars = (progressData: ProgressData) => {
+          // Calculate percentage of checked items for each category
+          const mentalHealthPercentage = (progressData.mentalHealthCheckedCount / MAX_CHECKBOXES.mentalHealth) * 100;
+          const physicalHealthPercentage = (progressData.physicalHealthCheckedCount / MAX_CHECKBOXES.physicalHealth) * 100;
+          const nutritionPercentage = (progressData.nutritionCheckedCount / MAX_CHECKBOXES.nutrition) * 100;
+          const sleepPercentage = (progressData.sleepCheckedCount / MAX_CHECKBOXES.sleep) * 100;
           return (
             <div style={{ position: 'absolute', bottom: 0, width: '100%', display: 'flex', flexDirection: 'column' }}>
-              {/* Simplify the bars for debugging */}
-              <div style={{ width: '25%', height: '5px', backgroundColor: 'red' }}></div>
-              <div style={{ width: '50%', height: '5px', backgroundColor: 'blue' }}></div>
-              <div style={{ width: '75%', height: '5px', backgroundColor: 'green' }}></div>
-              <div style={{ width: '100%', height: '5px', backgroundColor: 'orange' }}></div>
+              <div style={{ width: `${mentalHealthPercentage}%`, height: '5px', backgroundColor: 'red' }}></div>
+              <div style={{ width: `${physicalHealthPercentage}%`, height: '5px', backgroundColor: 'blue' }}></div>
+              <div style={{ width: `${nutritionPercentage}%`, height: '5px', backgroundColor: 'green' }}></div>
+              <div style={{ width: `${sleepPercentage}%`, height: '5px', backgroundColor: 'orange' }}></div>
             </div>
           );
         };
-        
-        
-        
+
+
         days.push(
           <div
-           className={`column cell ${!isCurrentMonth ? 'disabled' : ''} ${isTodayFlag ? 'today' : ''}`}
+            className={`column cell ${!isCurrentMonth ? 'disabled' : ''} ${isTodayFlag ? 'today' : ''}`}
             key={day.toString()}
             style={cellStyle}
             onClick={() => isEligibleForRating && onDaySelect(formattedDay)}
           >
             {format(day, "d")}
-            {isTodayFlag && renderProgressBars()}
+            {isTodayFlag && renderProgressBars(progressData)}
           </div>
         );
         day = addDays(day, 1);
@@ -146,10 +157,10 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
       rows.push(<div className="row" key={day.toString()}>{days}</div>);
       days = [];
     }
-  
+
     return <div className="body">{rows}</div>;
   };
-  
+
 
   const nextMonth = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
