@@ -40,15 +40,15 @@ const Tab1: React.FC = () => {
           </IonFabList>
         </IonFab> */}
 
-
         <IonGrid>
           <IonRow>
             <IonCol size="6" size-sm="4" style={{}}>
               <IonRouterLink routerLink="/mentalhealthpage">
-                <IonCard>
+                <IonCard color="secondary">
                   <img alt="MentalHealth" src="/MentalHealthCard.png" />
                   <IonCardHeader>
                     <IonCardTitle>Mental Health</IonCardTitle>
+                    <IonCardSubtitle>Take care of your mental health!</IonCardSubtitle>
                   </IonCardHeader>
                 </IonCard>
               </IonRouterLink>
