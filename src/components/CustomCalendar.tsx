@@ -130,12 +130,13 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
           const physicalHealthPercentage = (progressData.physicalHealthCheckedCount / MAX_CHECKBOXES.physicalHealth) * 100;
           const nutritionPercentage = (progressData.nutritionCheckedCount / MAX_CHECKBOXES.nutrition) * 100;
           const sleepPercentage = (progressData.sleepCheckedCount / MAX_CHECKBOXES.sleep) * 100;
+          const barHeight = '25%';
           return (
-            <div style={{ position: 'absolute', bottom: 0, width: '100%', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ width: `${mentalHealthPercentage}%`, height: '5px', backgroundColor: 'red' }}></div>
-              <div style={{ width: `${physicalHealthPercentage}%`, height: '5px', backgroundColor: 'blue' }}></div>
-              <div style={{ width: `${nutritionPercentage}%`, height: '5px', backgroundColor: 'green' }}></div>
-              <div style={{ width: `${sleepPercentage}%`, height: '5px', backgroundColor: 'orange' }}></div>
+            <div style={{ position: 'absolute', bottom: 0, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+              <div style={{ width: `${mentalHealthPercentage}%`, height: barHeight, backgroundColor: 'red' }}></div>
+              <div style={{ width: `${physicalHealthPercentage}%`, height: barHeight, backgroundColor: 'blue' }}></div>
+              <div style={{ width: `${nutritionPercentage}%`, height: barHeight, backgroundColor: 'green' }}></div>
+              <div style={{ width: `${sleepPercentage}%`, height: barHeight, backgroundColor: 'orange' }}></div>
             </div>
           );
         };
