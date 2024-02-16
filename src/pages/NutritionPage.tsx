@@ -87,6 +87,14 @@ const NutritionPage: React.FC = () => {
             <IonBackButton />
           </IonButtons>
           <IonTitle>Nutrition</IonTitle>
+          <IonProgressBar
+            className={`progress-bar-custom color-${color}`}
+            style={{
+              '--dynamic-progress-color': getColorBasedOnCount(),
+              height: '0.5rem'
+            }}
+            value={calculateCheckedCount() / 4}
+          ></IonProgressBar>
         </IonToolbar>
       </IonHeader>
 
@@ -140,19 +148,6 @@ const NutritionPage: React.FC = () => {
             </IonLabel>
           </IonItem>
         </IonList>
-        <div className={`color-square color-${color}`} style={{ marginTop: '10px', width: '50px', height: '50px' }}></div>
-      
-      {/* Dynamic square based on the checked count */}
-      <div style={colorStyles}></div>
-      <IonProgressBar
-        className="progress-bar-custom"
-        style={{
-          '--dynamic-progress-color': getColorBasedOnCount(), // This applies the dynamic color
-          height: '2rem',
-          marginTop: '10px',
-        }}
-        value={calculateCheckedCount() / 4}>
-      </IonProgressBar>
       <p>
         Number of checked checkboxes: {checkedCount}
       </p>

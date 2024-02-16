@@ -68,8 +68,6 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
     return Object.values(mentalHealth).filter((value) => value).length;
   };
 
-  
-
   // Function to determine the color based on the checkedCount
   const getColorBasedOnCount = () => {
     if (checkedCount <= 0) return '#ff0000';
@@ -85,147 +83,125 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
   
   const color = getColorBasedOnCount();
   
-  const colorStyles = {
-    width: '100px', // Adjust the width as needed
-    height: '100px', // Adjust the height as needed
-    margin: 'auto', // Center the square horizontally
-    marginTop: '0px', // Adjust the top margin as needed
-    backgroundColor: color, // Apply the color variable dynamically
-    borderRadius: '10px', // Adjust the border-radius as needed for rounded corners
-  };
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-        <IonButtons slot="start">
-          <IonBackButton />
-          </IonButtons>
-          <IonTitle>Mental Health, these are some words to delete later</IonTitle>
+          <IonButtons slot="start"><IonBackButton/></IonButtons>
+          <IonTitle>Mental</IonTitle>
+          <IonProgressBar
+            className={`progress-bar-custom color-${color}`}
+            style={{
+              '--dynamic-progress-color': getColorBasedOnCount(),
+              height: '0.5rem'
+            }}
+            value={calculateCheckedCount() / 8}
+          ></IonProgressBar>
         </IonToolbar>
       </IonHeader>
+
       <IonContent>
-      <IonList>
-      <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={mentalHealth.mindfulness}
-            onIonChange={() => handleCheckboxChange('mindfulness')}
-            aria-label="mindfulness"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('mindfulness')}>
-            Did you practice mindfulness or meditation for at least 5 minutes today?
-          </IonLabel>
-        </IonItem>
-        
-       <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={mentalHealth.family}
-            onIonChange={() => handleCheckboxChange('family')}
-            aria-label="family"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('family')}>
-            Did you connect with a friend or family member for emotional support today?
-          </IonLabel>
-        </IonItem>
+        <IonList>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={mentalHealth.mindfulness}
+              onIonChange={() => handleCheckboxChange('mindfulness')}
+              aria-label="mindfulness"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('mindfulness')}>
+              Did you practice mindfulness or meditation for at least 5 minutes today?
+            </IonLabel>
+          </IonItem>
 
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={mentalHealth.manageStress}
-            onIonChange={() => handleCheckboxChange('manageStress')}
-            aria-label="Managing stress"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('manageStress')}>
-            Have you taken breaks to manage stress at work or during your daily routine?
-          </IonLabel>
-        </IonItem>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={mentalHealth.family}
+              onIonChange={() => handleCheckboxChange('family')}
+              aria-label="family"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('family')}>
+              Did you connect with a friend or family member for emotional support today?
+            </IonLabel>
+          </IonItem>
 
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={mentalHealth.limitScreen}
-            onIonChange={() => handleCheckboxChange('limitScreen')}
-            aria-label="Limiting screens"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('limitScreen')}>
-            Have you limited your screen time on electronic devices to promote a healthy mental state?
-          </IonLabel>
-        </IonItem>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={mentalHealth.manageStress}
+              onIonChange={() => handleCheckboxChange('manageStress')}
+              aria-label="Managing stress"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('manageStress')}>
+              Have you taken breaks to manage stress at work or during your daily routine?
+            </IonLabel>
+          </IonItem>
 
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={mentalHealth.hobby}
-            onIonChange={() => handleCheckboxChange('hobby')}
-            aria-label="Having a hobby"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('hobby')}>
-            Did you set aside time for a hobby or activity you enjoy for relaxation today?
-          </IonLabel>
-        </IonItem>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={mentalHealth.limitScreen}
+              onIonChange={() => handleCheckboxChange('limitScreen')}
+              aria-label="Limiting screens"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('limitScreen')}>
+              Have you limited your screen time on electronic devices to promote a healthy mental state?
+            </IonLabel>
+          </IonItem>
 
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={mentalHealth.feelings}
-            onIonChange={() => handleCheckboxChange('feelings')}
-            aria-label="Communicating feelings"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('feelings')}>
-            Have you addressed and communicated your feelings with someone if you were experiencing distress?
-          </IonLabel>
-        </IonItem>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={mentalHealth.hobby}
+              onIonChange={() => handleCheckboxChange('hobby')}
+              aria-label="Having a hobby"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('hobby')}>
+              Did you set aside time for a hobby or activity you enjoy for relaxation today?
+            </IonLabel>
+          </IonItem>
 
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={mentalHealth.balance}
-            onIonChange={() => handleCheckboxChange('balance')}
-            aria-label="Having a balance"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('balance')}>
-            Have you set boundaries to ensure a healthy balance between work or responsibilities and personal time for relaxation?
-          </IonLabel>
-        </IonItem>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={mentalHealth.feelings}
+              onIonChange={() => handleCheckboxChange('feelings')}
+              aria-label="Communicating feelings"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('feelings')}>
+              Have you addressed and communicated your feelings with someone if you were experiencing distress?
+            </IonLabel>
+          </IonItem>
 
-        <IonItem>
-          <IonCheckbox
-            slot="start"
-            checked={mentalHealth.kindness}
-            onIonChange={() => handleCheckboxChange('kindness')}
-            aria-label="Being kind"
-          />
-          <IonLabel onClick={() => handleCheckboxChange('kindness')}>
-            Have you practiced at least one act of kindness towards yourself or others today?
-          </IonLabel>
-        </IonItem>
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={mentalHealth.balance}
+              onIonChange={() => handleCheckboxChange('balance')}
+              aria-label="Having a balance"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('balance')}>
+              Have you set boundaries to ensure a healthy balance between work or responsibilities and personal time for relaxation?
+            </IonLabel>
+          </IonItem>
 
+          <IonItem>
+            <IonCheckbox
+              slot="start"
+              checked={mentalHealth.kindness}
+              onIonChange={() => handleCheckboxChange('kindness')}
+              aria-label="Being kind"
+            />
+            <IonLabel onClick={() => handleCheckboxChange('kindness')}>
+              Have you practiced at least one act of kindness towards yourself or others today?
+            </IonLabel>
+          </IonItem>
 
-      </IonList>
-      <div className={`color-square color-${color}`} style={{ marginTop: '10px', width: '50px', height: '50px' }} ></div>
-
-<IonProgressBar
-  style={{ height: '10px', marginTop: '10px' }}
-  color={color}
-  value={checkedCount / 8}
-></IonProgressBar>
-
-
-      {/* Dynamic square based on the checked count */}
-      <div style={colorStyles}></div>
-
-      <IonProgressBar
-        className="progress-bar-custom"
-        style={{
-          '--dynamic-progress-color': getColorBasedOnCount(), // This applies the dynamic color
-          height: '2rem',
-          marginTop: '10px',
-        }}
-        value={calculateCheckedCount() / 8}
-      ></IonProgressBar>
-
-<p>Goals Accomplished: {checkedCount} out of {Object.keys(mentalHealth).length - 2}</p>
+        </IonList>
+        <p>
+          Goals Accomplished: {checkedCount} out of {Object.keys(mentalHealth).length - 2}
+        </p>
       </IonContent>
     </IonPage>
   );

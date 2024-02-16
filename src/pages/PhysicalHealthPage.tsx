@@ -81,7 +81,8 @@ const PhysicalPage: React.FC = () => {
           <IonProgressBar
             className={`progress-bar-custom color-${color}`}
             style={{
-              '--dynamic-progress-color': getColorBasedOnCount()
+              '--dynamic-progress-color': getColorBasedOnCount(),
+              height: '0.5rem'
             }}
             value={calculateCheckedCount() / 5}
           ></IonProgressBar>
