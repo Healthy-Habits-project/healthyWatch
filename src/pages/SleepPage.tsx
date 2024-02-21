@@ -83,6 +83,7 @@ const SleepPage: React.FC = () => {
     if (checkedCount <= 7) return '#adcc00';
     if (checkedCount <= 8) return '#91de00';
     if (checkedCount <= 9) return '#6aef00';
+    if (checkedCount <= 10) return '#00ff00';
   };
   
   const color = getColorBasedOnCount();
