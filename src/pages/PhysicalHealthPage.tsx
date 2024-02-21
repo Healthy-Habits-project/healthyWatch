@@ -88,7 +88,7 @@ const PhysicalPage: React.FC = () => {
               '--dynamic-progress-color': getColorBasedOnCount(),
               height: '0.5rem'
             }}
-            value={calculateCheckedCount() / 6}
+            value={calculateCheckedCount() / Object.keys(physicalHabits).length}
           ></IonProgressBar>
         </IonToolbar>
       </IonHeader>

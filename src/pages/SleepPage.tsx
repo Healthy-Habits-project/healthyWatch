@@ -100,7 +100,7 @@ const SleepPage: React.FC = () => {
               '--dynamic-progress-color': getColorBasedOnCount(),
               height: '0.5rem'
             }}
-            value={calculateCheckedCount() / 10}
+            value={calculateCheckedCount() / Object.keys(sleepHabits).length}
           ></IonProgressBar>
         </IonToolbar>
       </IonHeader>

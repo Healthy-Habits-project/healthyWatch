@@ -14,7 +14,7 @@ import {
   IonToolbar
 } from '@ionic/react';
 
-import { calculateCheckedCount, handleCheckboxChangeTest } from './functions';
+import { calculateCheckedCount, handleCheckboxChange } from './functions';
 
 import './NutritionPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
@@ -47,13 +47,6 @@ const NutritionPage: React.FC = () => {
     localStorage.setItem('nutritionPageCheckboxes', JSON.stringify(nutritionHabits)); // Optionally, persist the nutritionHabits state in localStorage
   }, [nutritionHabits, setNutritionCheckedCount]);
 
-  const handleCheckboxChange = (key: keyof NutritionPageState) => {
-    setNutritionHabits((prevNutritionHabits) => ({
-      ...prevNutritionHabits,
-      [key]: !prevNutritionHabits[key],
-    }));
-  };
-
   const checkedCount = calculateCheckedCount(nutritionHabits);
 
   // Function to determine the color based on the checkedCount
@@ -79,7 +72,7 @@ const NutritionPage: React.FC = () => {
               '--dynamic-progress-color': getColorBasedOnCount(),
               height: '0.5rem'
             }}
-            value={calculateCheckedCount(nutritionHabits) / 4}
+            value={calculateCheckedCount(nutritionHabits) / Object.keys(nutritionHabits).length}
           ></IonProgressBar>
         </IonToolbar>
       </IonHeader>
@@ -90,22 +83,22 @@ const NutritionPage: React.FC = () => {
             <IonCheckbox
               slot="start"
               checked={nutritionHabits.calorieTarget}
-              onIonChange={() => handleCheckboxChangeTest('calorieTarget', nutritionHabits, setNutritionHabits)}
+              onIonChange={() => handleCheckboxChange('calorieTarget', nutritionHabits, setNutritionHabits)}
               aria-label="Calorie Target"
             />
-            <IonLabel onClick={() => handleCheckboxChangeTest('calorieTarget', nutritionHabits, setNutritionHabits)}>
+            <IonLabel onClick={() => handleCheckboxChange('calorieTarget', nutritionHabits, setNutritionHabits)}>
               Did you meet your calorie target today?
             </IonLabel>
           </IonItem>
-        
+
           <IonItem>
             <IonCheckbox
               slot="start"
               checked={nutritionHabits.individualMeals}
-              onIonChange={() => handleCheckboxChange('individualMeals')}
+              onIonChange={() => handleCheckboxChange('individualMeals', nutritionHabits, setNutritionHabits)}
               aria-label="Individual Meals"
             />
-            <IonLabel onClick={() => handleCheckboxChange('individualMeals')}>
+            <IonLabel onClick={() => handleCheckboxChange('individualMeals', nutritionHabits, setNutritionHabits)}>
               Did you eat individual meals today?
             </IonLabel>
           </IonItem>
@@ -114,10 +107,10 @@ const NutritionPage: React.FC = () => {
             <IonCheckbox
               slot="start"
               checked={nutritionHabits.waterTarget}
-              onIonChange={() => handleCheckboxChange('waterTarget')}
+              onIonChange={() => handleCheckboxChange('waterTarget', nutritionHabits, setNutritionHabits)}
               aria-label="Water Target"
             />
-            <IonLabel onClick={() => handleCheckboxChange('waterTarget')}>
+            <IonLabel onClick={() => handleCheckboxChange('waterTarget', nutritionHabits, setNutritionHabits)}>
               Did you drink enough water today?
             </IonLabel>
           </IonItem>
@@ -126,10 +119,10 @@ const NutritionPage: React.FC = () => {
             <IonCheckbox
               slot="start"
               checked={nutritionHabits.fastFood}
-              onIonChange={() => handleCheckboxChange('fastFood')}
+              onIonChange={() => handleCheckboxChange('fastFood', nutritionHabits, setNutritionHabits)}
               aria-label="Fast Food Consumption"
             />
-            <IonLabel onClick={() => handleCheckboxChange('fastFood')}>
+            <IonLabel onClick={() => handleCheckboxChange('fastFood', nutritionHabits, setNutritionHabits)}>
               Did you avoid fast food today?
             </IonLabel>
           </IonItem>
