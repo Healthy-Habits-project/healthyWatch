@@ -14,6 +14,8 @@ import {
   IonToolbar
 } from '@ionic/react';
 
+import { calculateCheckedCount, getColorBasedOnCount, handleCheckboxChange } from './functions';
+
 import './PhysicalHealthPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
 
@@ -44,37 +46,14 @@ const PhysicalPage: React.FC = () => {
   const { setPhysicalHealthCheckedCount } = useGlobalCounts();
 
   useEffect(() => {
-    const newCheckedCount = calculateCheckedCount();
+    const newCheckedCount = calculateCheckedCount(physicalHabits);
     setPhysicalHealthCheckedCount(newCheckedCount);
-    localStorage.setItem('physicalPageCheckboxes', JSON.stringify(physicalHabits));
+    localStorage.setItem('physicalPageCheckboxes', JSON.stringify(physicalHabits)); // Optionally, persist the physicalHabits state in localStorage
   }, [physicalHabits, setPhysicalHealthCheckedCount]);
 
-  const handleCheckboxChange = (key: keyof PhysicalPageState) => {
-    setPhysicalHabits((prevPhysicalHabits) => ({
-      ...prevPhysicalHabits,
-      [key]: !prevPhysicalHabits[key],
-    }));
-  };
-
-  // Function to calculate the count of checked checkboxes
-  const calculateCheckedCount = () => {
-    return Object.values(physicalHabits).filter((value) => value).length;
-  };
-
-  const checkedCount = calculateCheckedCount();
-
-  // Function to determine the color based on the checkedCount
-  const getColorBasedOnCount = () => {
-    if (checkedCount <= 0) return '#ff0000';
-    if (checkedCount <= 1) return '#fb5600';
-    if (checkedCount <= 2) return '#ee8200';
-    if (checkedCount <= 3) return '#d7a700';
-    if (checkedCount <= 4) return '#b6c700';
-    if (checkedCount <= 5) return '#86e400';
-    if (checkedCount <= 6) return '#00ff00';
-  };
-  
-  const color = getColorBasedOnCount();
+  const checkedCount = calculateCheckedCount(physicalHabits);
+  const totalCheckboxes = Object.keys(physicalHabits).length;
+  const color = getColorBasedOnCount(checkedCount, totalCheckboxes);
 
   return (
     <IonPage>
@@ -85,10 +64,10 @@ const PhysicalPage: React.FC = () => {
           <IonProgressBar
             className={`progress-bar-custom color-${color}`}
             style={{
-              '--dynamic-progress-color': getColorBasedOnCount(),
+              '--dynamic-progress-color': color,
               height: '0.5rem'
             }}
-            value={calculateCheckedCount() / Object.keys(physicalHabits).length}
+            value={checkedCount / totalCheckboxes}
           ></IonProgressBar>
         </IonToolbar>
       </IonHeader>
@@ -104,10 +83,10 @@ const PhysicalPage: React.FC = () => {
             <IonCheckbox
               slot="start"
               checked={physicalHabits.resistance}
-              onIonChange={() => handleCheckboxChange('resistance')}
+              onIonChange={() => handleCheckboxChange('resistance', physicalHabits, setPhysicalHabits)}
               aria-label="Resistance Training"
             />
-            <IonLabel onClick={() => handleCheckboxChange('resistance')}>
+            <IonLabel onClick={() => handleCheckboxChange('resistance', physicalHabits, setPhysicalHabits)}>
               Did you meet your resistance training goal today?
             </IonLabel>
           </IonItem>
@@ -116,10 +95,10 @@ const PhysicalPage: React.FC = () => {
             <IonCheckbox
               slot="start"
               checked={physicalHabits.cardio}
-              onIonChange={() => handleCheckboxChange('cardio')}
+              onIonChange={() => handleCheckboxChange('cardio', physicalHabits, setPhysicalHabits)}
               aria-label="Cardiovascular Training"
             />
-            <IonLabel onClick={() => handleCheckboxChange('cardio')}>
+            <IonLabel onClick={() => handleCheckboxChange('cardio', physicalHabits, setPhysicalHabits)}>
               Did you meet your cardiovascular training goal today?
             </IonLabel>
           </IonItem>
@@ -128,10 +107,10 @@ const PhysicalPage: React.FC = () => {
             <IonCheckbox
               slot="start"
               checked={physicalHabits.balance}
-              onIonChange={() => handleCheckboxChange('balance')}
+              onIonChange={() => handleCheckboxChange('balance', physicalHabits, setPhysicalHabits)}
               aria-label="Balance Training"
             />
-            <IonLabel onClick={() => handleCheckboxChange('balance')}>
+            <IonLabel onClick={() => handleCheckboxChange('balance', physicalHabits, setPhysicalHabits)}>
               Did you meet your balance training goal today?
             </IonLabel>
           </IonItem>
@@ -140,10 +119,10 @@ const PhysicalPage: React.FC = () => {
             <IonCheckbox
               slot="start"
               checked={physicalHabits.rom}
-              onIonChange={() => handleCheckboxChange('rom')}
+              onIonChange={() => handleCheckboxChange('rom', physicalHabits, setPhysicalHabits)}
               aria-label="Range of Motion"
             />
-            <IonLabel onClick={() => handleCheckboxChange('rom')}>
+            <IonLabel onClick={() => handleCheckboxChange('rom', physicalHabits, setPhysicalHabits)}>
               Did you stretch at all today?
             </IonLabel>
           </IonItem>
@@ -152,10 +131,10 @@ const PhysicalPage: React.FC = () => {
             <IonCheckbox
               slot="start"
               checked={physicalHabits.steps}
-              onIonChange={() => handleCheckboxChange('steps')}
+              onIonChange={() => handleCheckboxChange('steps', physicalHabits, setPhysicalHabits)}
               aria-label="Steps"
             />
-            <IonLabel onClick={() => handleCheckboxChange('steps')}>
+            <IonLabel onClick={() => handleCheckboxChange('steps', physicalHabits, setPhysicalHabits)}>
               Did you walk at least 10,000 steps today?
             </IonLabel>
           </IonItem>
@@ -164,10 +143,10 @@ const PhysicalPage: React.FC = () => {
             <IonCheckbox
               slot="start"
               checked={physicalHabits.sunlight}
-              onIonChange={() => handleCheckboxChange('sunlight')}
+              onIonChange={() => handleCheckboxChange('sunlight', physicalHabits, setPhysicalHabits)}
               aria-label="Sunlight"
             />
-            <IonLabel onClick={() => handleCheckboxChange('sunlight')}>
+            <IonLabel onClick={() => handleCheckboxChange('sunlight', physicalHabits, setPhysicalHabits)}>
               Did you get at least 30 minutes of sunlight today?
             </IonLabel>
           </IonItem>

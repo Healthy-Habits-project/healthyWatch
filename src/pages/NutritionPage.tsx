@@ -14,7 +14,7 @@ import {
   IonToolbar
 } from '@ionic/react';
 
-import { calculateCheckedCount, handleCheckboxChange } from './functions';
+import { calculateCheckedCount, getColorBasedOnCount, handleCheckboxChange } from './functions';
 
 import './NutritionPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
@@ -48,18 +48,9 @@ const NutritionPage: React.FC = () => {
   }, [nutritionHabits, setNutritionCheckedCount]);
 
   const checkedCount = calculateCheckedCount(nutritionHabits);
+  const totalCheckboxes = Object.keys(nutritionHabits).length;
+  const color = getColorBasedOnCount(checkedCount, totalCheckboxes);
 
-  // Function to determine the color based on the checkedCount
-  const getColorBasedOnCount = () => {
-    if (checkedCount <= 0) return '#fa0000';
-    if (checkedCount <= 1) return '#f26c00';
-    if (checkedCount <= 2) return '#d5a500';
-    if (checkedCount <= 3) return '#a0d500';
-    if (checkedCount <= 4) return '#00ff00';
-  };
-  
-  const color = getColorBasedOnCount();
-  
   return (
     <IonPage>
       <IonHeader translucent={true}>
@@ -69,10 +60,10 @@ const NutritionPage: React.FC = () => {
           <IonProgressBar
             className={`progress-bar-custom color-${color}`}
             style={{
-              '--dynamic-progress-color': getColorBasedOnCount(),
+              '--dynamic-progress-color': color,
               height: '0.5rem'
             }}
-            value={calculateCheckedCount(nutritionHabits) / Object.keys(nutritionHabits).length}
+            value={checkedCount / totalCheckboxes}
           ></IonProgressBar>
         </IonToolbar>
       </IonHeader>
