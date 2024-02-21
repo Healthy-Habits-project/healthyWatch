@@ -14,6 +14,8 @@ import {
   IonToolbar
 } from '@ionic/react';
 
+import { calculateCheckedCount, handleCheckboxChangeTest } from './functions';
+
 import './NutritionPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
 
@@ -40,7 +42,7 @@ const NutritionPage: React.FC = () => {
   const { setNutritionCheckedCount } = useGlobalCounts();
 
   useEffect(() => {
-    const newCheckedCount = calculateCheckedCount();
+    const newCheckedCount = calculateCheckedCount(nutritionHabits);
     setNutritionCheckedCount(newCheckedCount);
     localStorage.setItem('nutritionPageCheckboxes', JSON.stringify(nutritionHabits)); // Optionally, persist the nutritionHabits state in localStorage
   }, [nutritionHabits, setNutritionCheckedCount]);
@@ -52,12 +54,7 @@ const NutritionPage: React.FC = () => {
     }));
   };
 
-  // Function to calculate the count of checked checkboxes
-  const calculateCheckedCount = () => {
-    return Object.values(nutritionHabits).filter((value) => value).length;
-  };
-
-  const checkedCount = calculateCheckedCount();
+  const checkedCount = calculateCheckedCount(nutritionHabits);
 
   // Function to determine the color based on the checkedCount
   const getColorBasedOnCount = () => {
@@ -82,7 +79,7 @@ const NutritionPage: React.FC = () => {
               '--dynamic-progress-color': getColorBasedOnCount(),
               height: '0.5rem'
             }}
-            value={calculateCheckedCount() / 4}
+            value={calculateCheckedCount(nutritionHabits) / 4}
           ></IonProgressBar>
         </IonToolbar>
       </IonHeader>
@@ -93,10 +90,10 @@ const NutritionPage: React.FC = () => {
             <IonCheckbox
               slot="start"
               checked={nutritionHabits.calorieTarget}
-              onIonChange={() => handleCheckboxChange('calorieTarget')}
+              onIonChange={() => handleCheckboxChangeTest('calorieTarget', nutritionHabits, setNutritionHabits)}
               aria-label="Calorie Target"
             />
-            <IonLabel onClick={() => handleCheckboxChange('calorieTarget')}>
+            <IonLabel onClick={() => handleCheckboxChangeTest('calorieTarget', nutritionHabits, setNutritionHabits)}>
               Did you meet your calorie target today?
             </IonLabel>
           </IonItem>
