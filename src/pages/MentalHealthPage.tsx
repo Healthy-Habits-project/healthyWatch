@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   IonBackButton,
   IonButtons,
@@ -29,7 +29,7 @@ interface mentalHealthPageState {
 }
 
 const mentalHealthPage: React.FC = (): React.ReactElement => {
-  const [mentalHealth, setmentalHealth] = useState<mentalHealthPageState>(() => {
+  const [mentalHealth, setMentalHealth] = useState<mentalHealthPageState>(() => {
     const storedState = localStorage.getItem('mentalHealthPageCheckboxes');
     return storedState
       ? JSON.parse(storedState)
@@ -48,24 +48,24 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
   const { setMentalHealthCheckedCount } = useGlobalCounts();
 
   useEffect(() => {
-    // Update the checked count in the global context
-    const newCheckedCount = Object.values(mentalHealth).filter(Boolean).length;
+    const newCheckedCount = calculateCheckedCount();
     setMentalHealthCheckedCount(newCheckedCount); // Use the appropriate setter from the global context
     localStorage.setItem('mentalHealthPageCheckboxes', JSON.stringify(mentalHealth));
   }, [mentalHealth, setMentalHealthCheckedCount]);
 
   const handleCheckboxChange = (key: keyof mentalHealthPageState) => {
-    setmentalHealth((prevmentalHealth) => ({
-      ...prevmentalHealth!,
-      [key]: !prevmentalHealth![key],
+    setMentalHealth((prevMentalHealth) => ({
+      ...prevMentalHealth!,
+      [key]: !prevMentalHealth![key],
     }));
   };
-  
-  const checkedCount = Object.values(mentalHealth).filter(Boolean).length;
+
   // Function to calculate the count of checked checkboxes
   const calculateCheckedCount = () => {
     return Object.values(mentalHealth).filter((value) => value).length;
   };
+
+  const checkedCount = calculateCheckedCount();
 
   // Function to determine the color based on the checkedCount
   const getColorBasedOnCount = () => {
@@ -84,7 +84,7 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
   
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent={true}>
         <IonToolbar>
           <IonButtons slot="start"><IonBackButton/></IonButtons>
           <IonTitle>Mental</IonTitle>
@@ -99,7 +99,7 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent>
+      <IonContent fullscreen={true} className="ion-padding">
         <IonList>
           <IonItem>
             <IonCheckbox

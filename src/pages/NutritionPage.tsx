@@ -37,14 +37,12 @@ const NutritionPage: React.FC = () => {
       };
   });
 
-  const { nutritionCheckedCount, setNutritionCheckedCount } = useGlobalCounts();
-  
+  const { setNutritionCheckedCount } = useGlobalCounts();
 
   useEffect(() => {
-    const newCheckedCount = Object.values(nutritionHabits).filter(Boolean).length;
+    const newCheckedCount = calculateCheckedCount();
     setNutritionCheckedCount(newCheckedCount);
-    // Optionally, persist the nutritionHabits state in localStorage
-    localStorage.setItem('nutritionPageCheckboxes', JSON.stringify(nutritionHabits));
+    localStorage.setItem('nutritionPageCheckboxes', JSON.stringify(nutritionHabits)); // Optionally, persist the nutritionHabits state in localStorage
   }, [nutritionHabits, setNutritionCheckedCount]);
 
   const handleCheckboxChange = (key: keyof NutritionPageState) => {
@@ -74,11 +72,9 @@ const NutritionPage: React.FC = () => {
   
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent={true}>
         <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton />
-          </IonButtons>
+          <IonButtons slot="start"><IonBackButton/></IonButtons>
           <IonTitle>Nutrition</IonTitle>
           <IonProgressBar
             className={`progress-bar-custom color-${color}`}
@@ -91,7 +87,7 @@ const NutritionPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent>
+      <IonContent fullscreen={true} className="ion-padding">
         <IonList>
           <IonItem>
             <IonCheckbox

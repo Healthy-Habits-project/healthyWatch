@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   IonBackButton,
   IonButtons,
@@ -52,10 +52,9 @@ const SleepPage: React.FC = () => {
   const { setSleepCheckedCount } = useGlobalCounts();
 
   useEffect(() => {
-    const newCheckedCount = Object.values(sleepHabits).filter(Boolean).length;
+    const newCheckedCount = calculateCheckedCount();
     setSleepCheckedCount(newCheckedCount);
-    // Optionally, persist the sleepHabits state in localStorage
-    localStorage.setItem('sleepPageCheckboxes', JSON.stringify(sleepHabits));
+    localStorage.setItem('sleepPageCheckboxes', JSON.stringify(sleepHabits)); // Optionally, persist the sleepHabits state in localStorage
   }, [sleepHabits, setSleepCheckedCount]);
 
   const handleCheckboxChange = (key: keyof SleepPageState) => {
@@ -84,14 +83,13 @@ const SleepPage: React.FC = () => {
     if (checkedCount <= 7) return '#adcc00';
     if (checkedCount <= 8) return '#91de00';
     if (checkedCount <= 9) return '#6aef00';
-    return '#00ff00';
   };
   
   const color = getColorBasedOnCount();
   
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent={true}>
         <IonToolbar>
           <IonButtons slot="start"><IonBackButton/></IonButtons>
           <IonTitle>Sleep</IonTitle>
@@ -106,7 +104,7 @@ const SleepPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent>
+      <IonContent fullscreen={true} className="ion-padding">
         <IonList>
           <IonItem>
             <IonCheckbox
