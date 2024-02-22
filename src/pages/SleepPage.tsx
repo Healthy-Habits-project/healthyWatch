@@ -202,9 +202,19 @@ const SleepPage: React.FC = () => {
             </IonLabel>
           </IonItem>
         </IonList>
-      <p>
-        Number of checked checkboxes: {checkedCount}
-      </p>
+        <h1>Debugging Information</h1>
+        <p>
+          Number of checked checkboxes: {checkedCount}
+        </p>
+        <p>
+          Total number of checkboxes: {totalCheckboxes}
+        </p>
+        <p>
+          Progress: {Math.round(checkedCount / totalCheckboxes * 100)}%
+        </p>
+        <p>
+          Hex Color: {color}
+        </p>
       </IonContent>
     </IonPage>
   );
