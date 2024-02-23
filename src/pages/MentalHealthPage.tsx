@@ -16,7 +16,7 @@ import {
 
 import './SleepPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
-
+import { DateTimeDisplay }  from '../components/GetDateTime';
 interface mentalHealthPageState {
   mindfulness: boolean;
   family: boolean;
@@ -53,6 +53,8 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
     localStorage.setItem('mentalHealthPageCheckboxes', JSON.stringify(mentalHealth));
   }, [mentalHealth, setMentalHealthCheckedCount]);
 
+
+  
   const handleCheckboxChange = (key: keyof mentalHealthPageState) => {
     setMentalHealth((prevMentalHealth) => ({
       ...prevMentalHealth!,
@@ -100,6 +102,9 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
       </IonHeader>
 
       <IonContent fullscreen={true} className="ion-padding">
+      <div>
+      {/*<DateTimeDisplay />*/}
+      </div>
         <IonList>
           <IonItem>
             <IonCheckbox
@@ -201,6 +206,7 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
         <p>
           Goals Accomplished: {checkedCount} out of {Object.keys(mentalHealth).length - 2}
         </p>
+        <p><DateTimeDisplay/></p>
       </IonContent>
     </IonPage>
   );
