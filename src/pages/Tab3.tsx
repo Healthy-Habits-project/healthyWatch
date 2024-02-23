@@ -57,7 +57,7 @@ const Tab3: React.FC = () => {
           <IonItem>
             <IonLabel>Theme</IonLabel>
             <IonSelect
-              placeholder="Select One"
+              placeholder="Default"
               onIonChange={(e: CustomEvent) => handleThemeChange(e.detail.value as string)}
             >
               <IonSelectOption value="ion-color-light">Light</IonSelectOption>
