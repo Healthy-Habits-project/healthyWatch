@@ -7,18 +7,25 @@ import { IonSelect, IonSelectOption } from '@ionic/react';
 import { useIonRouter } from '@ionic/react';
 import { App } from '@capacitor/app';
 
-interface colors {
-  mentalColor: string;
-  physicalColor: string; 
-  nutritionColor: string;
-  sleepColor: string;
-}
+import { useGlobalCounts } from '../contexts/GlobalCountsContext';
+import { calculateCheckedCount, getColorBasedOnCount, handleCheckboxChange } from './functions';
 
-{/*
-const mentalCardColor = 
-*/}
+const Tab1: React.FC = () => {
+  const { mentalHealthCheckedCount } = useGlobalCounts();
+  const { physicalHealthCheckedCount } = useGlobalCounts();
+  const { nutritionCheckedCount } = useGlobalCounts();
+  const { sleepCheckedCount } = useGlobalCounts();
 
-const Tab1: React.FC<colors> = ({mentalColor, physicalColor, nutritionColor, sleepColor}) => {
+  {/* TODO: Remove hard coded values */}
+  const totalPhysicalCheckboxes = 6;
+  const totalMentalCheckboxes = 8;
+  const totalNutritionCheckboxes = 4;
+  const totalSleepCheckboxes = 10;
+
+  const physicalColor = getColorBasedOnCount(physicalHealthCheckedCount, totalPhysicalCheckboxes);
+  const mentalColor = getColorBasedOnCount(mentalHealthCheckedCount, totalMentalCheckboxes);
+  const nutritionColor = getColorBasedOnCount(nutritionCheckedCount, totalNutritionCheckboxes);
+  const sleepColor = getColorBasedOnCount(sleepCheckedCount, totalSleepCheckboxes);
 
   return (
     <IonPage>
@@ -38,7 +45,7 @@ const Tab1: React.FC<colors> = ({mentalColor, physicalColor, nutritionColor, sle
           <IonRow>
             <IonCol size="6" size-sm="4" style={{}}>
               <IonRouterLink routerLink="/mentalhealthpage">
-                <IonCard color="secondary">
+                <IonCard style={{ backgroundColor: mentalColor }}>
                   <img alt="MentalHealth" src="/MentalHealthCard.png" />
                   <IonCardHeader>
                     <IonCardTitle>Mental Health</IonCardTitle>
@@ -50,7 +57,7 @@ const Tab1: React.FC<colors> = ({mentalColor, physicalColor, nutritionColor, sle
 
             <IonCol size="6" size-sm="4" style={{}}>
               <IonRouterLink routerLink="/physicalhealthpage">
-                <IonCard>
+                <IonCard style={{ backgroundColor: physicalColor }}>
                   <img alt="PhysicalHealth" src="/PhysicalHealthCard.png" height="" />
                   <IonCardHeader>
                     <IonCardTitle>Physical Health</IonCardTitle>
@@ -61,7 +68,7 @@ const Tab1: React.FC<colors> = ({mentalColor, physicalColor, nutritionColor, sle
 
               <IonCol size="6" size-sm="4" style={{}}>
               <IonRouterLink routerLink="/nutritionpage">
-                <IonCard>
+                <IonCard style={{ backgroundColor: nutritionColor }}>
                   <img alt="Nutrition" src="/NutritionCard.png" />
                   <IonCardHeader>
                     <IonCardTitle>Nutrition</IonCardTitle>
@@ -72,7 +79,7 @@ const Tab1: React.FC<colors> = ({mentalColor, physicalColor, nutritionColor, sle
 
               <IonCol size="6" size-sm="4" style={{}}>
               <IonRouterLink routerLink="/sleeppage">
-                <IonCard>
+                <IonCard style={{ backgroundColor: sleepColor }}>
                   <img alt="SleepHabits" src="/SleepCard.png" />
                   <IonCardHeader>
                     <IonCardTitle>Sleep</IonCardTitle>
