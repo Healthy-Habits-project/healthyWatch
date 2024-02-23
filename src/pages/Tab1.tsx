@@ -1,14 +1,24 @@
 import React from 'react';
-import { IonContent, IonHeader, IonCol, IonCardTitle, IonCardHeader, IonCardContent, IonCard, IonGrid, IonRow, IonPage, IonTitle, IonToolbar, IonButtons, IonButton, IonImg, IonCardSubtitle, IonText, IonRouterLink, IonChip, IonAvatar, IonLabel, IonInput, IonIcon, IonNote, IonFabButton, IonFabList, IonFab } from '@ionic/react';
-import { chevronDownCircle, chevronForwardCircle, chevronUpCircle, colorPalette, document, globe, } from 'ionicons/icons';
-import ExploreContainer from '../components/ExploreContainer';
-import './Tab1.css';
-import { IonSelect, IonSelectOption } from '@ionic/react';
-import { useIonRouter } from '@ionic/react';
-import { App } from '@capacitor/app';
+import {
+  IonCard,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonHeader,
+  IonPage,
+  IonRouterLink,
+  IonRow,
+  IonTitle,
+  IonToolbar
+} from '@ionic/react';
 
+import { getColorBasedOnCount } from './functions';
+
+import './Tab1.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
-import { calculateCheckedCount, getColorBasedOnCount, handleCheckboxChange } from './functions';
 
 const Tab1: React.FC = () => {
   const { mentalHealthCheckedCount } = useGlobalCounts();
