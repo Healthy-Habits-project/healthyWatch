@@ -2,7 +2,6 @@ import React from 'react';
 import {
   IonCard,
   IonCardHeader,
-  IonCardSubtitle,
   IonCardTitle,
   IonCol,
   IonContent,
@@ -39,12 +38,12 @@ const Tab1: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent={true}>
         <IonToolbar>
           <IonTitle className = "ion-text-center">Hello, obvious change</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen={true} className="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Healthy Habit Tracker</IonTitle>
@@ -59,7 +58,6 @@ const Tab1: React.FC = () => {
                   <img alt="MentalHealth" src="/MentalHealthCard.png" />
                   <IonCardHeader>
                     <IonCardTitle>Mental Health</IonCardTitle>
-                    <IonCardSubtitle>Take care of your mental health!</IonCardSubtitle>
                   </IonCardHeader>
                 </IonCard>
               </IonRouterLink>
@@ -76,7 +74,7 @@ const Tab1: React.FC = () => {
               </IonRouterLink>
             </IonCol>
 
-              <IonCol size="6" size-sm="4" style={{}}>
+            <IonCol size="6" size-sm="4" style={{}}>
               <IonRouterLink routerLink="/nutritionpage">
                 <IonCard style={{ backgroundColor: nutritionColor }}>
                   <img alt="Nutrition" src="/NutritionCard.png" />
@@ -84,10 +82,10 @@ const Tab1: React.FC = () => {
                     <IonCardTitle>Nutrition</IonCardTitle>
                   </IonCardHeader>
                 </IonCard>
-                </IonRouterLink>
-              </IonCol>
+              </IonRouterLink>
+            </IonCol>
 
-              <IonCol size="6" size-sm="4" style={{}}>
+            <IonCol size="6" size-sm="4" style={{}}>
               <IonRouterLink routerLink="/sleeppage">
                 <IonCard style={{ backgroundColor: sleepColor }}>
                   <img alt="SleepHabits" src="/SleepCard.png" />
@@ -95,8 +93,8 @@ const Tab1: React.FC = () => {
                     <IonCardTitle>Sleep</IonCardTitle>
                   </IonCardHeader>
                 </IonCard>
-                </IonRouterLink>
-              </IonCol>
+              </IonRouterLink>
+            </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>
