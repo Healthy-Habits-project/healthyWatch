@@ -102,9 +102,6 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
       </IonHeader>
 
       <IonContent fullscreen={true} className="ion-padding">
-      <div>
-      {/*<DateTimeDisplay />*/}
-      </div>
         <IonList>
           <IonItem>
             <IonCheckbox
@@ -206,7 +203,7 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
         <p>
           Goals Accomplished: {checkedCount} out of {Object.keys(mentalHealth).length - 2}
         </p>
-        <p><DateTimeDisplay/></p>
+        <DateTimeDisplay />
       </IonContent>
     </IonPage>
   );
