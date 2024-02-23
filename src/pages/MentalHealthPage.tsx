@@ -16,7 +16,7 @@ import {
 
 import './SleepPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
-import { DateTimeDisplay }  from '../components/GetDateTime';
+import { DateTimeDisplay } from '../components/GetDateTime';
 interface mentalHealthPageState {
   mindfulness: boolean;
   family: boolean;
@@ -53,8 +53,6 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
     localStorage.setItem('mentalHealthPageCheckboxes', JSON.stringify(mentalHealth));
   }, [mentalHealth, setMentalHealthCheckedCount]);
 
-
-  
   const handleCheckboxChange = (key: keyof mentalHealthPageState) => {
     setMentalHealth((prevMentalHealth) => ({
       ...prevMentalHealth!,
