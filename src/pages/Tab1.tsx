@@ -25,7 +25,7 @@ const Tab1: React.FC = () => {
   const { nutritionCheckedCount } = useGlobalCounts();
   const { sleepCheckedCount } = useGlobalCounts();
 
-  {/* TODO: Remove hard coded values */}
+  {/* TODO: Replace hard-coded values with values calculated from the GlobalCountsContext, somehow. */}
   const totalPhysicalCheckboxes = 6;
   const totalMentalCheckboxes = 8;
   const totalNutritionCheckboxes = 4;
