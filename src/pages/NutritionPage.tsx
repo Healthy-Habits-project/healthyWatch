@@ -18,6 +18,7 @@ import { calculateCheckedCount, getColorBasedOnCount, handleCheckboxChange } fro
 
 import './NutritionPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
+import { isNewDay } from '../utils/checkNewDay';
 
 interface NutritionPageState {
   calorieTarget: boolean;
@@ -28,6 +29,15 @@ interface NutritionPageState {
 
 const NutritionPage: React.FC = () => {
   const [nutritionHabits, setNutritionHabits] = useState<NutritionPageState>(() => {
+    if (isNewDay()) {
+      // If it's a new day, return the initial state with all checkboxes cleared
+      return {
+        calorieTarget: false,
+        individualMeals: false,
+        waterTarget: false,
+        fastFood: false,
+      };
+    } else {
     const storedState = localStorage.getItem('nutritionPageCheckboxes');
     return storedState
       ? JSON.parse(storedState)
@@ -37,6 +47,7 @@ const NutritionPage: React.FC = () => {
         waterTarget: false,
         fastFood: false,
       };
+    }
   });
 
   const { setNutritionCheckedCount } = useGlobalCounts();
