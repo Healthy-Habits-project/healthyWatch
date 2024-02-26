@@ -7,11 +7,11 @@ ion-card-title {
     font-size: 27px;
     color: white;
 }
-ion-row {
+/* ion-row {
     background-color: #7030a0;
-}
+} */
 ion-card-content {
-    background-color: #4c036b;
+/*     background-color: #4c036b; */
     text-align: center;
     color: white;
 }
