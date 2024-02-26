@@ -16,7 +16,8 @@ import {
 
 import './SleepPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
-import { DateTimeDisplay } from '../components/GetDateTime';
+import DateTimeDisplay from '../components/GetDateTime';
+import { useCheckboxContext } from '../contexts/CheckboxContext';
 interface mentalHealthPageState {
   mindfulness: boolean;
   family: boolean;
@@ -29,6 +30,7 @@ interface mentalHealthPageState {
 }
 
 const mentalHealthPage: React.FC = (): React.ReactElement => {
+  const { state, setState } = useCheckboxContext();
   const [mentalHealth, setMentalHealth] = useState<mentalHealthPageState>(() => {
     const storedState = localStorage.getItem('mentalHealthPageCheckboxes');
     return storedState
@@ -44,6 +46,31 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
         kindness: false,
       };
   });
+
+  useEffect(() => {
+    const today = new Date();
+    const lastVisitDate = new Date(localStorage.getItem('lastVisitDate') || today);
+  
+    // Compare dates (ignoring time)
+    if (today.toDateString() !== lastVisitDate.toDateString()) {
+      // Clear checkboxes
+      setState(state => ({
+        ...state,
+        mindfulness: false,
+        family: false,
+        manageStress: false,
+        limitScreen: false,
+        hobby: false,
+        feelings: false,
+        balance: false,
+        kindness: false,
+      }));
+  
+      // Update last visit date
+      localStorage.setItem('lastVisitDate', today.toISOString());
+    }
+  }, []); // Empty dependency array ensures this runs on component mount
+  
 
   const { setMentalHealthCheckedCount } = useGlobalCounts();
 
@@ -63,6 +90,7 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
   // Function to calculate the count of checked checkboxes
   const calculateCheckedCount = () => {
     return Object.values(mentalHealth).filter((value) => value).length;
+    
   };
 
   const checkedCount = calculateCheckedCount();
@@ -199,7 +227,7 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
 
         </IonList>
         <p>
-          Goals Accomplished: {checkedCount} out of {Object.keys(mentalHealth).length - 2}
+          Goals Accomplished: {checkedCount} out of {Object.keys(mentalHealth).length}
         </p>
         <DateTimeDisplay />
       </IonContent>
