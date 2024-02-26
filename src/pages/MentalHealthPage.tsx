@@ -14,10 +14,15 @@ import {
   IonToolbar
 } from '@ionic/react';
 
+import { calculateCheckedCount, getColorBasedOnCount, handleCheckboxChange } from './functions';
+
 import './SleepPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
+
 import DateTimeDisplay from '../components/GetDateTime';
 import { useCheckboxContext } from '../contexts/CheckboxContext';
+import { set } from 'date-fns';
+
 interface mentalHealthPageState {
   mindfulness: boolean;
   family: boolean;
@@ -70,45 +75,18 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
       localStorage.setItem('lastVisitDate', today.toISOString());
     }
   }, []); // Empty dependency array ensures this runs on component mount
-  
 
   const { setMentalHealthCheckedCount } = useGlobalCounts();
 
   useEffect(() => {
-    const newCheckedCount = calculateCheckedCount();
-    setMentalHealthCheckedCount(newCheckedCount); // Use the appropriate setter from the global context
-    localStorage.setItem('mentalHealthPageCheckboxes', JSON.stringify(mentalHealth));
+    const newCheckedCount = calculateCheckedCount(mentalHealth);
+    setMentalHealthCheckedCount(newCheckedCount);
+    localStorage.setItem('mentalHealthPageCheckboxes', JSON.stringify(mentalHealth)); // Optionally, persist the mentalHealth state in localStorage
   }, [mentalHealth, setMentalHealthCheckedCount]);
 
-  const handleCheckboxChange = (key: keyof mentalHealthPageState) => {
-    setMentalHealth((prevMentalHealth) => ({
-      ...prevMentalHealth!,
-      [key]: !prevMentalHealth![key],
-    }));
-  };
-
-  // Function to calculate the count of checked checkboxes
-  const calculateCheckedCount = () => {
-    return Object.values(mentalHealth).filter((value) => value).length;
-    
-  };
-
-  const checkedCount = calculateCheckedCount();
-
-  // Function to determine the color based on the checkedCount
-  const getColorBasedOnCount = () => {
-    if (checkedCount <= 0) return '#ff0000';
-    if (checkedCount <= 1) return '#f54500';
-    if (checkedCount <= 2) return '#e66500';
-    if (checkedCount <= 3) return '#d47d00';
-    if (checkedCount <= 4) return '#bf9100';
-    if (checkedCount <= 5) return '#a6a300';
-    if (checkedCount <= 6) return '#8ab200';
-    if (checkedCount <= 7) return '#66c000';
-    if (checkedCount <= 8) return '#29cc00';
-  };
-  
-  const color = getColorBasedOnCount();
+  const checkedCount = calculateCheckedCount(mentalHealth);
+  const totalCheckboxes = Object.keys(mentalHealth).length;
+  const color = getColorBasedOnCount(checkedCount, totalCheckboxes);
   
   return (
     <IonPage>
@@ -119,10 +97,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
           <IonProgressBar
             className={`progress-bar-custom color-${color}`}
             style={{
-              '--dynamic-progress-color': getColorBasedOnCount(),
+              '--dynamic-progress-color': color,
               height: '0.5rem'
             }}
-            value={calculateCheckedCount() / 8}
+            value={checkedCount / totalCheckboxes}
           ></IonProgressBar>
         </IonToolbar>
       </IonHeader>
@@ -133,10 +111,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.mindfulness}
-              onIonChange={() => handleCheckboxChange('mindfulness')}
+              onIonChange={() => handleCheckboxChange('mindfulness', mentalHealth, setMentalHealth)}
               aria-label="mindfulness"
             />
-            <IonLabel onClick={() => handleCheckboxChange('mindfulness')}>
+            <IonLabel onClick={() => handleCheckboxChange('mindfulness', mentalHealth, setMentalHealth)}>
               Did you practice mindfulness or meditation for at least 5 minutes today?
             </IonLabel>
           </IonItem>
@@ -145,10 +123,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.family}
-              onIonChange={() => handleCheckboxChange('family')}
+              onIonChange={() => handleCheckboxChange('family', mentalHealth, setMentalHealth)}
               aria-label="family"
             />
-            <IonLabel onClick={() => handleCheckboxChange('family')}>
+            <IonLabel onClick={() => handleCheckboxChange('family', mentalHealth, setMentalHealth)}>
               Did you connect with a friend or family member for emotional support today?
             </IonLabel>
           </IonItem>
@@ -157,10 +135,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.manageStress}
-              onIonChange={() => handleCheckboxChange('manageStress')}
+              onIonChange={() => handleCheckboxChange('manageStress', mentalHealth, setMentalHealth)}
               aria-label="Managing stress"
             />
-            <IonLabel onClick={() => handleCheckboxChange('manageStress')}>
+            <IonLabel onClick={() => handleCheckboxChange('manageStress', mentalHealth, setMentalHealth)}>
               Have you taken breaks to manage stress at work or during your daily routine?
             </IonLabel>
           </IonItem>
@@ -169,10 +147,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.limitScreen}
-              onIonChange={() => handleCheckboxChange('limitScreen')}
+              onIonChange={() => handleCheckboxChange('limitScreen', mentalHealth, setMentalHealth)}
               aria-label="Limiting screens"
             />
-            <IonLabel onClick={() => handleCheckboxChange('limitScreen')}>
+            <IonLabel onClick={() => handleCheckboxChange('limitScreen', mentalHealth, setMentalHealth)}>
               Have you limited your screen time on electronic devices to promote a healthy mental state?
             </IonLabel>
           </IonItem>
@@ -181,10 +159,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.hobby}
-              onIonChange={() => handleCheckboxChange('hobby')}
+              onIonChange={() => handleCheckboxChange('hobby', mentalHealth, setMentalHealth)}
               aria-label="Having a hobby"
             />
-            <IonLabel onClick={() => handleCheckboxChange('hobby')}>
+            <IonLabel onClick={() => handleCheckboxChange('hobby', mentalHealth, setMentalHealth)}>
               Did you set aside time for a hobby or activity you enjoy for relaxation today?
             </IonLabel>
           </IonItem>
@@ -193,10 +171,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.feelings}
-              onIonChange={() => handleCheckboxChange('feelings')}
+              onIonChange={() => handleCheckboxChange('feelings', mentalHealth, setMentalHealth)}
               aria-label="Communicating feelings"
             />
-            <IonLabel onClick={() => handleCheckboxChange('feelings')}>
+            <IonLabel onClick={() => handleCheckboxChange('feelings', mentalHealth, setMentalHealth)}>
               Have you addressed and communicated your feelings with someone if you were experiencing distress?
             </IonLabel>
           </IonItem>
@@ -205,10 +183,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.balance}
-              onIonChange={() => handleCheckboxChange('balance')}
+              onIonChange={() => handleCheckboxChange('balance', mentalHealth, setMentalHealth)}
               aria-label="Having a balance"
             />
-            <IonLabel onClick={() => handleCheckboxChange('balance')}>
+            <IonLabel onClick={() => handleCheckboxChange('balance', mentalHealth, setMentalHealth)}>
               Have you set boundaries to ensure a healthy balance between work or responsibilities and personal time for relaxation?
             </IonLabel>
           </IonItem>
@@ -217,17 +195,27 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.kindness}
-              onIonChange={() => handleCheckboxChange('kindness')}
+              onIonChange={() => handleCheckboxChange('kindness', mentalHealth, setMentalHealth)}
               aria-label="Being kind"
             />
-            <IonLabel onClick={() => handleCheckboxChange('kindness')}>
+            <IonLabel onClick={() => handleCheckboxChange('kindness', mentalHealth, setMentalHealth)}>
               Have you practiced at least one act of kindness towards yourself or others today?
             </IonLabel>
           </IonItem>
 
         </IonList>
+        <h1>Debugging Information</h1>
         <p>
-          Goals Accomplished: {checkedCount} out of {Object.keys(mentalHealth).length}
+          Number of checked checkboxes: {checkedCount}
+        </p>
+        <p>
+          Total number of checkboxes: {totalCheckboxes}
+        </p>
+        <p>
+          Progress: {Math.round(checkedCount / totalCheckboxes * 100)}%
+        </p>
+        <p>
+          Hex Color: {color}
         </p>
         <DateTimeDisplay />
       </IonContent>
