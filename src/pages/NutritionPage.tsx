@@ -26,29 +26,42 @@ interface NutritionPageState {
   waterTarget: boolean;
   fastFood: boolean;
 }
+interface CheckboxState {
+  calorieTarget: false,
+  individualMeals: false,
+  waterTarget: false,
+  fastFood: false,
+}
 
 const NutritionPage: React.FC = () => {
+  const initialState: CheckboxState = {
+    calorieTarget: false,
+    individualMeals: false,
+    waterTarget: false,
+    fastFood: false,
+  };
   const [nutritionHabits, setNutritionHabits] = useState<NutritionPageState>(() => {
-    if (isNewDay()) {
-      // If it's a new day, return the initial state with all checkboxes cleared
-      return {
-        calorieTarget: false,
-        individualMeals: false,
-        waterTarget: false,
-        fastFood: false,
-      };
-    } else {
     const storedState = localStorage.getItem('nutritionPageCheckboxes');
-    return storedState
-      ? JSON.parse(storedState)
-      : {
-        calorieTarget: false,
-        individualMeals: false,
-        waterTarget: false,
-        fastFood: false,
-      };
-    }
+    return storedState ? JSON.parse(storedState) : initialState;
   });
+
+  useEffect(() => {
+    if (isNewDay()) {
+      setNutritionHabits(initialState);
+      localStorage.setItem('nutritionPageCheckboxes', JSON.stringify(initialState));
+    }
+  }, []);
+
+  const onCheckboxChange = (key: keyof NutritionPageState) => {
+    setNutritionHabits((prevHabits) => {
+      const newHabits = {
+        ...prevHabits,
+        [key]: !prevHabits[key],
+      };
+      localStorage.setItem('nutritionPageCheckboxes', JSON.stringify(newHabits));
+      return newHabits;
+    });
+  };
 
   const { setNutritionCheckedCount } = useGlobalCounts();
 
@@ -66,7 +79,7 @@ const NutritionPage: React.FC = () => {
     <IonPage>
       <IonHeader translucent={true}>
         <IonToolbar>
-          <IonButtons slot="start"><IonBackButton/></IonButtons>
+          <IonButtons slot="start"><IonBackButton /></IonButtons>
           <IonTitle>Nutrition</IonTitle>
           <IonProgressBar
             className={`progress-bar-custom color-${color}`}
@@ -85,7 +98,7 @@ const NutritionPage: React.FC = () => {
             <IonCheckbox
               slot="start"
               checked={nutritionHabits.calorieTarget}
-              onIonChange={() => handleCheckboxChange('calorieTarget', nutritionHabits, setNutritionHabits)}
+              onIonChange={() => onCheckboxChange('calorieTarget')}
               aria-label="Calorie Target"
             />
             <IonLabel onClick={() => handleCheckboxChange('calorieTarget', nutritionHabits, setNutritionHabits)}>
