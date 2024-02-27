@@ -51,18 +51,7 @@ const NutritionPage: React.FC = () => {
       localStorage.setItem('nutritionPageCheckboxes', JSON.stringify(initialState));
     }
   }, []);
-
-  const onCheckboxChange = (key: keyof NutritionPageState) => {
-    setNutritionHabits((prevHabits) => {
-      const newHabits = {
-        ...prevHabits,
-        [key]: !prevHabits[key],
-      };
-      localStorage.setItem('nutritionPageCheckboxes', JSON.stringify(newHabits));
-      return newHabits;
-    });
-  };
-
+  
   const { setNutritionCheckedCount } = useGlobalCounts();
 
   useEffect(() => {
@@ -98,7 +87,7 @@ const NutritionPage: React.FC = () => {
             <IonCheckbox
               slot="start"
               checked={nutritionHabits.calorieTarget}
-              onIonChange={() => onCheckboxChange('calorieTarget')}
+              onIonChange={() => handleCheckboxChange('calorieTarget', nutritionHabits, setNutritionHabits)}
               aria-label="Calorie Target"
             />
             <IonLabel onClick={() => handleCheckboxChange('calorieTarget', nutritionHabits, setNutritionHabits)}>
