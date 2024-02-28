@@ -15,9 +15,9 @@ import {
 } from '@ionic/react';
 
 import { calculateCheckedCount, getColorBasedOnCount, handleCheckboxChange } from './functions';
-
 import './PhysicalHealthPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
+import { isNewDay } from '../utils/checkNewDay';
 
 interface PhysicalPageState {
   resistance: boolean;
@@ -27,13 +27,26 @@ interface PhysicalPageState {
   steps: boolean;
   sunlight: boolean;
 }
-
+interface CheckboxState {
+  resistance: false,
+  cardio: false,
+  balance: false,
+  rom: false,
+  steps: false,
+  sunlight: false,
+}
 const PhysicalPage: React.FC = () => {
+  const initialState: CheckboxState = {
+    resistance: false,
+    cardio: false,
+    balance: false,
+    rom: false,
+    steps: false,
+    sunlight: false,
+  };
   const [physicalHabits, setPhysicalHabits] = useState<PhysicalPageState>(() => {
-    const storedState = localStorage.getItem('physicalPageCheckboxes');
-    return storedState
-      ? JSON.parse(storedState)
-      : {
+    const storedState = localStorage.getItem('physicalHealthPageCheckboxes');
+    return storedState ? JSON.parse(storedState) : {
         resistance: false,
         cardio: false,
         balance: false,
@@ -43,12 +56,19 @@ const PhysicalPage: React.FC = () => {
       };
   });
 
+  useEffect(() => {
+    if (isNewDay()) {
+      setPhysicalHabits(initialState);
+      localStorage.setItem('physicalHealthPageCheckboxes', JSON.stringify(initialState));
+    }
+  }, []);
+
   const { setPhysicalHealthCheckedCount } = useGlobalCounts();
 
   useEffect(() => {
     const newCheckedCount = calculateCheckedCount(physicalHabits);
     setPhysicalHealthCheckedCount(newCheckedCount);
-    localStorage.setItem('physicalPageCheckboxes', JSON.stringify(physicalHabits)); // Optionally, persist the physicalHabits state in localStorage
+    localStorage.setItem('physicalPageCheckboxes', JSON.stringify(physicalHabits)); // Persist the physicalHabits state in localStorage
   }, [physicalHabits, setPhysicalHealthCheckedCount]);
 
   const checkedCount = calculateCheckedCount(physicalHabits);
