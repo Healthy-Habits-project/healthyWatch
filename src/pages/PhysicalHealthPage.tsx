@@ -15,9 +15,9 @@ import {
 } from '@ionic/react';
 
 import { calculateCheckedCount, getColorBasedOnCount, handleCheckboxChange } from './functions';
-
 import './PhysicalHealthPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
+import { isNewDay } from '../utils/checkNewDay';
 
 interface PhysicalPageState {
   resistance: boolean;
@@ -27,28 +27,43 @@ interface PhysicalPageState {
   steps: boolean;
   sunlight: boolean;
 }
-
+interface CheckboxState {
+  resistance: false,
+  cardio: false,
+  balance: false,
+  rom: false,
+  steps: false,
+  sunlight: false,
+}
 const PhysicalPage: React.FC = () => {
-  const [physicalHabits, setPhysicalHabits] = useState<PhysicalPageState>(() => {
+  const initialState: CheckboxState = {
+    resistance: false,
+    cardio: false,
+    balance: false,
+    rom: false,
+    steps: false,
+    sunlight: false,
+  };
+  const [physicalHabits, setPhysicalHabits] = useState<CheckboxState>(() => {
     const storedState = localStorage.getItem('physicalPageCheckboxes');
-    return storedState
-      ? JSON.parse(storedState)
-      : {
-        resistance: false,
-        cardio: false,
-        balance: false,
-        rom: false,
-        steps: false,
-        sunlight: false,
-      };
+    return storedState ? JSON.parse(storedState) : initialState;
   });
+
+  useEffect(() => {
+    console.log('Checking for a new day...');
+    if (isNewDay('physicalPage')) {
+      console.log('New day, resetting checkboxes');
+      setPhysicalHabits(initialState);
+      localStorage.setItem('physicalPageCheckboxes', JSON.stringify(initialState));
+    } 
+  }, []);
 
   const { setPhysicalHealthCheckedCount } = useGlobalCounts();
 
   useEffect(() => {
     const newCheckedCount = calculateCheckedCount(physicalHabits);
     setPhysicalHealthCheckedCount(newCheckedCount);
-    localStorage.setItem('physicalPageCheckboxes', JSON.stringify(physicalHabits)); // Optionally, persist the physicalHabits state in localStorage
+    localStorage.setItem('physicalPageCheckboxes', JSON.stringify(physicalHabits)); // Persist the physicalHabits state in localStorage
   }, [physicalHabits, setPhysicalHealthCheckedCount]);
 
   const checkedCount = calculateCheckedCount(physicalHabits);
@@ -59,7 +74,7 @@ const PhysicalPage: React.FC = () => {
     <IonPage>
       <IonHeader translucent={true}>
         <IonToolbar>
-          <IonButtons slot='start'><IonBackButton/></IonButtons>
+          <IonButtons slot='start'><IonBackButton /></IonButtons>
           <IonTitle>Physical</IonTitle>
           <IonProgressBar
             className={`progress-bar-custom color-${color}`}
@@ -90,7 +105,7 @@ const PhysicalPage: React.FC = () => {
               Did you meet your resistance training goal today?
             </IonLabel>
           </IonItem>
-        
+
           <IonItem>
             <IonCheckbox
               slot="start"

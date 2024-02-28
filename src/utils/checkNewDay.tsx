@@ -1,16 +1,16 @@
-// utils/checkNewDay.ts
-export const isNewDay = (): boolean => {
-    const simulatedToday: string = new Date('2024-02-28').toDateString(); // Set this to a date that is after the lastVisitDat
-const today: string = new Date().toDateString();
-const lastVisitDate: string | null = localStorage.getItem('lastVisitDate');
+export const isNewDay = (pageKey: string): boolean => {
+    const today = new Date().toLocaleDateString('en-CA'); // Outputs YYYY-MM-DD in local time zone
+    const lastVisitKey = `${pageKey}-lastVisitDate`;
+    const lastVisitDate = localStorage.getItem(lastVisitKey);
 
-console.log('Today:', today, 'Last Visit:', lastVisitDate); // Add this line for debugging
+    console.log(`Today: ${today}, Last Visit: ${lastVisitDate}`);
 
-if (today !== lastVisitDate) {
-    localStorage.setItem('lastVisitDate', today);
-    return true; // It's a new day
-}
+    if (today !== lastVisitDate) {
+        localStorage.setItem(lastVisitKey, today);
+        console.log(`It's a new day for ${pageKey}.`);
+        return true;
+    }
 
-return false; // Not a new day
-}
-export default isNewDay
+    console.log(`Not a new day for ${pageKey}.`);
+    return false;
+};
