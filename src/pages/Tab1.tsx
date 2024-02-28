@@ -1,3 +1,4 @@
+// Tab1.tsx
 import React from 'react';
 import {
   IonCard,
@@ -18,14 +19,16 @@ import { getColorBasedOnCount } from './functions';
 
 import './Tab1.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
+import { useUser } from '../contexts/UserContext'; // Import useUser hook
 
 const Tab1: React.FC = () => {
   const { mentalHealthCheckedCount } = useGlobalCounts();
   const { physicalHealthCheckedCount } = useGlobalCounts();
   const { nutritionCheckedCount } = useGlobalCounts();
   const { sleepCheckedCount } = useGlobalCounts();
+  const { userName } = useUser(); // Destructure the context object
 
-  {/* TODO: Replace hard-coded values with values calculated from the GlobalCountsContext, somehow. */}
+  // TODO: Replace hard-coded values with values calculated from the GlobalCountsContext, somehow.
   const totalPhysicalCheckboxes = 6;
   const totalMentalCheckboxes = 8;
   const totalNutritionCheckboxes = 4;
@@ -40,7 +43,7 @@ const Tab1: React.FC = () => {
     <IonPage>
       <IonHeader translucent={true}>
         <IonToolbar>
-          <IonTitle className = "ion-text-center">Hello, obvious change</IonTitle>
+          <IonTitle className="ion-text-center">{`Hello${userName}`}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen={true} className="ion-padding">
@@ -52,7 +55,7 @@ const Tab1: React.FC = () => {
 
         <IonGrid>
           <IonRow>
-            <IonCol size="6" size-sm="4" style={{}}>
+            <IonCol size="6" size-sm="4">
               <IonRouterLink routerLink="/mentalhealthpage">
                 <IonCard style={{ backgroundColor: mentalColor }}>
                   <img alt="MentalHealth" src="/MentalHealthCard.png" />
@@ -63,7 +66,7 @@ const Tab1: React.FC = () => {
               </IonRouterLink>
             </IonCol>
 
-            <IonCol size="6" size-sm="4" style={{}}>
+            <IonCol size="6" size-sm="4">
               <IonRouterLink routerLink="/physicalhealthpage">
                 <IonCard style={{ backgroundColor: physicalColor }}>
                   <img alt="PhysicalHealth" src="/PhysicalHealthCard.png" height="" />
@@ -74,7 +77,7 @@ const Tab1: React.FC = () => {
               </IonRouterLink>
             </IonCol>
 
-            <IonCol size="6" size-sm="4" style={{}}>
+            <IonCol size="6" size-sm="4">
               <IonRouterLink routerLink="/nutritionpage">
                 <IonCard style={{ backgroundColor: nutritionColor }}>
                   <img alt="Nutrition" src="/NutritionCard.png" />
@@ -85,7 +88,7 @@ const Tab1: React.FC = () => {
               </IonRouterLink>
             </IonCol>
 
-            <IonCol size="6" size-sm="4" style={{}}>
+            <IonCol size="6" size-sm="4">
               <IonRouterLink routerLink="/sleeppage">
                 <IonCard style={{ backgroundColor: sleepColor }}>
                   <img alt="SleepHabits" src="/SleepCard.png" />

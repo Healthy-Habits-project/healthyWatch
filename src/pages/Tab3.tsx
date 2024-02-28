@@ -1,4 +1,3 @@
-// Tab3.tsx
 import React, { useState } from 'react';
 import {
   IonButton,
@@ -17,12 +16,15 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import './Tab3.css';
+import { useUser } from '../contexts/UserContext'; // Import useUser hook
 
 const Tab3: React.FC = () => {
   const [name, setName] = useState('');
+  const { userName, setUserName } = useUser(); // Destructure the context object
 
   const handleSave = () => {
     console.log('LOG: Saving app data, set name to:', name);
+    setUserName(", " + name); // Update user name in the context
   };
 
   const handleThemeChange = (selectedTheme: string) => {

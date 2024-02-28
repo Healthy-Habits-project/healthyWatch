@@ -41,47 +41,50 @@ import './theme/variables.css';
 
 import { ThemeProvider } from './components/ThemeContext';
 import { CheckboxProvider } from './contexts/CheckboxContext';
+import { UserContextProvider } from './contexts/UserContext'; // Import UserContextProvider
 setupIonicReact();
 
 const App: React.FC = () => (
   <ThemeProvider>
     <CheckboxProvider>
       <GlobalCountsProvider>
-        <IonApp>
-          <IonReactRouter>
-            <IonTabs>
-              <IonRouterOutlet>
-                <Route path="/mentalhealthpage" component={MentalHealthPage} exact />
-                <Route path="/physicalhealthpage" component={PhysicalHealthPage} exact />
-                <Route path="/nutritionpage" component={NutritionPage} exact />
-                <Route path="/sleeppage" component={SleepPage} exact />
-                <Route exact path="/tab1">
-                  <Tab1 />
-                </Route>
-                <Route exact path="/tab2">
-                  <Tab2 />
-                </Route>
-                <Route path="/tab3">
-                  <Tab3 />
-                </Route>
-                <Route exact path="/">
-                  <Redirect to="/tab1" />
-                </Route>
-              </IonRouterOutlet>
-              <IonTabBar slot="bottom">
-                <IonTabButton tab="tab1" href="/tab1">
-                  <IonIcon icon={homeOutline} />
-                </IonTabButton>
-                <IonTabButton tab="tab2" href="/tab2">
-                  <IonIcon icon={calendarOutline} />
-                </IonTabButton>
-                <IonTabButton tab="tab3" href="/tab3">
-                  <IonIcon icon={settingsOutline} />
-                </IonTabButton>
-              </IonTabBar>
-            </IonTabs>
-          </IonReactRouter>
-        </IonApp>
+        <UserContextProvider> {/* Wrap the entire app with UserContextProvider */}
+          <IonApp>
+            <IonReactRouter>
+              <IonTabs>
+                <IonRouterOutlet>
+                  <Route path="/mentalhealthpage" component={MentalHealthPage} exact />
+                  <Route path="/physicalhealthpage" component={PhysicalHealthPage} exact />
+                  <Route path="/nutritionpage" component={NutritionPage} exact />
+                  <Route path="/sleeppage" component={SleepPage} exact />
+                  <Route exact path="/tab1">
+                    <Tab1 />
+                  </Route>
+                  <Route exact path="/tab2">
+                    <Tab2 />
+                  </Route>
+                  <Route path="/tab3">
+                    <Tab3 />
+                  </Route>
+                  <Route exact path="/">
+                    <Redirect to="/tab1" />
+                  </Route>
+                </IonRouterOutlet>
+                <IonTabBar slot="bottom">
+                  <IonTabButton tab="tab1" href="/tab1">
+                    <IonIcon icon={homeOutline} />
+                  </IonTabButton>
+                  <IonTabButton tab="tab2" href="/tab2">
+                    <IonIcon icon={calendarOutline} />
+                  </IonTabButton>
+                  <IonTabButton tab="tab3" href="/tab3">
+                    <IonIcon icon={settingsOutline} />
+                  </IonTabButton>
+                </IonTabBar>
+              </IonTabs>
+            </IonReactRouter>
+          </IonApp>
+        </UserContextProvider>
       </GlobalCountsProvider>
     </CheckboxProvider>
   </ThemeProvider>
