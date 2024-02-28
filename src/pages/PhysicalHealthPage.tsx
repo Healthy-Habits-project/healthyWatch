@@ -44,23 +44,18 @@ const PhysicalPage: React.FC = () => {
     steps: false,
     sunlight: false,
   };
-  const [physicalHabits, setPhysicalHabits] = useState<PhysicalPageState>(() => {
-    const storedState = localStorage.getItem('physicalHealthPageCheckboxes');
-    return storedState ? JSON.parse(storedState) : {
-        resistance: false,
-        cardio: false,
-        balance: false,
-        rom: false,
-        steps: false,
-        sunlight: false,
-      };
+  const [physicalHabits, setPhysicalHabits] = useState<CheckboxState>(() => {
+    const storedState = localStorage.getItem('physicalPageCheckboxes');
+    return storedState ? JSON.parse(storedState) : initialState;
   });
 
   useEffect(() => {
-    if (isNewDay()) {
+    console.log('Checking for a new day...');
+    if (isNewDay('physicalPage')) {
+      console.log('New day, resetting checkboxes');
       setPhysicalHabits(initialState);
-      localStorage.setItem('physicalHealthPageCheckboxes', JSON.stringify(initialState));
-    }
+      localStorage.setItem('physicalPageCheckboxes', JSON.stringify(initialState));
+    } 
   }, []);
 
   const { setPhysicalHealthCheckedCount } = useGlobalCounts();
@@ -79,7 +74,7 @@ const PhysicalPage: React.FC = () => {
     <IonPage>
       <IonHeader translucent={true}>
         <IonToolbar>
-          <IonButtons slot='start'><IonBackButton/></IonButtons>
+          <IonButtons slot='start'><IonBackButton /></IonButtons>
           <IonTitle>Physical</IonTitle>
           <IonProgressBar
             className={`progress-bar-custom color-${color}`}
@@ -110,7 +105,7 @@ const PhysicalPage: React.FC = () => {
               Did you meet your resistance training goal today?
             </IonLabel>
           </IonItem>
-        
+
           <IonItem>
             <IonCheckbox
               slot="start"

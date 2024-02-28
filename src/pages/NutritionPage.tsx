@@ -37,16 +37,17 @@ const NutritionPage: React.FC = () => {
     waterTarget: false,
     fastFood: false,
   };
-  const [nutritionHabits, setNutritionHabits] = useState<NutritionPageState>(() => {
+  const [nutritionHabits, setNutritionHabits] = useState<CheckboxState>(() => {
     const storedState = localStorage.getItem('nutritionPageCheckboxes');
     return storedState ? JSON.parse(storedState) : initialState;
   });
-
   useEffect(() => {
-    if (isNewDay()) {
+    console.log('Checking for a new day...');
+    if (isNewDay('nutritionPage')) {
+      console.log('New day, resetting checkboxes');
       setNutritionHabits(initialState);
-      localStorage.setItem('nutritionPageCheckboxes', JSON.stringify(initialState));
-    }
+      localStorage.setItem('physicalPageCheckboxes', JSON.stringify(initialState));
+    } 
   }, []);
 
   const { setNutritionCheckedCount } = useGlobalCounts();
