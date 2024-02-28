@@ -44,9 +44,9 @@ const NutritionPage: React.FC = () => {
   useEffect(() => {
     console.log('Checking for a new day...');
     if (isNewDay('nutritionPage')) {
-      console.log('New day, resetting checkboxes');
+      console.log('New day, resetting nutrition checkboxes');
       setNutritionHabits(initialState);
-      localStorage.setItem('physicalPageCheckboxes', JSON.stringify(initialState));
+      localStorage.setItem('nutritionPageCheckboxes', JSON.stringify(initialState));
     } 
   }, []);
 
