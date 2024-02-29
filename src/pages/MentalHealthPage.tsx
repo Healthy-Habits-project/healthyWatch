@@ -18,8 +18,8 @@ import { calculateCheckedCount, getColorBasedOnCount, handleCheckboxChange } fro
 
 import './SleepPage.css';
 import { useGlobalCounts } from '../contexts/GlobalCountsContext';
-
 import DateTimeDisplay from '../components/GetDateTime';
+import { isNewDay } from '../utils/checkNewDay';
 
 interface mentalHealthPageState {
   mindfulness: boolean;
@@ -31,23 +31,42 @@ interface mentalHealthPageState {
   balance: boolean;
   kindness: boolean;
 }
+interface CheckboxState {
+  mindfulness: false,
+  family: false,
+  manageStress: false,
+  limitScreen: false,
+  hobby: false,
+  feelings: false,
+  balance: false,
+  kindness: false,
+}
 
-const mentalHealthPage: React.FC = (): React.ReactElement => {
-  const [mentalHealth, setMentalHealth] = useState<mentalHealthPageState>(() => {
+const mentalHealthPage: React.FC = () => {
+  const initialState: CheckboxState = {
+    mindfulness: false,
+    family: false,
+    manageStress: false,
+    limitScreen: false,
+    hobby: false,
+    feelings: false,
+    balance: false,
+    kindness: false,
+  };
+  const [ mentalHealth, setMentalHealthHabits] = useState<CheckboxState>(() => {
     const storedState = localStorage.getItem('mentalHealthPageCheckboxes');
-    return storedState
-      ? JSON.parse(storedState)
-      : {
-        mindfulness: false,
-        family: false,
-        manageStress: false,
-        limitScreen: false,
-        hobby: false,
-        feelings: false,
-        balance: false,
-        kindness: false,
-      };
-  });
+    return storedState ? JSON.parse(storedState) : initialState;
+  }); 
+
+  useEffect(() => {
+    console.log('Checking for a new day...');
+    if (isNewDay('mentalHealthPage')) {
+      console.log('New day, resetting checkboxes');
+      setMentalHealthHabits(initialState);
+      localStorage.setItem('mentalHealthPageCheckboxes', JSON.stringify(initialState));
+    } 
+  }, []);
+
 
   const { setMentalHealthCheckedCount } = useGlobalCounts();
 
@@ -84,10 +103,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.mindfulness}
-              onIonChange={() => handleCheckboxChange('mindfulness', mentalHealth, setMentalHealth)}
+              onIonChange={() => handleCheckboxChange('mindfulness', mentalHealth, setMentalHealthHabits)}
               aria-label="mindfulness"
             />
-            <IonLabel onClick={() => handleCheckboxChange('mindfulness', mentalHealth, setMentalHealth)}>
+            <IonLabel onClick={() => handleCheckboxChange('mindfulness', mentalHealth, setMentalHealthHabits)}>
               Did you practice mindfulness or meditation for at least 5 minutes today?
             </IonLabel>
           </IonItem>
@@ -96,10 +115,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.family}
-              onIonChange={() => handleCheckboxChange('family', mentalHealth, setMentalHealth)}
+              onIonChange={() => handleCheckboxChange('family', mentalHealth, setMentalHealthHabits)}
               aria-label="family"
             />
-            <IonLabel onClick={() => handleCheckboxChange('family', mentalHealth, setMentalHealth)}>
+            <IonLabel onClick={() => handleCheckboxChange('family', mentalHealth, setMentalHealthHabits)}>
               Did you connect with a friend or family member for emotional support today?
             </IonLabel>
           </IonItem>
@@ -108,10 +127,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.manageStress}
-              onIonChange={() => handleCheckboxChange('manageStress', mentalHealth, setMentalHealth)}
+              onIonChange={() => handleCheckboxChange('manageStress', mentalHealth, setMentalHealthHabits)}
               aria-label="Managing stress"
             />
-            <IonLabel onClick={() => handleCheckboxChange('manageStress', mentalHealth, setMentalHealth)}>
+            <IonLabel onClick={() => handleCheckboxChange('manageStress', mentalHealth, setMentalHealthHabits)}>
               Have you taken breaks to manage stress at work or during your daily routine?
             </IonLabel>
           </IonItem>
@@ -120,10 +139,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.limitScreen}
-              onIonChange={() => handleCheckboxChange('limitScreen', mentalHealth, setMentalHealth)}
+              onIonChange={() => handleCheckboxChange('limitScreen', mentalHealth, setMentalHealthHabits)}
               aria-label="Limiting screens"
             />
-            <IonLabel onClick={() => handleCheckboxChange('limitScreen', mentalHealth, setMentalHealth)}>
+            <IonLabel onClick={() => handleCheckboxChange('limitScreen', mentalHealth, setMentalHealthHabits)}>
               Have you limited your screen time on electronic devices to promote a healthy mental state?
             </IonLabel>
           </IonItem>
@@ -132,10 +151,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.hobby}
-              onIonChange={() => handleCheckboxChange('hobby', mentalHealth, setMentalHealth)}
+              onIonChange={() => handleCheckboxChange('hobby', mentalHealth, setMentalHealthHabits)}
               aria-label="Having a hobby"
             />
-            <IonLabel onClick={() => handleCheckboxChange('hobby', mentalHealth, setMentalHealth)}>
+            <IonLabel onClick={() => handleCheckboxChange('hobby', mentalHealth, setMentalHealthHabits)}>
               Did you set aside time for a hobby or activity you enjoy for relaxation today?
             </IonLabel>
           </IonItem>
@@ -144,10 +163,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.feelings}
-              onIonChange={() => handleCheckboxChange('feelings', mentalHealth, setMentalHealth)}
+              onIonChange={() => handleCheckboxChange('feelings', mentalHealth, setMentalHealthHabits)}
               aria-label="Communicating feelings"
             />
-            <IonLabel onClick={() => handleCheckboxChange('feelings', mentalHealth, setMentalHealth)}>
+            <IonLabel onClick={() => handleCheckboxChange('feelings', mentalHealth, setMentalHealthHabits)}>
               Have you addressed and communicated your feelings with someone if you were experiencing distress?
             </IonLabel>
           </IonItem>
@@ -156,10 +175,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.balance}
-              onIonChange={() => handleCheckboxChange('balance', mentalHealth, setMentalHealth)}
+              onIonChange={() => handleCheckboxChange('balance', mentalHealth, setMentalHealthHabits)}
               aria-label="Having a balance"
             />
-            <IonLabel onClick={() => handleCheckboxChange('balance', mentalHealth, setMentalHealth)}>
+            <IonLabel onClick={() => handleCheckboxChange('balance', mentalHealth, setMentalHealthHabits)}>
               Have you set boundaries to ensure a healthy balance between work or responsibilities and personal time for relaxation?
             </IonLabel>
           </IonItem>
@@ -168,10 +187,10 @@ const mentalHealthPage: React.FC = (): React.ReactElement => {
             <IonCheckbox
               slot="start"
               checked={mentalHealth.kindness}
-              onIonChange={() => handleCheckboxChange('kindness', mentalHealth, setMentalHealth)}
+              onIonChange={() => handleCheckboxChange('kindness', mentalHealth, setMentalHealthHabits)}
               aria-label="Being kind"
             />
-            <IonLabel onClick={() => handleCheckboxChange('kindness', mentalHealth, setMentalHealth)}>
+            <IonLabel onClick={() => handleCheckboxChange('kindness', mentalHealth, setMentalHealthHabits)}>
               Have you practiced at least one act of kindness towards yourself or others today?
             </IonLabel>
           </IonItem>
