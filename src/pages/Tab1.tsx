@@ -49,7 +49,7 @@ const Tab1: React.FC = () => {
       <IonContent fullscreen={true} className="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Healthy Habit Tracker</IonTitle>
+            <IonHeader class="mediumHeader">Healthy Habit Tracker</IonHeader>
           </IonToolbar>
         </IonHeader>
 

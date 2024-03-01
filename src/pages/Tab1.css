@@ -7,6 +7,10 @@ ion-card-title {
     font-size: 1.2rem;
     color: white;
 }
+.mediumHeader {
+    font-size: 200%;
+    text-align: center;
+}
 /* ion-row {
     background-color: #7030a0;
 } */
@@ -23,3 +27,4 @@ ion-card-header {
 ion-grid {
     padding: inherit;
 }
+
