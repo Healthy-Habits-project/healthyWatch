@@ -24,7 +24,8 @@ const Tab3: React.FC = () => {
 
   const handleSave = () => {
     console.log('LOG: Saving app data, set name to:', name);
-    setUserName(", " + name); // Update user name in the context
+    setUserName(", " + name);
+    setUserName(", " + name);
   };
 
   const handleThemeChange = (selectedTheme: string) => {

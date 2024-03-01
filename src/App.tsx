@@ -41,7 +41,7 @@ import './theme/variables.css';
 
 import { ThemeProvider } from './components/ThemeContext';
 import { CheckboxProvider } from './contexts/CheckboxContext';
-import { UserContextProvider } from './contexts/UserContext'; // Import UserContextProvider
+import { UserContextProvider } from './contexts/UserContext';
 setupIonicReact();
 
 const App: React.FC = () => (
