@@ -17,15 +17,30 @@ import {
 } from '@ionic/react';
 import './Tab3.css';
 import { useUser } from '../contexts/UserContext'; // Import useUser hook
+import { useEffect } from 'react';
 
 const Tab3: React.FC = () => {
   const [name, setName] = useState('');
-  const { userName, setUserName } = useUser(); // Destructure the context object
+  const { userName, setUserName } = useUser();
+  const [saveClicked, setSaveClicked] = useState(false);
+
+  useEffect(() => {
+    if (saveClicked) {
+      // Introduce a delay of 100 milliseconds (adjust as needed)
+      const delayDuration = 100;
+
+      const timeoutId = setTimeout(() => {
+        setUserName(name);
+        setSaveClicked(false);
+      }, delayDuration);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [saveClicked, name, setUserName]);
 
   const handleSave = () => {
     console.log('LOG: Saving app data, set name to:', name);
-    setUserName(", " + name);
-    setUserName(", " + name);
+    setSaveClicked(true);
   };
 
   const handleThemeChange = (selectedTheme: string) => {
@@ -45,7 +60,7 @@ const Tab3: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Settings</IonTitle>
+          <IonTitle>Settings {userName}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
