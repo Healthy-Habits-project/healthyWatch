@@ -133,10 +133,10 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
           const barHeight = '25%';
           return (
             <div style={{ position: 'absolute', bottom: 0, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-              <div style={{ width: `${mentalHealthPercentage}%`, height: barHeight, backgroundColor: 'red' }}></div>
-              <div style={{ width: `${physicalHealthPercentage}%`, height: barHeight, backgroundColor: 'blue' }}></div>
-              <div style={{ width: `${nutritionPercentage}%`, height: barHeight, backgroundColor: 'green' }}></div>
-              <div style={{ width: `${sleepPercentage}%`, height: barHeight, backgroundColor: 'orange' }}></div>
+              <div style={{ width: `${mentalHealthPercentage}%`, height: barHeight, backgroundColor: '#ebc2ff' }}></div>
+              <div style={{ width: `${physicalHealthPercentage}%`, height: barHeight, backgroundColor: '#a873e8' }}></div>
+              <div style={{ width: `${nutritionPercentage}%`, height: barHeight, backgroundColor: '#56d1dc' }}></div>
+              <div style={{ width: `${sleepPercentage}%`, height: barHeight, backgroundColor: '#5d7bd5' }}></div>
             </div>
           );
         };

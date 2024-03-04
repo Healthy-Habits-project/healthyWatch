@@ -59,7 +59,7 @@ const Tab1: React.FC = () => {
               <IonRouterLink routerLink="/mentalhealthpage">
                 <IonCard style={{ backgroundColor: mentalColor }}>
                   <img alt="MentalHealth" src="/MentalHealthCard.png" />
-                  <IonCardHeader>
+                  <IonCardHeader style={{ backgroundColor: "#ebc2ff" }}>
                     <IonCardTitle>Mental Health</IonCardTitle>
                   </IonCardHeader>
                 </IonCard>
@@ -70,7 +70,7 @@ const Tab1: React.FC = () => {
               <IonRouterLink routerLink="/physicalhealthpage">
                 <IonCard style={{ backgroundColor: physicalColor }}>
                   <img alt="PhysicalHealth" src="/PhysicalHealthCard.png" height="" />
-                  <IonCardHeader>
+                  <IonCardHeader style={{ backgroundColor: "#a873e8" }}>
                     <IonCardTitle>Physical Health</IonCardTitle>
                   </IonCardHeader>
                 </IonCard>
@@ -81,7 +81,7 @@ const Tab1: React.FC = () => {
               <IonRouterLink routerLink="/nutritionpage">
                 <IonCard style={{ backgroundColor: nutritionColor }}>
                   <img alt="Nutrition" src="/NutritionCard.png" />
-                  <IonCardHeader>
+                  <IonCardHeader style={{ backgroundColor: "#56d1dc" }}>
                     <IonCardTitle>Nutrition</IonCardTitle>
                   </IonCardHeader>
                 </IonCard>
@@ -92,7 +92,7 @@ const Tab1: React.FC = () => {
               <IonRouterLink routerLink="/sleeppage">
                 <IonCard style={{ backgroundColor: sleepColor }}>
                   <img alt="SleepHabits" src="/SleepCard.png" />
-                  <IonCardHeader>
+                  <IonCardHeader style={{ backgroundColor: "#5d7bd5" }}>
                     <IonCardTitle>Sleep</IonCardTitle>
                   </IonCardHeader>
                 </IonCard>
