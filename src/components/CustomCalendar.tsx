@@ -1,5 +1,5 @@
 // CustomCalendar.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   format,
   startOfWeek,
@@ -32,6 +32,31 @@ interface CustomCalendarProps {
 
 const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect, calculatedColor, progressData }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const getMillisecondsUntilEndOfDay = (): number => {
+    const now = new Date();
+    const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999); 
+    return endOfDay.getTime() - now.getTime(); 
+  };
+
+  const saveHealthData = (data: ProgressData, date: string) => {
+    const healthData = {
+      mentalHealthPercentage: (data.mentalHealthCheckedCount / MAX_CHECKBOXES.mentalHealth) * 100,
+      physicalHealthPercentage: (data.physicalHealthCheckedCount / MAX_CHECKBOXES.physicalHealth) * 100,
+      nutritionPercentage: (data.nutritionCheckedCount / MAX_CHECKBOXES.nutrition) * 100,
+      sleepPercentage: (data.sleepCheckedCount / MAX_CHECKBOXES.sleep) * 100,
+    };
+  
+    const existingData = JSON.parse(localStorage.getItem('healthDataByDate') || '{}');
+    existingData[date] = healthData;
+    localStorage.setItem('healthDataByDate', JSON.stringify(existingData)); 
+  };
+  
+  useEffect(() => {
+    const currentDate = new Date().toISOString().slice(0, 10);
+    saveHealthData(progressData, currentDate);
+
+  }, [progressData]);
+  
 
   const getColorForRating = (rating: number): string => {
     switch (rating) {
@@ -48,6 +73,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
       default: return '';
     }
   };
+
 
   const renderHeader = () => {
     const dateFormat = 'MMMM yyyy';
@@ -140,8 +166,6 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
             </div>
           );
         };
-
-
         days.push(
           <div
             className={`column cell ${!isCurrentMonth ? 'disabled' : ''} ${isTodayFlag ? 'today' : ''}`}
