@@ -52,7 +52,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
   };
   
   useEffect(() => {
-    const currentDate = new Date().toISOString().slice(0, 10);
+    const currentDate = format(new Date(), 'yyyy-MM-dd');
     saveHealthData(progressData, currentDate);
 
   }, [progressData]);
