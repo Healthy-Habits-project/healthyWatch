@@ -31,12 +31,36 @@ interface CustomCalendarProps {
 }
 
 const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect, calculatedColor, progressData }) => {
+  const [selectedDayProgress, setSelectedDayProgress] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const handleDayClick = (date: string) => {
+    const healthDataByDate = JSON.parse(localStorage.getItem('healthDataByDate') || '{}');
+    const selectedDayData = healthDataByDate[date];
+    if (selectedDayData) {
+      setSelectedDayProgress(selectedDayData);
+    } else {
+      setSelectedDayProgress(null); // or your default state
+    }
+  };
+  
   const getMillisecondsUntilEndOfDay = (): number => {
     const now = new Date();
     const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999); 
     return endOfDay.getTime() - now.getTime(); 
   };
+  
+
+  useEffect(() => {
+    // This will run once at the end of the day to save the day's progress data.
+    const delayUntilEndOfDay = getMillisecondsUntilEndOfDay();
+    const timeoutId = setTimeout(() => {
+      const currentDate = format(new Date(), 'yyyy-MM-dd');
+      saveHealthData(progressData, currentDate);
+    }, delayUntilEndOfDay);
+  
+    return () => clearTimeout(timeoutId); // Cleanup on unmount or re-render
+  }, [progressData]); // Rerun only if progressData changes
+  
 
   const saveHealthData = (data: ProgressData, date: string) => {
     const healthData = {
