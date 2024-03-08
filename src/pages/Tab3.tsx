@@ -18,6 +18,7 @@ import {
 import './Tab3.css';
 import { useUser } from '../contexts/UserContext'; // Import useUser hook
 import { useEffect } from 'react';
+import '../theme/variables.css'
 
 const Tab3: React.FC = () => {
   const [name, setName] = useState('');
@@ -75,7 +76,7 @@ const Tab3: React.FC = () => {
           <IonItem>
             <IonLabel>Theme</IonLabel>
             <IonSelect
-              placeholder="Default"
+              placeholder="Change Theme"
               onIonChange={(e: CustomEvent) => handleThemeChange(e.detail.value as string)}>
               <IonSelectOption value="ion-color-light">Light</IonSelectOption>
               <IonSelectOption value="ion-color-dark">Dark</IonSelectOption>
@@ -84,7 +85,6 @@ const Tab3: React.FC = () => {
           <IonGrid>
             <IonRow>
               <IonButton onClick={handleSave}>Save</IonButton>
-              <IonButton onClick={exportAppData}>Export Data</IonButton>
               <IonButton onClick={resetAppData}>Reset Data</IonButton>
             </IonRow>
           </IonGrid>
