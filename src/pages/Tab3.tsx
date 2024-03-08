@@ -76,7 +76,10 @@ const Tab3: React.FC = () => {
             <IonLabel>Theme</IonLabel>
             <IonSelect
               placeholder="Default"
-              onIonChange={(e: CustomEvent) => handleThemeChange(e.detail.value as string)}>
+              onIonChange={(e: CustomEvent) => handleThemeChange(e.detail.value as string)}
+              interface="popover" // Add this line
+              mode="ios" // Add this line
+            >
               <IonSelectOption value="ion-color-light">Light</IonSelectOption>
               <IonSelectOption value="ion-color-dark">Dark</IonSelectOption>
             </IonSelect>
