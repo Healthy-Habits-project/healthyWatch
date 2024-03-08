@@ -50,7 +50,12 @@ const Tab3: React.FC = () => {
   };
 
   const resetAppData = () => {
-    console.log('LOG: Handling reset app data');
+    const confirmReset = window.confirm('Are you sure you want to reset the data?');
+    if (confirmReset) {
+      console.log('LOG: Handling reset app data');
+      localStorage.clear();
+      window.location.reload();
+    }
   };
 
   return (
