@@ -1,0 +1,4 @@
+ion-select-option[value="ion-color-light"] {
+    color: var(--ion-text-color) !important;
+  }
+  

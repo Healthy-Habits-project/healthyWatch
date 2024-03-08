@@ -18,6 +18,7 @@ import {
 import './Tab3.css';
 import { useUser } from '../contexts/UserContext'; // Import useUser hook
 import { useEffect } from 'react';
+import '../theme/variables.css'
 
 const Tab3: React.FC = () => {
   const [name, setName] = useState('');
@@ -87,7 +88,6 @@ const Tab3: React.FC = () => {
           <IonGrid>
             <IonRow>
               <IonButton onClick={handleSave}>Save</IonButton>
-              <IonButton onClick={exportAppData}>Export Data</IonButton>
               <IonButton onClick={resetAppData}>Reset Data</IonButton>
             </IonRow>
           </IonGrid>
