@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  IonAlert,
   IonButton,
   IonContent,
   IonGrid,
@@ -49,23 +50,20 @@ const Tab3: React.FC = () => {
     document.body.classList.add(selectedTheme);
   };
 
-  const resetAppData = () => {
-    const confirmReset = window.confirm('Are you sure you want to reset the data?');
-    if (confirmReset) {
-      console.log('LOG: Handling reset app data');
-      localStorage.clear();
-      window.location.reload();
-    }
+  const handleResetData = () => {
+    console.log('LOG: Handling reset app data');
+    localStorage.clear();
+    window.location.reload();
   };
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent={true}>
         <IonToolbar>
-          <IonTitle>Settings {userName}</IonTitle>
+          <IonTitle>Settings</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen={true} className="ion-padding">
         <IonList>
           <IonItem>
             <IonInput
@@ -88,7 +86,27 @@ const Tab3: React.FC = () => {
           <IonGrid>
             <IonRow>
               <IonButton onClick={handleSave}>Save</IonButton>
-              <IonButton onClick={resetAppData}>Reset Data</IonButton>
+              <IonButton id="present-alert">Reset</IonButton>
+              <IonAlert
+              trigger="present-alert"
+                header="Reset Data"
+                message="Are you sure you want to reset the app data?"
+                buttons={[
+                  {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                      console.log('Cancel clicked');
+                    },
+                  },
+                  {
+                    text: 'Confirm',
+                    handler: () => {
+                      handleResetData();
+                    },
+                  },
+                ]}
+              ></IonAlert>
             </IonRow>
           </IonGrid>
         </IonList>
