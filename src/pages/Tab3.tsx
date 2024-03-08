@@ -53,10 +53,6 @@ const Tab3: React.FC = () => {
     console.log('LOG: Handling reset app data');
   };
 
-  const exportAppData = () => {
-    console.log('LOG: Handling export app data');
-  };
-
   return (
     <IonPage>
       <IonHeader>
@@ -78,8 +74,7 @@ const Tab3: React.FC = () => {
             <IonSelect
               placeholder="Default"
               onIonChange={(e: CustomEvent) => handleThemeChange(e.detail.value as string)}
-              interface="popover" // Add this line
-              mode="ios" // Add this line
+              interface="popover"
             >
               <IonSelectOption value="ion-color-light">Light</IonSelectOption>
               <IonSelectOption value="ion-color-dark">Dark</IonSelectOption>
