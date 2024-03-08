@@ -21,6 +21,10 @@ interface ProgressData {
   physicalHealthCheckedCount: number;
   nutritionCheckedCount: number;
   sleepCheckedCount: number;
+  mentalHealthPercentage?: number;
+  physicalHealthPercentage?: number;
+  nutritionPercentage?: number;
+  sleepPercentage?: number;
 }
 
 interface CustomCalendarProps {
@@ -32,6 +36,48 @@ interface CustomCalendarProps {
 
 const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect, calculatedColor, progressData }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [selectedDay, setSelectedDay] = useState<string | null>(null);
+  // Define the state for holding the progress data of the selected day
+  const [selectedDayProgress, setSelectedDayProgress] = useState<ProgressData | null>(null);
+
+// Assuming selectedDay and selectedDayProgress are already defined in your state
+const handleDayClick = (formattedDay: string) => {
+  // Convert the formattedDay string back to a Date object for comparison
+  const clickedDate = new Date(formattedDay);
+  const today = new Date();
+  
+  // Ensure the clicked date is set to the start of the day for accurate comparison
+  clickedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  // Determine if the clicked day is today or in the past (making it eligible for rating)
+  const isEligibleForRating = clickedDate <= today;
+
+  if (isEligibleForRating) {
+    // Proceed with your existing logic...
+    onDaySelect(formattedDay);
+
+    // Fetch and log the health data for the clicked day
+    const healthDataByDate = JSON.parse(localStorage.getItem('healthDataByDate') || '{}');
+    const dayData = healthDataByDate[formattedDay];
+
+    if (dayData) {
+      console.log(`Health data for ${formattedDay}:`, dayData);
+
+      console.log(`Mental Health Percentage: ${dayData.mentalHealthPercentage}%`);
+      console.log(`Physical Health Percentage: ${dayData.physicalHealthPercentage}%`);
+      console.log(`Nutrition Percentage: ${dayData.nutritionPercentage}%`);
+      console.log(`Sleep Percentage: ${dayData.sleepPercentage}%`);
+      // Add more logs as needed for other categories
+    } else {
+      console.log(`No health data available for ${formattedDay}.`);
+    }
+  }
+};
+
+
+
+  
   const saveHealthData = (data: ProgressData, date: string) => {
     const healthData = {
       mentalHealthPercentage: (data.mentalHealthCheckedCount / MAX_CHECKBOXES.mentalHealth) * 100,
@@ -44,6 +90,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
     existingData[date] = healthData;
     localStorage.setItem('healthDataByDate', JSON.stringify(existingData)); 
   };
+  
   
   useEffect(() => {
     const currentDate = format(new Date(), 'yyyy-MM-dd');
@@ -115,6 +162,8 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
     const startDate = startOfWeek(monthStart);
     const endDate = endOfWeek(monthEnd);
 
+    const healthDataByDate = JSON.parse(localStorage.getItem('healthDataByDate') || '{}');
+
     const rows = [];
     let days = [];
     let day = startDate;
@@ -124,6 +173,7 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
       for (let i = 0; i < 7; i++) {
         const formattedDay = format(day, "yyyy-MM-dd");
         const dayRating = dayRatings[formattedDay] || 0;
+        const dayHealthData = healthDataByDate[formattedDay]; 
         const isTodayFlag = isToday(day);
         const isCurrentMonth = isSameMonth(day, monthStart);
         const backgroundColor = isTodayFlag ? calculatedColor : getColorForRating(dayRating);
@@ -165,10 +215,13 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
             className={`column cell ${!isCurrentMonth ? 'disabled' : ''} ${isTodayFlag ? 'today' : ''}`}
             key={day.toString()}
             style={cellStyle}
-            onClick={() => isEligibleForRating && onDaySelect(formattedDay)}
+            onClick={() => handleDayClick(formattedDay)}
+            
+
           >
             {format(day, "d")}
             {isTodayFlag && renderProgressBars(progressData)}
+            
           </div>
         );
         day = addDays(day, 1);
