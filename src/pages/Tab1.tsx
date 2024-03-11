@@ -40,7 +40,7 @@ const Tab1: React.FC = () => {
   const sleepColor = getColorBasedOnCount(sleepCheckedCount, totalSleepCheckboxes);
 
   // TODO: Get the card color to update when the page is accessed, rather than only when the card is clicked.
-  // UseEffect is not working as expected, so the card colors are not updating when the page is accessed.
+  // UseEffect is not working as expected, so the card colors are not updating when the Tab1.tsx page is accessed.
   const setCardColor = (cardId: string, color: string) => {
     const card = document.getElementById(cardId);
     if (card) {
@@ -49,7 +49,7 @@ const Tab1: React.FC = () => {
   };
 
   useEffect(() => {
-    // Update the colors when the page is accessed
+    // Update the colors when the page is accessed, at least that's the idea.
     const physicalColor = getColorBasedOnCount(physicalHealthCheckedCount, totalPhysicalCheckboxes);
     const mentalColor = getColorBasedOnCount(mentalHealthCheckedCount, totalMentalCheckboxes);
     const nutritionColor = getColorBasedOnCount(nutritionCheckedCount, totalNutritionCheckboxes);
