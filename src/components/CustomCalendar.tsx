@@ -40,45 +40,45 @@ const CustomCalendar: React.FC<CustomCalendarProps> = ({ dayRatings, onDaySelect
   // Define the state for holding the progress data of the selected day
   const [selectedDayProgress, setSelectedDayProgress] = useState<ProgressData | null>(null);
 
-// Assuming selectedDay and selectedDayProgress are already defined in your state
-const handleDayClick = (formattedDay: string) => {
-  // Convert the formattedDay string back to a Date object for comparison
-  const clickedDate = new Date(formattedDay);
-  const today = new Date();
-  
-  // Ensure the clicked date is set to the start of the day for accurate comparison
-  clickedDate.setHours(0, 0, 0, 0);
-  today.setHours(0, 0, 0, 0);
+  // Assuming selectedDay and selectedDayProgress are already defined in your state
+  const handleDayClick = (formattedDay: string) => {
+    // Convert the formattedDay string back to a Date object for comparison
+    const clickedDate = new Date(formattedDay);
+    const today = new Date();
 
-  // Determine if the clicked day is today or in the past (making it eligible for rating)
-  const isEligibleForRating = clickedDate <= today;
+    // Ensure the clicked date is set to the start of the day for accurate comparison
+    clickedDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
 
-  if (isEligibleForRating) {
-    onDaySelect(formattedDay);
+    // Determine if the clicked day is today or in the past (making it eligible for rating)
+    const isEligibleForRating = clickedDate <= today;
 
-    const healthDataByDate = JSON.parse(localStorage.getItem('healthDataByDate') || '{}');
-    const dayData = healthDataByDate[formattedDay];
+    if (isEligibleForRating) {
+      onDaySelect(formattedDay);
 
-    if (dayData) {
-      // Assuming dayData already contains the percentage properties
-      setSelectedDay(formattedDay);
-      setSelectedDayProgress(dayData);
-    } else {
-      console.log(`No health data available for ${formattedDay}.`);
-      setSelectedDayProgress(null);
+      const healthDataByDate = JSON.parse(localStorage.getItem('healthDataByDate') || '{}');
+      const dayData = healthDataByDate[formattedDay];
+
+      if (dayData) {
+        // Assuming dayData already contains the percentage properties
+        setSelectedDay(formattedDay);
+        setSelectedDayProgress(dayData);
+      } else {
+        console.log(`No health data available for ${formattedDay}.`);
+        setSelectedDayProgress(null);
+      }
     }
-  }
-};
+  };
 
 
-const MAX_CHECKBOXES = {
-  mentalHealth: 8,
-  physicalHealth: 6,
-  nutrition: 4,
-  sleep: 10,
-};
+  const MAX_CHECKBOXES = {
+    mentalHealth: 8,
+    physicalHealth: 6,
+    nutrition: 4,
+    sleep: 10,
+  };
 
-  
+
   const saveHealthData = (data: ProgressData, date: string) => {
     const healthData = {
       mentalHealthPercentage: (data.mentalHealthCheckedCount / MAX_CHECKBOXES.mentalHealth) * 100,
@@ -86,19 +86,19 @@ const MAX_CHECKBOXES = {
       nutritionPercentage: (data.nutritionCheckedCount / MAX_CHECKBOXES.nutrition) * 100,
       sleepPercentage: (data.sleepCheckedCount / MAX_CHECKBOXES.sleep) * 100,
     };
-  
+
     const existingData = JSON.parse(localStorage.getItem('healthDataByDate') || '{}');
     existingData[date] = healthData;
-    localStorage.setItem('healthDataByDate', JSON.stringify(existingData)); 
+    localStorage.setItem('healthDataByDate', JSON.stringify(existingData));
   };
-  
-  
+
+
   useEffect(() => {
     const currentDate = format(new Date(), 'yyyy-MM-dd');
     saveHealthData(progressData, currentDate);
 
   }, [progressData]);
-  
+
 
   const getColorForRating = (rating: number): string => {
     switch (rating) {
@@ -168,7 +168,7 @@ const MAX_CHECKBOXES = {
       for (let i = 0; i < 7; i++) {
         const formattedDay = format(day, "yyyy-MM-dd");
         const dayRating = dayRatings[formattedDay] || 0;
-        const dayHealthData = healthDataByDate[formattedDay]; 
+        const dayHealthData = healthDataByDate[formattedDay];
         const isTodayFlag = isToday(day);
         const isCurrentMonth = isSameMonth(day, monthStart);
         const backgroundColor = isTodayFlag ? calculatedColor : getColorForRating(dayRating);
@@ -200,12 +200,37 @@ const MAX_CHECKBOXES = {
           const sleepPercentage = (progressData.sleepCheckedCount / MAX_CHECKBOXES.sleep) * 100;
           const barHeight = '25%';
           return (
-            <div style={{ position: 'absolute', bottom: 0, width: '100%', display: 'flex', flexDirection: 'column' }}>
-            <div style={{ width: `${progressData.mentalHealthPercentage || 0}%`, backgroundColor: 'blue', height: '10px' }}></div>
-            <div style={{ width: `${progressData.physicalHealthPercentage || 0}%`, backgroundColor: 'green', height: '10px' }}></div>
-            <div style={{ width: `${progressData.nutritionPercentage || 0}%`, backgroundColor: 'orange', height: '10px' }}></div>
-            <div style={{ width: `${progressData.sleepPercentage || 0}%`, backgroundColor: 'red', height: '10px' }}></div>
-          </div>
+            <div style={{
+              position: 'absolute',
+              bottom: 0,
+              width: '100%',
+              height: '100%', // Ensure the container takes the full height of the cell
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-end'
+            }}>
+              <div style={{
+                flex: 1, // This will allow the bar to fill the space evenly
+                width: `${progressData.mentalHealthPercentage || 0}%`,
+                backgroundColor: '#ebc2ff'
+              }}></div>
+              <div style={{
+                flex: 1,
+                width: `${progressData.physicalHealthPercentage || 0}%`,
+                backgroundColor: '#a873e8'
+              }}></div>
+              <div style={{
+                flex: 1,
+                width: `${progressData.nutritionPercentage || 0}%`,
+                backgroundColor: '#56d1dc'
+              }}></div>
+              <div style={{
+                flex: 1,
+                width: `${progressData.sleepPercentage || 0}%`,
+                backgroundColor: '#5d7bd5'
+              }}></div>
+
+            </div>
           );
         };
         days.push(
@@ -214,13 +239,13 @@ const MAX_CHECKBOXES = {
             key={day.toString()}
             style={cellStyle}
             onClick={() => handleDayClick(formattedDay)}
-            
+
 
           >
             {format(day, "d")}
             {selectedDay === formattedDay && selectedDayProgress && renderProgressBars(selectedDayProgress)}
 
-            
+
           </div>
         );
         day = addDays(day, 1);
