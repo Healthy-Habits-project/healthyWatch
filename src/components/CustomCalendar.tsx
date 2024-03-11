@@ -54,28 +54,29 @@ const handleDayClick = (formattedDay: string) => {
   const isEligibleForRating = clickedDate <= today;
 
   if (isEligibleForRating) {
-    // Proceed with your existing logic...
     onDaySelect(formattedDay);
 
-    // Fetch and log the health data for the clicked day
     const healthDataByDate = JSON.parse(localStorage.getItem('healthDataByDate') || '{}');
     const dayData = healthDataByDate[formattedDay];
 
     if (dayData) {
-      console.log(`Health data for ${formattedDay}:`, dayData);
-
-      console.log(`Mental Health Percentage: ${dayData.mentalHealthPercentage}%`);
-      console.log(`Physical Health Percentage: ${dayData.physicalHealthPercentage}%`);
-      console.log(`Nutrition Percentage: ${dayData.nutritionPercentage}%`);
-      console.log(`Sleep Percentage: ${dayData.sleepPercentage}%`);
-      // Add more logs as needed for other categories
+      // Assuming dayData already contains the percentage properties
+      setSelectedDay(formattedDay);
+      setSelectedDayProgress(dayData);
     } else {
       console.log(`No health data available for ${formattedDay}.`);
+      setSelectedDayProgress(null);
     }
   }
 };
 
 
+const MAX_CHECKBOXES = {
+  mentalHealth: 8,
+  physicalHealth: 6,
+  nutrition: 4,
+  sleep: 10,
+};
 
   
   const saveHealthData = (data: ProgressData, date: string) => {
@@ -149,12 +150,6 @@ const handleDayClick = (formattedDay: string) => {
     return <div className="row">{days}</div>;
   };
 
-  const MAX_CHECKBOXES = {
-    mentalHealth: 8,
-    physicalHealth: 6,
-    nutrition: 4,
-    sleep: 10,
-  };
 
   const renderCells = () => {
     const monthStart = startOfMonth(currentMonth);
@@ -194,7 +189,10 @@ const handleDayClick = (formattedDay: string) => {
           cellStyle.backgroundColor = ratingColor;
         }
 
-        const renderProgressBars = (progressData: ProgressData) => {
+        const renderProgressBars = (progressData: ProgressData | null) => {
+          if (!progressData) {
+            return null; // No progress data for this day.
+          }
           // Calculate percentage of checked items for each category
           const mentalHealthPercentage = (progressData.mentalHealthCheckedCount / MAX_CHECKBOXES.mentalHealth) * 100;
           const physicalHealthPercentage = (progressData.physicalHealthCheckedCount / MAX_CHECKBOXES.physicalHealth) * 100;
@@ -202,12 +200,12 @@ const handleDayClick = (formattedDay: string) => {
           const sleepPercentage = (progressData.sleepCheckedCount / MAX_CHECKBOXES.sleep) * 100;
           const barHeight = '25%';
           return (
-            <div style={{ position: 'absolute', bottom: 0, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-              <div style={{ width: `${mentalHealthPercentage}%`, height: barHeight, backgroundColor: '#ebc2ff' }}></div>
-              <div style={{ width: `${physicalHealthPercentage}%`, height: barHeight, backgroundColor: '#a873e8' }}></div>
-              <div style={{ width: `${nutritionPercentage}%`, height: barHeight, backgroundColor: '#56d1dc' }}></div>
-              <div style={{ width: `${sleepPercentage}%`, height: barHeight, backgroundColor: '#5d7bd5' }}></div>
-            </div>
+            <div style={{ position: 'absolute', bottom: 0, width: '100%', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ width: `${progressData.mentalHealthPercentage || 0}%`, backgroundColor: 'blue', height: '10px' }}></div>
+            <div style={{ width: `${progressData.physicalHealthPercentage || 0}%`, backgroundColor: 'green', height: '10px' }}></div>
+            <div style={{ width: `${progressData.nutritionPercentage || 0}%`, backgroundColor: 'orange', height: '10px' }}></div>
+            <div style={{ width: `${progressData.sleepPercentage || 0}%`, backgroundColor: 'red', height: '10px' }}></div>
+          </div>
           );
         };
         days.push(
@@ -220,7 +218,8 @@ const handleDayClick = (formattedDay: string) => {
 
           >
             {format(day, "d")}
-            {isTodayFlag && renderProgressBars(progressData)}
+            {selectedDay === formattedDay && selectedDayProgress && renderProgressBars(selectedDayProgress)}
+
             
           </div>
         );
