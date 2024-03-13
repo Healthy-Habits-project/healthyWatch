@@ -65,7 +65,7 @@ const Tab1: React.FC = () => {
     <IonPage>
       <IonHeader translucent={true}>
         <IonToolbar>
-          <IonTitle className="ion-text-center">{`Hello ${userName}`}</IonTitle>
+          <IonTitle className="ion-text-center">{`Hello Test`}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen={true} className="ion-padding">
